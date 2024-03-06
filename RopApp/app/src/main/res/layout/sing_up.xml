@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,59 +9,110 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="89dp"
+        android:layout_marginEnd="170dp"
+        android:layout_marginBottom="40dp"
         android:text="Crear Cuenta"
         android:textSize="24sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="170dp"
-        tools:layout_editor_absoluteY="89dp" />
+        app:layout_constraintBottom_toTopOf="@+id/registerEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/registerEmail"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="25dp"
         android:ems="10"
         android:inputType="text"
         android:text="Email"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="163dp" />
+        app:layout_constraintBottom_toTopOf="@+id/registerUsername"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/registerUsername"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="25dp"
         android:ems="10"
         android:inputType="text"
         android:text="Nombre de Usuario"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="234dp" />
+        app:layout_constraintBottom_toTopOf="@+id/registerPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerEmail" />
 
     <EditText
         android:id="@+id/registerPassword"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="25dp"
         android:ems="10"
         android:inputType="text"
         android:text="Contraseña"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="306dp" />
+        app:layout_constraintBottom_toTopOf="@+id/editTextDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerUsername" />
 
     <EditText
         android:id="@+id/editTextDate"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="25dp"
         android:ems="10"
         android:inputType="date"
         android:text="Fecha de Nacimiento"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="437dp" />
+        app:layout_constraintBottom_toTopOf="@+id/signUpbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/registerPassword" />
 
     <Button
         android:id="@+id/signUpbutton"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="85dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="190dp"
         android:backgroundTint="#605D5D"
         android:text="Crear Cuenta"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="561dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+
+    <Spinner
+        android:id="@+id/spinner_genero"
+        android:layout_width="400dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="55dp"
+        android:entries="@array/genero_options"
+        app:layout_constraintBottom_toTopOf="@+id/signUpbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
