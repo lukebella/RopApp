@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Nombre de usuario o Email "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="244dp" />
+
+    <Button
+        android:id="@+id/loginFacebookbutton"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#605D5D"
+        android:text="Iniciar Sesión"
+        app:strokeColor="#858484"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="422dp" />
+
+    <Button
+        android:id="@+id/loginFacebookbutton"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#605D5D"
+        android:text="Login with Facebook"
+        app:strokeColor="#858484"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="584dp" />
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Contraseña"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="324dp" />
+
+    <TextView
+        android:id="@+id/textOR"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="267dp"
+        tools:layout_editor_absoluteY="505dp" />
+
+    <Button
+        android:id="@+id/loginXbutton"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#605D5D"
+        android:text="Login with X"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="658dp" />
+
+    <Button
+        android:id="@+id/loginGooglebutton"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#605D5D"
+        android:text="Login with google"
+        tools:layout_editor_absoluteX="82dp"
+        tools:layout_editor_absoluteY="735dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
