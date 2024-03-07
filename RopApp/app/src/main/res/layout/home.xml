@@ -64,7 +64,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/recomendPrenda" />
+        app:srcCompat="@drawable/recomendprenda"
+        tools:ignore="UnknownIdInLayout" />
 
     <Button
         android:id="@+id/meGusta"

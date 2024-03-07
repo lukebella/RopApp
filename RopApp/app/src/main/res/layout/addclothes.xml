@@ -17,7 +17,7 @@
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="20dp" />
     <Button
-        android:id="@+id/signUpbutton"
+        android:id="@+id/photobutton"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:backgroundTint="#605D5D"
@@ -25,7 +25,7 @@
         tools:layout_editor_absoluteX="50dp"
         tools:layout_editor_absoluteY="100dp" />
     <Button
-        android:id="@+id/signUpbutton"
+        android:id="@+id/galerybutton"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:backgroundTint="#605D5D"

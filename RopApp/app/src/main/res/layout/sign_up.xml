@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:visibility="visible">
 
     <TextView
         android:id="@+id/textView"
@@ -16,10 +18,12 @@
         android:text="Crear Cuenta"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/registerEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/registerEmail"
@@ -32,10 +36,12 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="Email"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/registerUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/registerUsername"
@@ -48,10 +54,12 @@
         android:ems="10"
         android:inputType="text"
         android:text="Nombre de Usuario"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/registerPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/registerEmail"
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/registerPassword"
@@ -64,10 +72,12 @@
         android:ems="10"
         android:inputType="textPassword"
         android:text="Contraseña"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/editTextDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/registerUsername"
+        tools:visibility="visible" />
 
     <EditText
         android:id="@+id/editTextDate"
@@ -80,13 +90,15 @@
         android:ems="10"
         android:inputType="date"
         android:text="Fecha de Nacimiento"
-        app:layout_constraintBottom_toTopOf="@+id/signUpbutton"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/photobutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/registerPassword"
+        tools:visibility="visible" />
 
     <Button
-        android:id="@+id/signUpbutton"
+        android:id="@+id/photobutton"
         android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -95,24 +107,29 @@
         android:layout_marginBottom="190dp"
         android:backgroundTint="#605D5D"
         android:text="Crear Cuenta"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
+        tools:visibility="visible" />
 
     <Spinner
         android:id="@+id/spinner_genero"
         android:layout_width="400dp"
         android:layout_height="40dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="55dp"
         android:entries="@array/genero_options"
-        app:layout_constraintBottom_toTopOf="@+id/signUpbutton"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/photobutton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
