@@ -42,16 +42,17 @@
         android:layout_width="235dp"
         android:layout_height="349dp"
         android:layout_marginStart="87dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton10"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/recomendprenda" />
+        app:srcCompat="@drawable/recomendprenda"
+        tools:layout_editor_absoluteY="110dp" />
 
     <ImageButton
         android:id="@+id/imageButton10"
         android:layout_width="91dp"
         android:layout_height="73dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="221dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="288dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
@@ -59,19 +60,20 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageButton9"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.306"
+        app:layout_constraintVertical_bias="0.023"
         app:srcCompat="@drawable/pencil" />
 
     <ImageButton
         android:id="@+id/imageButton9"
         android:layout_width="82dp"
         android:layout_height="75dp"
-        android:layout_marginStart="19dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="13dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/heart"
-        tools:layout_editor_absoluteY="438dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:srcCompat="@drawable/heart" />
 
     <Button
         android:id="@+id/button10"
