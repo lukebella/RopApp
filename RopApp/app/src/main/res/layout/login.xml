@@ -5,103 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="244dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="37dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Nombre de usuario o Email "
-        app:layout_constraintBottom_toTopOf="@+id/editTextText2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-
-    <Button
-        android:id="@+id/loginFacebookbutton"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="#605D5D"
-        android:text="Login with Facebook"
-        app:layout_constraintBottom_toTopOf="@+id/loginXbutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textOR"
-        app:strokeColor="#858484" />
-
-    <EditText
-        android:id="@+id/editTextText2"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="37dp"
-        android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Contraseña"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
-
-    <TextView
-        android:id="@+id/textOR"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="225dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="225dp"
-        android:layout_marginBottom="400dp"
-        android:text="OR"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginFacebookbutton" />
-
-    <Button
-        android:id="@+id/loginXbutton"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="#605D5D"
-        android:text="Login with X"
-        app:layout_constraintBottom_toTopOf="@+id/loginGooglebutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginFacebookbutton" />
-
-    <Button
-        android:id="@+id/loginGooglebutton"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="39dp"
-        android:backgroundTint="#605D5D"
-        android:text="Login with google"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginXbutton" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="115dp"
@@ -117,5 +20,95 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ropapplogo" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Nombre de usuario o Email "
+        app:layout_constraintBottom_toTopOf="@+id/editTextText2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:inputType="text"
+        android:text="Contraseña"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:backgroundTint="#605D5D"
+        android:text="Iniciar sesion"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#858484"
+        android:layout_marginTop="400dp" />
+
+    <TextView
+        android:id="@+id/textOR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500dp"
+        android:foregroundGravity="center_vertical"
+        android:text="OR"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/loginFacebookbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:backgroundTint="#605D5D"
+        android:text="Login with Facebook"
+        app:layout_constraintBottom_toTopOf="@+id/loginXbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textOR"
+        app:strokeColor="#858484" />
+
+
+    <Button
+        android:id="@+id/loginXbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:backgroundTint="#605D5D"
+        android:text="Login with X"
+        app:layout_constraintBottom_toTopOf="@+id/loginGooglebutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginFacebookbutton" />
+
+    <Button
+        android:id="@+id/loginGooglebutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:backgroundTint="#605D5D"
+        android:text="Login with google"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginXbutton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
