@@ -3,6 +3,9 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_closet">Closet</string>
+    <string name="title_calendar">Calendar</string>
+    <string name="title_user">User</string>
 
     <!-- Definición de valores de Dropdown de Género en la vista de crear cuenta -->
     <string-array name="genero_options">
