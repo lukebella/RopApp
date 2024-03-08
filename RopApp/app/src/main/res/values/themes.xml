@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.RopApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@android:color/darker_gray</item>
         <item name="colorOnPrimary">@color/black</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#FFD185</item>
+        <item name="colorSecondary">@color/yellow</item>
         <item name="colorSecondaryVariant">@android:color/holo_orange_light</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
