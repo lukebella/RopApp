@@ -27,13 +27,10 @@
 
     <EditText
         android:id="@+id/registerEmail"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="25dp"
-        android:ems="10"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:inputType="textEmailAddress"
         android:text="Email"
         android:visibility="visible"
@@ -45,16 +42,12 @@
 
     <EditText
         android:id="@+id/registerUsername"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="25dp"
-        android:ems="10"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:inputType="text"
         android:text="Nombre de Usuario"
-        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/registerPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,13 +56,10 @@
 
     <EditText
         android:id="@+id/registerPassword"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="25dp"
-        android:ems="10"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:inputType="textPassword"
         android:text="Contraseña"
         android:visibility="visible"
@@ -81,47 +71,25 @@
 
     <EditText
         android:id="@+id/editTextDate"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="25dp"
-        android:ems="10"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:inputType="date"
         android:text="Fecha de Nacimiento"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/photobutton"
+        app:layout_constraintBottom_toTopOf="@+id/spinner_genero"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/registerPassword"
         tools:visibility="visible" />
 
-    <Button
-        android:id="@+id/photobutton"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="85dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="190dp"
-        android:backgroundTint="@color/gray"
-        android:text="Crear Cuenta"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate"
-        tools:visibility="visible" />
-
     <Spinner
         android:id="@+id/spinner_genero"
-        android:layout_width="400dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
         android:entries="@array/genero_options"
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/photobutton"
@@ -130,6 +98,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextDate"
         tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/photobutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:backgroundTint="@color/gray"
+        android:text="Crear Cuenta"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_genero"
+        tools:visibility="visible" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
