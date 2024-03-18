@@ -26,7 +26,7 @@ private lateinit var binding: ActivityMainBinding
         binding.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-            intent = Intent(this, SignUp::class.java)
+            intent = Intent(this, AddClothes::class.java)
             startActivity(intent)
         }
 

@@ -28,12 +28,23 @@
         <activity
             android:name=".SignUp"
             android:exported="true"
-            android:label="SingUp">
+            android:label="SignUp">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".AddClothes"
+            android:exported="true"
+            android:label="AddClothes">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

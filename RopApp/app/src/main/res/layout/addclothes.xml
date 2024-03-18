@@ -23,15 +23,16 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="28dp"
         android:text="Añadir Prenda"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/floatingActionButton1"
-        tools:layout_editor_absoluteY="29dp" />
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton1"
+        android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -81,45 +82,103 @@
         app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/imageButton13" />
 
-    <Button
-        android:id="@+id/button12"
+
+    <Spinner
+        android:id="@+id/categoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:entries="@array/categoria_options"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/estilo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/estilo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:entries="@array/estilo_options"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/detalles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoria"
+        tools:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/detalles"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:entries="@array/detalles_options"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/temporada"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/estilo"
+        tools:visibility="visible" />
+
+    <Spinner
+        android:id="@+id/temporada"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:entries="@array/temporada_options"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detalles"
+        tools:visibility="visible" />
+
+    <!--<Button
+        android:id="@+id/temporada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Temporada"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button14" />
+        app:layout_constraintTop_toBottomOf="@+id/detalles" />
 
     <Button
-        android:id="@+id/button13"
+        android:id="@+id/estilo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Estilo"
-        app:layout_constraintBottom_toTopOf="@+id/button14"
+        app:layout_constraintBottom_toTopOf="@+id/detalles"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button15" />
+        app:layout_constraintTop_toBottomOf="@+id/categoria" />
 
     <Button
-        android:id="@+id/button14"
+        android:id="@+id/detalles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Detalles"
-        app:layout_constraintBottom_toTopOf="@+id/button12"
+        app:layout_constraintBottom_toTopOf="@+id/temporada"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button13" />
+        app:layout_constraintTop_toBottomOf="@+id/estilo" />
 
     <Button
-        android:id="@+id/button15"
+        android:id="@+id/categoria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="250dp"
         android:text="Categoría"
-        app:layout_constraintBottom_toTopOf="@+id/button13"
+        app:layout_constraintBottom_toTopOf="@+id/estilo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />-->
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

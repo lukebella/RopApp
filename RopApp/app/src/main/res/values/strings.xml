@@ -19,4 +19,32 @@
         <item>Otros</item>
     </string-array>
 
+    <string-array name="categoria_options">
+        <item>Categoria</item> <!-- Este será el marcador de posición -->
+        <item>Hombre</item>
+        <item>Mujer</item>
+        <item>Otros</item>
+    </string-array>
+
+    <string-array name="estilo_options">
+        <item>Estilo</item> <!-- Este será el marcador de posición -->
+        <item>Hombre</item>
+        <item>Mujer</item>
+        <item>Otros</item>
+    </string-array>
+
+    <string-array name="detalles_options">
+        <item>Detalles</item> <!-- Este será el marcador de posición -->
+        <item>Hombre</item>
+        <item>Mujer</item>
+        <item>Otros</item>
+    </string-array>
+
+    <string-array name="temporada_options">
+        <item>Temporada</item> <!-- Este será el marcador de posición -->
+        <item>Hombre</item>
+        <item>Mujer</item>
+        <item>Otros</item>
+    </string-array>
+
 </resources>
