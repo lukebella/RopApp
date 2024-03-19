@@ -30,7 +30,7 @@ class AddClothes : AppCompatActivity() {
             startActivity(intent)
         }
         binding.estilo.setOnClickListener {
-            intent = Intent(this, AddCategories::class.java)
+            intent = Intent(this, AddStyle::class.java)
             startActivity(intent)
         }
         binding.detalles.setOnClickListener {
