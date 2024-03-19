@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.notifications.NotificationsFragment" >
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/shoe"
+        android:layout_width="352dp"
+        android:layout_height="850dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:background="#E1D4D4"
+        android:backgroundTint="#A8A7CE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/backButtonChoice"
+            android:layout_width="88dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_revert" />
+
+        <CheckBox
+            android:id="@+id/top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="33dp"
+            android:text="Top"
+            app:layout_constraintBottom_toTopOf="@+id/bottom"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+        <CheckBox
+            android:id="@+id/accessories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="147dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="21dp"
+            android:layout_marginBottom="34dp"
+            android:text="Accessories"
+            app:layout_constraintBottom_toTopOf="@+id/checkBox17"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/top"
+            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <CheckBox
+            android:id="@+id/bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_marginEnd="128dp"
+            android:layout_marginBottom="34dp"
+            android:text="Bottom"
+            app:layout_constraintBottom_toTopOf="@+id/dress"
+            app:layout_constraintEnd_toStartOf="@+id/checkBox17"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <CheckBox
+            android:id="@+id/dress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="34dp"
+            android:text="Dress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom" />
+
+        <CheckBox
+            android:id="@+id/outerwear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="34dp"
+            android:text="Outerwear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dress" />
+
+        <CheckBox
+            android:id="@+id/activewear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="34dp"
+            android:text="Activewear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/outerwear" />
+
+        <CheckBox
+            android:id="@+id/formalwear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="34dp"
+            android:text="Formalwear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/activewear" />
+
+        <CheckBox
+            android:id="@+id/loungewear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="34dp"
+            android:text="Loungewear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/formalwear" />
+
+        <CheckBox
+            android:id="@+id/checkBox17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:layout_marginEnd="61dp"
+            android:text="Shoe"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top" />
+
+        <CheckBox
+            android:id="@+id/bag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="68dp"
+            android:text="Bag"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox17" />
+
+        <CheckBox
+            android:id="@+id/hat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="70dp"
+            android:text="Hat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bag" />
+
+        <CheckBox
+            android:id="@+id/scarf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="60dp"
+            android:text="Scarf"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hat" />
+
+        <CheckBox
+            android:id="@+id/gloves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="51dp"
+            android:text="Gloves"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scarf" />
+
+        <CheckBox
+            android:id="@+id/socks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="56dp"
+            android:text="Socks"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gloves" />
+
+        <CheckBox
+            android:id="@+id/belts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="34dp"
+            android:text="Belts"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/loungewear" />
+
+        <CheckBox
+            android:id="@+id/sunglasses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="20dp"
+            android:text="Sunglasses"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/socks" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="325dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="69dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="65dp"
+            android:layout_marginBottom="1dp"
+            android:background="#FAF0F0"
+            android:fontFamily="casual"
+            android:text="Select the categories of your dress"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toTopOf="@+id/top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="135dp"
+            android:layout_marginTop="39dp"
+            android:layout_marginEnd="115dp"
+            android:layout_marginBottom="19dp"
+            android:text="Confirm"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sunglasses" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>

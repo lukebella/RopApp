@@ -19,5 +19,27 @@ class AddClothes : AppCompatActivity() {
             intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+        binding.guardar.setOnClickListener {
+            intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.categoria.setOnClickListener {
+            intent = Intent(this, AddCategories::class.java)
+            startActivity(intent)
+        }
+        binding.estilo.setOnClickListener {
+            intent = Intent(this, AddCategories::class.java)
+            startActivity(intent)
+        }
+        binding.detalles.setOnClickListener {
+            intent = Intent(this, AddCategories::class.java)
+            startActivity(intent)
+        }
+        binding.temporada.setOnClickListener {
+            intent = Intent(this, AddCategories::class.java)
+            startActivity(intent)
+        }
     }
 }

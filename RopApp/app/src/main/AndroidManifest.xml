@@ -45,6 +45,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".AddCategories"
+            android:exported="true"
+            android:label="AddCategories">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

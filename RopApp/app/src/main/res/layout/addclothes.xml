@@ -8,7 +8,7 @@
     tools:context=".ui.notifications.NotificationsFragment" >
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/guardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -83,63 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageButton13" />
 
 
-    <Spinner
-        android:id="@+id/categoria"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:entries="@array/categoria_options"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/estilo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
-
-    <Spinner
-        android:id="@+id/estilo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginVertical="@dimen/activity_vertical_margin"
-        android:entries="@array/estilo_options"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/detalles"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoria"
-        tools:visibility="visible" />
-
-    <Spinner
-        android:id="@+id/detalles"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginVertical="@dimen/activity_vertical_margin"
-        android:entries="@array/detalles_options"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/temporada"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/estilo"
-        tools:visibility="visible" />
-
-    <Spinner
-        android:id="@+id/temporada"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginVertical="@dimen/activity_vertical_margin"
-        android:entries="@array/temporada_options"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detalles"
-        tools:visibility="visible" />
-
-    <!--<Button
+   <Button
         android:id="@+id/temporada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -178,7 +122,7 @@
         app:layout_constraintBottom_toTopOf="@+id/estilo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
