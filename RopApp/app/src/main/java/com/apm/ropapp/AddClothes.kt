@@ -38,7 +38,7 @@ class AddClothes : AppCompatActivity() {
             startActivity(intent)
         }
         binding.temporada.setOnClickListener {
-            intent = Intent(this, AddCategories::class.java)
+            intent = Intent(this, AddSeason::class.java)
             startActivity(intent)
         }
     }
