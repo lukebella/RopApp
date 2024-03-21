@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.Window
 import android.widget.Button
 import com.apm.ropapp.AddClothes
-import com.apm.ropapp.com.apm.ropapp.CreateOutfit
+import com.apm.ropapp.CreateOutfit
 import com.apm.ropapp.R
 
 class CustomDialog(context: Context) : Dialog(context) {

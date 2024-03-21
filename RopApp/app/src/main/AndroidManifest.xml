@@ -105,9 +105,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!-- Actividad com.apm.ropapp.com.apm.ropapp.CreateOutfit -->
+        <!-- Actividad com.apm.ropapp.CreateOutfit -->
         <activity
-            android:name=".com.apm.ropapp.CreateOutfit"
+            android:name=".CreateOutfit"
             android:exported="true"
             android:label="CreateOutfit">
             <intent-filter>
@@ -126,6 +126,40 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- Actividad com.apm.ropapp.EditProfile -->
+        <activity
+            android:name=".EditProfile"
+            android:exported="true"
+            android:label="EditProfile">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Actividad com.apm.ropapp.Profile -->
+        <activity
+            android:name=".Profile"
+            android:exported="true"
+            android:label="Profile">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Actividad com.apm.ropapp.EditPassword -->
+        <activity
+            android:name=".EditPassword"
+            android:exported="true"
+            android:label="EditPassword">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
+
+
 
 </manifest>

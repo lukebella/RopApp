@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/stat_button"
         android:layout_width="158dp"
         android:layout_height="55dp"
         android:layout_marginStart="128dp"
@@ -16,10 +16,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
+        app:layout_constraintTop_toBottomOf="@+id/config_button" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/config_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="128dp"
@@ -27,7 +27,7 @@
         android:layout_marginEnd="125dp"
         android:layout_marginBottom="84dp"
         android:text="Configuración"
-        app:layout_constraintBottom_toTopOf="@+id/button7"
+        app:layout_constraintBottom_toTopOf="@+id/stat_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -58,13 +58,13 @@
         android:layout_height="36dp"
         android:layout_marginStart="58dp"
         android:layout_marginTop="93dp"
-        android:text="\@Usuario"
+        android:text="@string/usuario"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/info_button"
         android:layout_width="171dp"
         android:layout_height="87dp"
         android:layout_marginStart="128dp"
@@ -74,5 +74,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.944"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7" />
+        app:layout_constraintTop_toBottomOf="@+id/stat_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
