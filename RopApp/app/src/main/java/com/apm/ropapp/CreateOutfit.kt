@@ -18,39 +18,39 @@ class CreateOutfit : AppCompatActivity() {
 
         binding.backButton.setOnClickListener {
             intent = Intent(this, MainActivity::class.java)
-            Log.d("TAG", "Back to Main Activity")
+            Log.d("CreateOutfit", "Back to Main Activity")
             startActivity(intent)
         }
 
         binding.saveButton.setOnClickListener {
-            intent = Intent(this, MainActivity::class.java)
-            Log.d("TAG", "Outfit Added")
+            intent = Intent(this, ArrangeItems::class.java)
+            Log.d("CreateOutfit", "Outfit Added")
             startActivity(intent)
         }
         binding.accesorioButton.setOnClickListener {
-//            intent = Intent(this, AddAccessories::class.java)
-            Log.d("TAG", "Add Accessory")
+            intent = Intent(this, SelectItem::class.java)
+            Log.d("CreateOutfit", "Add Accessory")
             startActivity(intent)
         }
         binding.bottomButton.setOnClickListener {
-//            intent = Intent(this, AddBottom::class.java)
-            Log.d("TAG", "Add Bottom")
+            intent = Intent(this, SelectItem::class.java)
+            Log.d("CreateOutfit", "Add Bottom")
             startActivity(intent)
         }
         binding.topButton.setOnClickListener {
-//            intent = Intent(this, AddTop::class.java)
-            Log.d("TAG", "Add Top")
+            intent = Intent(this, SelectItem::class.java)
+            Log.d("CreateOutfit", "Add Top")
             startActivity(intent)
         }
         binding.shoeButton.setOnClickListener {
-//            intent = Intent(this, AddShoes::class.java)
-            Log.d("TAG", "Add Shoes")
+            intent = Intent(this, SelectItem::class.java)
+            Log.d("CreateOutfit", "Add Shoes")
             startActivity(intent)
         }
         binding.outfitName.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 val outfitName = binding.outfitName.text.toString()
-                Log.d("TAG", "Outfit Name: $outfitName")
+                Log.d("CreateOutfit", "Outfit Name: $outfitName")
                 // You can now use the outfitName variable
             }
         }

@@ -18,34 +18,34 @@ class AddClothes : AppCompatActivity() {
 
         binding.backButton.setOnClickListener {
             intent = Intent(this, MainActivity::class.java)
-            Log.d("TAG","Back to Main Activity")
+            Log.d("AddClothes","Back to Main Activity")
             startActivity(intent)
         }
 
         binding.guardar.setOnClickListener {
-            intent = Intent(this, MainActivity::class.java)
-            Log.d("TAG","Dress Added")
+            intent = Intent(this, Home::class.java)
+            Log.d("AddClothes","Dress Added")
             startActivity(intent)
         }
 
         binding.categoria.setOnClickListener {
             intent = Intent(this, AddCategories::class.java)
-            Log.d("TAG","Add category")
+            Log.d("AddClothes","Add category")
             startActivity(intent)
         }
         binding.estilo.setOnClickListener {
             intent = Intent(this, AddStyle::class.java)
-            Log.d("TAG","Add Style")
+            Log.d("AddClothes","Add Style")
             startActivity(intent)
         }
         binding.detalles.setOnClickListener {
             intent = Intent(this, AddDetails::class.java)
-            Log.d("TAG","Add Details")
+            Log.d("AddClothes","Add Details")
             startActivity(intent)
         }
         binding.temporada.setOnClickListener {
             intent = Intent(this, AddSeason::class.java)
-            Log.d("TAG","Add Season")
+            Log.d("AddClothes","Add Season")
             startActivity(intent)
         }
     }

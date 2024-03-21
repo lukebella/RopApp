@@ -3,7 +3,6 @@ package com.apm.ropapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.ArrangeItemsBinding
 
@@ -18,14 +17,14 @@ class ArrangeItems : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.floatingBackButton.setOnClickListener {
-            intent = Intent(this, MainActivity::class.java)
-            Log.d("TAG","Back to Main Activity")
+            intent = Intent(this, CreateOutfit::class.java)
+            Log.d("ArrangeItems","Back to Create Outfit")
             startActivity(intent)
         }
 
         binding.saveButton.setOnClickListener {
-            intent = Intent(this, ArrangeItems::class.java)
-            Log.d("TAG","Continue to Arrange Items")
+            intent = Intent(this, ShareOutfit::class.java)
+            Log.d("ArrangeItems","Continue to Share Outfit")
             startActivity(intent)
         }
 

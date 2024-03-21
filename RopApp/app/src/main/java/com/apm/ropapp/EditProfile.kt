@@ -2,7 +2,6 @@ package com.apm.ropapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract.Profile
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.EditprofileBinding
@@ -19,20 +18,20 @@ class EditProfile : AppCompatActivity() {
         // Initialize your views here
         // For example, to set a click listener on the floating action button:
         binding.cancelButton2.setOnClickListener {
-            intent = Intent(this, Profile::class.java)
-            Log.d("TAG", "Back to Main Activity")
+            intent = Intent(this, MainActivity::class.java)
+            Log.d("EditProfile", "Back to Main Activity")
             startActivity(intent)
         }
         binding.saveButton2.setOnClickListener {
             intent = Intent(this, Profile::class.java) // Maybe editOutfit?
-            Log.d("TAG", "Edit Outfit")
+            Log.d("EditProfile", "Edit Outfit")
             startActivity(intent)
         }
 
         binding.editAddress.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 val address = binding.editAddress.text.toString()
-                Log.d("TAG", "Address: $address")
+                Log.d("EditProfile", "Address: $address")
                 // You can now use the address variable
             }
         }
@@ -40,7 +39,7 @@ class EditProfile : AppCompatActivity() {
         binding.editPhone.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 val phone = binding.editPhone.text.toString()
-                Log.d("TAG", "Phone: $phone")
+                Log.d("EditProfile", "Phone: $phone")
                 // You can now use the phone variable
             }
         }
@@ -48,14 +47,14 @@ class EditProfile : AppCompatActivity() {
         binding.editEmail.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
                 val email = binding.editEmail.text.toString()
-                Log.d("TAG", "Email: $email")
+                Log.d("EditProfile", "Email: $email")
                 // You can now use the email variable
             }
         }
 
         binding.passwordChange.setOnClickListener() {
             intent = Intent(this, EditPassword::class.java)
-            Log.d("TAG", "Change Password")
+            Log.d("EditProfile", "Change Password")
             startActivity(intent)
         }
 

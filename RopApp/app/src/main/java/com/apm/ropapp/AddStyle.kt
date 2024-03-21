@@ -18,13 +18,13 @@ class AddStyle : AppCompatActivity() {
 
         binding.backButtonChoice.setOnClickListener {
             intent = Intent(this, AddClothes::class.java)
-            Log.d("TAG","Back to Add Clothes")
+            Log.d("AddStyle","Back to Add Clothes")
             startActivity(intent)
         }
 
         binding.confirm.setOnClickListener {
             intent = Intent(this, AddClothes::class.java)
-            Log.d("TAG","Confirm Style")
+            Log.d("AddStyle","Confirm Style")
             startActivity(intent)
         }
 

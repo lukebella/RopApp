@@ -20,7 +20,7 @@ class Closet : AppCompatActivity() {
 
         binding.floatingAddButton.setOnClickListener {
             intent = Intent(this, MainActivity::class.java)
-            Log.d("TAG","Back to Main Activity")
+            Log.d("Closet","Back to Main Activity")
             startActivity(intent)
         }
 

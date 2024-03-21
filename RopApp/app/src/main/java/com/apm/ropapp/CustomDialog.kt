@@ -25,9 +25,7 @@ class CustomDialog(context: Context) : Dialog(context) {
         addPrendaButton.setOnClickListener {
             // Acción cuando se hace clic en el botón añadir prenda
             dismiss() // Cierra el diálogo
-
             Log.d("Custom Dialog", "Se hizo clic en el botón Añadir Prenda")
-
             // Iniciar la actividad AddClothes
             val intent = Intent(context, AddClothes::class.java)
             context.startActivity(intent)

@@ -16,8 +16,9 @@
 
         <!-- Actividad principal -->
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".Login"
+            android:exported="true"
+            android:label="Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,15 +26,21 @@
         </activity>
 
         <activity
-            android:name=".Login"
+            android:name=".MainActivity"
             android:exported="true"
-            android:label="Login">
+            android:label="MainActivity">
         </activity>
 
         <activity
             android:name=".SignUp"
             android:exported="true"
             android:label="SignUp">
+        </activity>
+
+        <activity
+            android:name=".Home"
+            android:exported="true"
+            android:label="Home">
         </activity>
 
         <activity

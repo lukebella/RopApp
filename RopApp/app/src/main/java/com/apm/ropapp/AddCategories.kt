@@ -19,13 +19,13 @@ class AddCategories : AppCompatActivity() {
         binding.backButtonChoice.setOnClickListener {
 
             intent = Intent(this, AddClothes::class.java)
-            Log.d("TAG","Back to add clothes")
+            Log.d("AddCategories","Back to add clothes")
             startActivity(intent)
         }
 
         binding.confirm.setOnClickListener {
             intent = Intent(this, AddClothes::class.java)
-            Log.d("TAG","Categories Added")
+            Log.d("AddCategories","Categories Added")
             startActivity(intent)
         }
 

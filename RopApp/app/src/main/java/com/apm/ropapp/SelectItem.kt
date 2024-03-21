@@ -19,14 +19,14 @@ class SelectItem : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.floatingBackButton.setOnClickListener {
-            intent = Intent(this, MainActivity::class.java)
-            Log.d("TAG","Back to Main Activity")
+            intent = Intent(this, CreateOutfit::class.java)
+            Log.d("SelectItem","Back to Create Outfit")
             startActivity(intent)
         }
 
         binding.floatingAddButton.setOnClickListener {
-            intent = Intent(this, ArrangeItems::class.java)
-            Log.d("TAG","Continue to Arrange Items")
+            intent = Intent(this, Closet::class.java)
+            Log.d("SelectItem","Continue to Closet")
             startActivity(intent)
         }
 

@@ -35,7 +35,7 @@ class SignUp : AppCompatActivity() {
         binding.spinnerGenero.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
                 val selectedGender = parent.getItemAtPosition(position).toString()
-                Log.d("com.apm.ropapp.SignUp", "Se seleccionó el género: $selectedGender")
+                Log.d("SignUp", "Se seleccionó el género: $selectedGender")
                 Toast.makeText(applicationContext, "Selected gender: $selectedGender", Toast.LENGTH_SHORT).show()
             }
 
