@@ -23,7 +23,7 @@ private lateinit var binding: ActivityMainBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.fab.setOnClickListener { view ->
+        binding.fab.setOnClickListener {
             Log.d("Main Activity", "Se hizo clic en el botón flotante")
             showCustomDialog()
         }

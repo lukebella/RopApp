@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton1"
+        android:id="@+id/floatingBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -24,7 +23,7 @@
         android:text="Elegir Prenda"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/floatingActionButton1"
+        app:layout_constraintStart_toEndOf="@+id/floatingBackButton"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
@@ -37,7 +36,7 @@
         android:layout_marginEnd="100dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/floatingAddButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -62,7 +61,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/button1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -71,7 +70,7 @@
                 app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/bottom_button"
+                android:id="@+id/button2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -80,7 +79,7 @@
                 app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/accesorio_button"
+                android:id="@+id/button3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -89,7 +88,7 @@
                 app:backgroundTint="@null" />
 
             <Button
-                android:id="@+id/save_button"
+                android:id="@+id/button4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -118,17 +117,21 @@
 
                 <ImageButton
                     android:id="@+id/imageButton1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/tshirt"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
 
                 <ImageButton
-                    android:id="@+id/shoe_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButton2"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/nike"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
             </TableRow>
             <TableRow
                 android:layout_width="match_parent"
@@ -136,17 +139,21 @@
 
                 <ImageButton
                     android:id="@+id/imageButton3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/recomendprenda"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
 
                 <ImageButton
                     android:id="@+id/imageButton4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/tshirt"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
             </TableRow>
             <TableRow
                 android:layout_width="match_parent"
@@ -154,17 +161,21 @@
 
                 <ImageButton
                     android:id="@+id/imageButton5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/nike"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
 
                 <ImageButton
                     android:id="@+id/imageButton6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/recomendprenda"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
             </TableRow>
             <TableRow
                 android:layout_width="match_parent"
@@ -172,17 +183,21 @@
 
                 <ImageButton
                     android:id="@+id/imageButton7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/tshirt"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
 
                 <ImageButton
                     android:id="@+id/imageButton8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_margin="@dimen/activity_horizontal_margin"
-                    tools:srcCompat="@tools:sample/avatars" />
+                    android:src="@drawable/nike"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true" />
             </TableRow>
         </TableLayout>
     </ScrollView>

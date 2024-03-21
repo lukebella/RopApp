@@ -24,142 +24,102 @@
             </intent-filter>
         </activity>
 
-        <!-- Actividad Login -->
         <activity
             android:name=".Login"
             android:exported="true"
             android:label="Login">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
-        <!-- Actividad com.apm.ropapp.SignUp -->
         <activity
             android:name=".SignUp"
             android:exported="true"
             android:label="SignUp">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".AddClothes"
             android:exported="true"
             android:label="AddClothes">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".AddCategories"
             android:exported="true"
             android:label="AddCategories">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".AddStyle"
             android:exported="true"
             android:label="AddStyle">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".AddSeason"
             android:exported="true"
             android:label="AddSeason">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".AddDetails"
             android:exported="true"
             android:label="AddDetails">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <activity
             android:name=".Calendar"
             android:exported="true"
             android:label="Calendar">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
-        <!-- Actividad com.apm.ropapp.CreateOutfit -->
+
+        <activity
+            android:name=".Closet"
+            android:exported="true"
+            android:label="Closet">
+        </activity>
+
+        <activity
+            android:name=".SelectItem"
+            android:exported="true"
+            android:label="SelectItem">
+        </activity>
+
+        <activity
+            android:name=".ArrangeItems"
+            android:exported="true"
+            android:label="ArrangeItems">
+        </activity>
+
         <activity
             android:name=".CreateOutfit"
             android:exported="true"
             android:label="CreateOutfit">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
-        <!-- Actividad com.apm.ropapp.com.apm.ropapp.ShareOutfit -->
         <activity
-            android:name=".com.apm.ropapp.ShareOutfit"
+            android:name=".ShareOutfit"
             android:exported="true"
             android:label="ShareOutfit">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
-        <!-- Actividad com.apm.ropapp.EditProfile -->
+
         <activity
             android:name=".EditProfile"
             android:exported="true"
             android:label="EditProfile">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
-        <!-- Actividad com.apm.ropapp.Profile -->
         <activity
             android:name=".Profile"
             android:exported="true"
             android:label="Profile">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
-        <!-- Actividad com.apm.ropapp.EditPassword -->
         <activity
             android:name=".EditPassword"
             android:exported="true"
             android:label="EditPassword">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
+
     </application>
-
-
 
 </manifest>

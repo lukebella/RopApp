@@ -2,6 +2,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/button_default_click" android:state_pressed="true" />
     <item android:drawable="@drawable/button_default_click" android:state_focused="true" />
-    <item android:drawable="@drawable/button_default_click" android:state_active="true" />
+    <item android:drawable="@drawable/button_default_click" android:state_selected="true" />
     <item android:drawable="@drawable/button_default_normal" />
 </selector>

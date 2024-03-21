@@ -1,4 +1,4 @@
-package com.apm.ropapp.com.apm.ropapp
+package com.apm.ropapp
 
 import android.content.Intent
 import android.os.Bundle

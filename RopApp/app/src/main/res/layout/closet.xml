@@ -6,31 +6,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Button
-        android:id="@+id/bottom_button"
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_default"
         android:text="Armarios"
         app:backgroundTint="@null"
         android:layout_marginTop="25dp"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_default"
         android:text="Conjuntos"
         app:backgroundTint="@null"
         android:layout_marginTop="25dp"
-        app:layout_constraintStart_toEndOf="@+id/bottom_button"
+        app:layout_constraintStart_toEndOf="@+id/button1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/back_button"
+        android:id="@+id/floatingAddButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -64,12 +64,14 @@
 
                     <ImageButton
                         android:id="@+id/imageButton1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        android:src="@drawable/tshirt"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true" />
 
                     <TextView
                         android:id="@+id/textView1"
@@ -92,13 +94,15 @@
                     android:layout_margin="@dimen/activity_horizontal_margin">
 
                     <ImageButton
-                        android:id="@+id/shoe_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/imageButton2"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        android:src="@drawable/nike"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true" />
 
                     <TextView
                         android:id="@+id/textView2"
@@ -111,7 +115,7 @@
                         android:text="Armario Verano"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        app:layout_constraintTop_toBottomOf="@id/shoe_button"
+                        app:layout_constraintTop_toBottomOf="@id/imageButton2"
                         tools:layout_editor_absoluteX="16dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </TableRow>
@@ -127,12 +131,14 @@
 
                     <ImageButton
                         android:id="@+id/imageButton3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        android:src="@drawable/recomendprenda"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true" />
 
                     <TextView
                         android:id="@+id/textView3"
@@ -145,8 +151,7 @@
                         android:text="Armario Formal"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        app:layout_constraintTop_toBottomOf="@id/imageButton3"
-                        tools:layout_editor_absoluteX="16dp" />
+                        app:layout_constraintTop_toBottomOf="@id/imageButton3" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -156,12 +161,14 @@
 
                     <ImageButton
                         android:id="@+id/imageButton4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        android:src="@drawable/tshirt"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true" />
 
                     <TextView
                         android:id="@+id/textView4"
@@ -190,12 +197,14 @@
 
                     <ImageButton
                         android:id="@+id/imageButton5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        android:src="@drawable/nike"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true" />
 
                     <TextView
                         android:id="@+id/textView5"
@@ -219,12 +228,14 @@
 
                     <ImageButton
                         android:id="@+id/imageButton6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        android:src="@drawable/recomendprenda"
+                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true" />
 
                     <TextView
                         android:id="@+id/textView6"
