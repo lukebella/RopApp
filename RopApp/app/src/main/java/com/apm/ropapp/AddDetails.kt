@@ -2,6 +2,7 @@ package com.apm.ropapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
@@ -26,11 +27,13 @@ class AddDetails : AppCompatActivity() {
 
         binding.backButtonChoice.setOnClickListener {
             intent = Intent(this, AddClothes::class.java)
+            Log.d("TAG","Back to Add Clothes")
             startActivity(intent)
         }
 
         binding.confirm.setOnClickListener {
             intent = Intent(this, AddClothes::class.java)
+            Log.d("TAG","Confirm Details")
             startActivity(intent)
         }
 

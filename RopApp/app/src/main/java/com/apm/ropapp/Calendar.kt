@@ -2,6 +2,7 @@ package com.apm.ropapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.AddchoiceseasonBinding
 import com.apm.ropapp.databinding.CalendarBinding
@@ -18,6 +19,7 @@ class Calendar : AppCompatActivity() {
 
         binding.backButtonChoice.setOnClickListener {
             intent = Intent(this, MainActivity::class.java)
+            Log.d("TAG","Back to Add Clothes")
             startActivity(intent)
         }
 

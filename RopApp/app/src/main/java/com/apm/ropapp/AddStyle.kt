@@ -2,6 +2,7 @@ package com.apm.ropapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.AddchoicestyleBinding
 
@@ -17,11 +18,13 @@ class AddStyle : AppCompatActivity() {
 
         binding.backButtonChoice.setOnClickListener {
             intent = Intent(this, AddClothes::class.java)
+            Log.d("TAG","Back to Add Clothes")
             startActivity(intent)
         }
 
         binding.confirm.setOnClickListener {
             intent = Intent(this, AddClothes::class.java)
+            Log.d("TAG","Confirm Style")
             startActivity(intent)
         }
 
