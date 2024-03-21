@@ -13,14 +13,14 @@
 
     <!-- Definición de valores de Dropdown de Género en la vista de crear cuenta -->
     <string-array name="genero_options">
-        <item>Selecciona género</item> <!-- Este será el marcador de posición -->
+        <!-- Este será el marcador de posición -->
         <item>Hombre</item>
         <item>Mujer</item>
         <item>Otros</item>
     </string-array>
 
     <string-array name="estado_options">
-        <item>Selecciona estado</item> <!-- Este será el marcador de posición -->
+         <!-- Este será el marcador de posición -->
         <item>Nuevo</item>
         <item>Usado</item>
         <item>Como nuevo</item>
@@ -34,7 +34,7 @@
     </string-array>
 
     <string-array name="tamano_options">
-        <item>Selecciona tamaño</item> <!-- Este será el marcador de posición -->
+        <!-- Este será el marcador de posición -->
         <item>XS</item>
         <item>S</item>
         <item>M</item>

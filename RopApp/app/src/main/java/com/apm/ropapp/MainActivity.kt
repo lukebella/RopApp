@@ -10,8 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.apm.ropapp.databinding.ActivityMainBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,11 +23,9 @@ private lateinit var binding: ActivityMainBinding
         setContentView(binding.root)
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-            intent = Intent(this, AddClothes::class.java)
-            startActivity(intent)
+            showCustomDialog()
         }
+
 
         val navView: BottomNavigationView = binding.navView
 
@@ -40,12 +37,12 @@ private lateinit var binding: ActivityMainBinding
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        /*
-        val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener {
-            val dialog = CustomDialog(this)
-            dialog.show()
-        }
-        */
+    }
+
+    private fun showCustomDialog() {
+        // Crear e instanciar el Custom Dialog
+        val customDialog = CustomDialog(this)
+        // Mostrar el Custom Dialog
+        customDialog.show()
     }
 }
