@@ -105,6 +105,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <!-- Actividad com.apm.ropapp.CreateOutfit -->
+        <activity
+            android:name=".CreateOutfit"
+            android:exported="true"
+            android:label="CreateOutfit">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
     </application>
 

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Window
 import android.widget.Button
 import com.apm.ropapp.AddClothes
+import com.apm.ropapp.CreateOutfit
 import com.apm.ropapp.R
 
 class CustomDialog(context: Context) : Dialog(context) {
@@ -37,6 +38,8 @@ class CustomDialog(context: Context) : Dialog(context) {
             dismiss() // Cierra el diálogo
             Log.d("Custom Dialog", "Se hizo clic en el botón Añadir Conjunto")
             // Agrega aquí la lógica para añadir un conjunto
+            val intent = Intent(context, CreateOutfit::class.java)
+            context.startActivity(intent)
         }
     }
 }

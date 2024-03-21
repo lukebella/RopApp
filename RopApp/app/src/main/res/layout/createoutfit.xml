@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-             android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.notifications.NotificationsFragment">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
@@ -19,13 +20,13 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="360dp"
-        android:layout_marginBottom="108dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="52dp"
         android:text="Parte de abajo"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_button"
+        app:layout_constraintEnd_toStartOf="@+id/bottom_button"
+        app:layout_constraintTop_toTopOf="@+id/bottom_button" />
 
     <TextView
         android:id="@+id/textView4"
@@ -35,7 +36,7 @@
         android:layout_marginTop="116dp"
         android:text="Accesorios"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/outfit_name" />
 
     <TextView
         android:id="@+id/textView3"
@@ -44,45 +45,45 @@
         android:layout_marginStart="28dp"
         android:layout_marginBottom="51dp"
         android:text="Calzado"
-        app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+        app:layout_constraintBottom_toBottomOf="@+id/shoe_button"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/shoe_button"
         android:layout_width="130dp"
-        android:layout_height="123dp"
+        android:layout_height="125dp"
         android:layout_marginStart="54dp"
         android:layout_marginEnd="140dp"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_button"
         app:srcCompat="@drawable/nike" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/accesorio_button"
         android:layout_width="130dp"
         android:layout_height="125dp"
         android:layout_marginStart="34dp"
         android:layout_marginTop="61dp"
-        android:layout_marginEnd="141dp"
-        android:text="+"
+        android:layout_marginEnd="140dp"
+        android:text="@string/plus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/outfit_name" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/top_button"
         android:layout_width="130dp"
         android:layout_height="123dp"
         android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3"
+        app:layout_constraintTop_toBottomOf="@+id/accesorio_button"
         app:srcCompat="@drawable/tshirt" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/bottom_button"
         android:layout_width="130dp"
         android:layout_height="125dp"
         android:layout_marginStart="141dp"
@@ -90,55 +91,55 @@
         android:text="+"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/top_button" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginBottom="98dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="52dp"
         android:text="Parte de arriba"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintBottom_toBottomOf="@+id/top_button"
+        app:layout_constraintEnd_toStartOf="@+id/top_button"
+        app:layout_constraintTop_toTopOf="@+id/top_button" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/textInputEditText"
+        android:id="@+id/outfit_name"
         android:layout_width="209dp"
         android:layout_height="44dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="54dp"
         android:hint="Nombre del conjunto"
-        app:layout_constraintStart_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toEndOf="@+id/back_button"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/save_button"
         android:layout_width="116dp"
         android:layout_height="37dp"
         android:layout_marginStart="12dp"
         android:layout_marginBottom="68dp"
         android:layout_weight="1"
         android:text="Guardar"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/accesorio_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textInputEditText" />
+        app:layout_constraintStart_toEndOf="@+id/outfit_name" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/back_button"
         android:layout_width="49dp"
         android:layout_height="51dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="48dp"
         android:clickable="true"
-        android:rotation="90"
+        android:focusable="true"
         android:scaleType="center"
         app:fabSize="auto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="@android:drawable/ic_menu_revert" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

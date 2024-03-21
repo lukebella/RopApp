@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/bottom_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_default"
@@ -25,12 +25,12 @@
         android:text="Conjuntos"
         app:backgroundTint="@null"
         android:layout_marginTop="25dp"
-        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintStart_toEndOf="@+id/bottom_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -92,7 +92,7 @@
                     android:layout_margin="@dimen/activity_horizontal_margin">
 
                     <ImageButton
-                        android:id="@+id/imageButton2"
+                        android:id="@+id/shoe_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +111,7 @@
                         android:text="Armario Verano"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        app:layout_constraintTop_toBottomOf="@id/imageButton2"
+                        app:layout_constraintTop_toBottomOf="@id/shoe_button"
                         tools:layout_editor_absoluteX="16dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </TableRow>
