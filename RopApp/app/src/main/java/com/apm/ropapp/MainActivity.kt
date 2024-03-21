@@ -3,6 +3,7 @@ package com.apm.ropapp
 import CustomDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -23,6 +24,7 @@ private lateinit var binding: ActivityMainBinding
         setContentView(binding.root)
 
         binding.fab.setOnClickListener { view ->
+            Log.d("Main Activity", "Se hizo clic en el botón flotante")
             showCustomDialog()
         }
 
