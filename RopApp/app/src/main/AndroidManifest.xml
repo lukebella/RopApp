@@ -105,9 +105,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!-- Actividad com.apm.ropapp.CreateOutfit -->
+        <!-- Actividad com.apm.ropapp.com.apm.ropapp.CreateOutfit -->
         <activity
-            android:name=".CreateOutfit"
+            android:name=".com.apm.ropapp.CreateOutfit"
             android:exported="true"
             android:label="CreateOutfit">
             <intent-filter>
@@ -116,6 +116,16 @@
             </intent-filter>
         </activity>
 
+        <!-- Actividad com.apm.ropapp.com.apm.ropapp.ShareOutfit -->
+        <activity
+            android:name=".com.apm.ropapp.ShareOutfit"
+            android:exported="true"
+            android:label="ShareOutfit">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
