@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Actividad SignUp -->
+        <!-- Actividad com.apm.ropapp.SignUp -->
         <activity
             android:name=".SignUp"
             android:exported="true"

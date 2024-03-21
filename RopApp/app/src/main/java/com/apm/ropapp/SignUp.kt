@@ -1,12 +1,12 @@
+package com.apm.ropapp
+
 import android.content.Intent
-import com.apm.ropapp.R
 import android.os.Bundle
 import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.apm.ropapp.MainActivity
 import com.apm.ropapp.databinding.SignUpBinding
 
 class SignUp : AppCompatActivity() {
@@ -35,7 +35,7 @@ class SignUp : AppCompatActivity() {
         binding.spinnerGenero.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
                 val selectedGender = parent.getItemAtPosition(position).toString()
-                Log.d("SignUp", "Se seleccionó el género: $selectedGender")
+                Log.d("com.apm.ropapp.SignUp", "Se seleccionó el género: $selectedGender")
                 Toast.makeText(applicationContext, "Selected gender: $selectedGender", Toast.LENGTH_SHORT).show()
             }
 
@@ -46,6 +46,7 @@ class SignUp : AppCompatActivity() {
 
         // Configurar el clic del botón para navegar a MainActivity
         binding.createAccountButton.setOnClickListener {
+            Log.d("SignUp", "Se seleccionó el botón Crear Cuenta")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
