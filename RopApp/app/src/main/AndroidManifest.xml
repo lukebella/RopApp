@@ -80,12 +80,6 @@
         </activity>
 
         <activity
-            android:name=".Closet"
-            android:exported="true"
-            android:label="Closet">
-        </activity>
-
-        <activity
             android:name=".SelectItem"
             android:exported="true"
             android:label="SelectItem">

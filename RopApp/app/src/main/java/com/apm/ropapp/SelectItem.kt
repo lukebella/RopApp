@@ -25,8 +25,8 @@ class SelectItem : AppCompatActivity() {
         }
 
         binding.floatingAddButton.setOnClickListener {
-            intent = Intent(this, Closet::class.java)
-            Log.d("SelectItem","Continue to Closet")
+            intent = Intent(this, MainActivity::class.java)
+            Log.d("SelectItem","Continue to Main Activity")
             startActivity(intent)
         }
 
