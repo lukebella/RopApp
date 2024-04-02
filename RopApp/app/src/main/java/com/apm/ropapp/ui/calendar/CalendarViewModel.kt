@@ -1,4 +1,6 @@
 package com.apm.ropapp.ui.calendar
 
-class CalendarViewModel {
+import androidx.lifecycle.ViewModel
+
+class CalendarViewModel : ViewModel() {
 }

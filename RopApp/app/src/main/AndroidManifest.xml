@@ -73,11 +73,11 @@
             android:label="AddDetails">
         </activity>
 
-        <activity
+        <!--<activity
             android:name=".Calendar"
             android:exported="true"
             android:label="Calendar">
-        </activity>
+        </activity> -->
 
         <activity
             android:name=".SelectItem"
