@@ -18,12 +18,9 @@ class CalendarFragment : Fragment() {
     ): View {
         _binding = CalendarBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-
         binding.backButtonChoice.setOnClickListener {
                 parentFragmentManager.popBackStack()
-
-            }
+        }
 
         return root
     }

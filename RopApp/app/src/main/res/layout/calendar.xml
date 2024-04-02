@@ -1,95 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fecha"
-        android:layout_width="407dp"
-        android:layout_height="153dp"
-        android:background="@color/yellow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.136">
-
-        <TextView
-            android:id="@+id/year"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="5dp"
-            android:ems="10"
-            android:fontFamily="sans-serif-light"
-            android:inputType="text"
-            android:text="1970"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/fechaEscrita"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.051"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/fechaEscrita"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:fontFamily="sans-serif-light"
-            android:inputType="date"
-            android:text="Thu, Jan 1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textColor="#FFFFFF"
-            android:textSize="32dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.933"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/year" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <CalendarView
+    <DatePicker
         android:id="@+id/simpleCalendarView"
-        android:layout_width="412dp"
-        android:layout_height="338dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="2dp"
+        android:layout_width="450dp"
+        android:layout_height="430dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="116dp"
         android:firstDayOfWeek="2"
         android:unfocusedMonthDateColor="#f00"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.27"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fecha" />
+        app:layout_constraintTop_toBottomOf="@+id/backButtonChoice" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="390dp"
         android:layout_height="90dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/rectangle_borders"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/simpleCalendarView">
 
@@ -108,7 +51,7 @@
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.526"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.521" />
@@ -133,13 +76,12 @@
         android:id="@+id/backButtonChoice"
         android:layout_width="88dp"
         android:layout_height="56dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/fecha"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/simpleCalendarView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,6 @@ class Calendar : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = CalendarBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -22,6 +21,6 @@ class Calendar : AppCompatActivity() {
             startActivity(intent)
         }
 
-
     }
+
 }
