@@ -109,11 +109,11 @@
             android:label="EditProfile">
         </activity>
 
-        <activity
+        <!--<activity
             android:name=".Profile"
             android:exported="true"
             android:label="Profile">
-        </activity>
+        </activity>-->
 
         <activity
             android:name=".EditPassword"
