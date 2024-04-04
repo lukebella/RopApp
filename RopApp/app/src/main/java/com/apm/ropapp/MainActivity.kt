@@ -32,9 +32,10 @@ private lateinit var binding: ActivityMainBinding
         val b = intent.extras
         if (b != null) {
             val navFragment = b.getInt("fragment")
-            if (navFragment != 0)
+            if (navFragment != 0) {
                 navController.popBackStack()
                 navController.navigate(navFragment)
+            }
         }
 
         binding.floatingAddButton.setOnClickListener {
