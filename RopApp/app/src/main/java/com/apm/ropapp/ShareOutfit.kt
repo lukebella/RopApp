@@ -39,8 +39,9 @@ class ShareOutfit : AppCompatActivity() {
         }
         binding.calendarButton.setOnClickListener {
             // Add the outfit to the calendar
-            intent = Intent(this, Calendar::class.java)
-            Log.d("ShareOutfit", "Add to Calendar")
+            Log.d("ShareOutfit", "Continue to Fragment Calendar")
+            intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("fragment", R.id.navigation_calendar)
             startActivity(intent)
         }
 

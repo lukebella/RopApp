@@ -39,6 +39,7 @@ private var _binding: FragmentHomeBinding? = null
     noMeGusta.setOnClickListener{
         //findNavController().navigate(R.id.navigation_profile)
         // crea una doble barra de navegación
+        //parentFragmentManager.popBackStack()
     }
       val meGusta: Button =  binding.meGusta
       meGusta.setOnClickListener{

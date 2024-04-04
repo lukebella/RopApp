@@ -29,6 +29,13 @@ private lateinit var binding: ActivityMainBinding
 //        setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
 
+        val b = intent.extras
+        if (b != null) {
+            val navFragment = b.getInt("fragment")
+            if (navFragment != 0)
+                navController.navigate(navFragment)
+        }
+
         binding.floatingAddButton.setOnClickListener {
             Log.d("Main Activity", "Se hizo clic en el botón flotante")
             showCustomDialog()

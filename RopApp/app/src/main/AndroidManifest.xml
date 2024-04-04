@@ -38,12 +38,6 @@
         </activity>
 
         <activity
-            android:name=".Home"
-            android:exported="true"
-            android:label="Home">
-        </activity>
-
-        <activity
             android:name=".AddClothes"
             android:exported="true"
             android:label="AddClothes">

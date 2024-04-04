@@ -23,7 +23,7 @@ class AddClothes : AppCompatActivity() {
         }
 
         binding.guardar.setOnClickListener {
-            intent = Intent(this, Home::class.java)
+            intent = Intent(this, MainActivity::class.java)
             Log.d("AddClothes","Dress Added")
             startActivity(intent)
         }
