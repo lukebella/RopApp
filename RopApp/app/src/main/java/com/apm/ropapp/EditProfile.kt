@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.EditprofileBinding
+import com.apm.ropapp.ui.profile.ProfileFragment
 
 
 class EditProfile : AppCompatActivity() {
@@ -18,12 +19,12 @@ class EditProfile : AppCompatActivity() {
         // Initialize your views here
         // For example, to set a click listener on the floating action button:
         binding.cancelButton2.setOnClickListener {
-            intent = Intent(this, MainActivity::class.java)
-            Log.d("EditProfile", "Back to Main Activity")
+            intent = Intent(this, ProfileFragment::class.java)
+            Log.d("EditProfile", "Back to Profile")
             startActivity(intent)
         }
         binding.saveButton2.setOnClickListener {
-            intent = Intent(this, Profile::class.java) // Maybe editOutfit?
+            intent = Intent(this, ProfileFragment::class.java) // Maybe editOutfit?
             Log.d("EditProfile", "Edit Outfit")
             startActivity(intent)
         }

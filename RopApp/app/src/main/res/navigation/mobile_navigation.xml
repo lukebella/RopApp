@@ -36,7 +36,7 @@
         tools:layout="@layout/fragment_calendar" />
 
     <fragment
-        android:id="@+id/navigation_profile"
+        android:id="@+id/navigation_user"
         android:name="com.apm.ropapp.ui.profile.ProfileFragment"
         android:label="@string/title_user"
         tools:layout="@layout/fragment_profile" />

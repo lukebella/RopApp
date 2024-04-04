@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.EditpasswordBinding
+import com.apm.ropapp.ui.profile.ProfileFragment
 
 
 class EditPassword : AppCompatActivity() {
@@ -18,12 +19,12 @@ class EditPassword : AppCompatActivity() {
         // Initialize your views here
         // For example, to set a click listener on the floating action button:
         binding.cancelButton3.setOnClickListener {
-            intent = Intent(this, Profile::class.java)
+            intent = Intent(this, ProfileFragment::class.java)
             Log.d("EditPassword", "Back to Profile")
             startActivity(intent)
         }
         binding.saveButton3.setOnClickListener {
-            intent = Intent(this, Profile::class.java) // Maybe editOutfit?
+            intent = Intent(this, ProfileFragment::class.java) // Maybe editOutfit?
             Log.d("EditPassword", "Edit Profile")
             startActivity(intent)
         }
