@@ -5,16 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
-
     <TextView
         android:id="@+id/textView7"
         android:layout_width="245dp"
@@ -45,10 +35,9 @@
         android:layout_width="209dp"
         android:layout_height="296dp"
         android:layout_marginStart="100dp"
-        android:layout_marginBottom="292dp"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/recomendprenda" />
+        app:srcCompat="@drawable/recomendprenda"
+        tools:layout_editor_absoluteY="247dp" />
 
     <ImageButton
         android:id="@+id/edit_button"
@@ -80,10 +69,10 @@
         android:id="@+id/calendar_button"
         android:layout_width="156dp"
         android:layout_height="83dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="80dp"
         android:text="Añadir al calendario"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/like_button" />
 
     <Button

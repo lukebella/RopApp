@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.notifications.NotificationsFragment">
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="52dp"
+        android:text="Parte de abajo"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_button"
+        app:layout_constraintEnd_toStartOf="@+id/bottom_button"
+        app:layout_constraintTop_toTopOf="@+id/bottom_button" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accesorios"
+        app:layout_constraintBottom_toBottomOf="@+id/accesorio_button"
+        app:layout_constraintStart_toStartOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/accesorio_button"
+        app:layout_constraintVertical_bias="0.519" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="108dp"
+        android:text="Calzado"
+        app:layout_constraintBottom_toBottomOf="@+id/shoe_button"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView5" />
+
+    <ImageButton
+        android:id="@+id/shoe_button"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="@+id/top_button"
+        app:srcCompat="@drawable/nike"
+        tools:layout_editor_absoluteY="350dp" />
+
+    <Button
+        android:id="@+id/accesorio_button"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="39dp"
+        android:text="@string/plus"
+        app:layout_constraintEnd_toStartOf="@+id/top_button"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/top_button" />
+
+    <ImageButton
+        android:id="@+id/top_button"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/tshirt"
+        tools:layout_editor_absoluteY="134dp" />
+
+    <Button
+        android:id="@+id/bottom_button"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:text="+"
+        app:layout_constraintEnd_toEndOf="@+id/accesorio_button"
+        app:layout_constraintTop_toTopOf="@+id/shoe_button" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="76dp"
+        android:text="Parte de arriba"
+        app:layout_constraintStart_toEndOf="@+id/top_button"
+        app:layout_constraintTop_toTopOf="@+id/textView4" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/outfit_name"
+        android:layout_width="236dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="28dp"
+        android:hint="Nombre del conjunto"
+        app:layout_constraintBottom_toTopOf="@+id/accesorio_button"
+        app:layout_constraintEnd_toEndOf="@+id/accesorio_button" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="228dp"
+        android:layout_height="91dp"
+        android:layout_marginBottom="104dp"
+        android:layout_weight="1"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/shoe_button"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/bottom_button" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/back_button"
+        android:layout_width="65dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="52dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:scaleType="center"
+        app:fabSize="auto"
+        app:layout_constraintEnd_toStartOf="@+id/outfit_name"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_revert" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
