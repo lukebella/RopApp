@@ -33,6 +33,7 @@ private lateinit var binding: ActivityMainBinding
         if (b != null) {
             val navFragment = b.getInt("fragment")
             if (navFragment != 0)
+                navController.popBackStack()
                 navController.navigate(navFragment)
         }
 
