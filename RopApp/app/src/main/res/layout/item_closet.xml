@@ -16,6 +16,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/yellow"
             android:src="@drawable/tshirt"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true" />

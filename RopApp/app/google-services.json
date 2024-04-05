@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "381231263922",
+    "project_id": "ropapp-743fd",
+    "storage_bucket": "ropapp-743fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381231263922:android:254c4f9f83a764da4859ab",
+        "android_client_info": {
+          "package_name": "com.apm.ropapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDon1udmNpJ6DHdI2pMGHyoY9AcJ6m6AS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
