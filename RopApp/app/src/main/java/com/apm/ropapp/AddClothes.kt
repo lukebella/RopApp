@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.EXTRA_OUTPUT
 import android.util.Log
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,11 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.apm.ropapp.databinding.AddclothesBinding
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AddClothes : AppCompatActivity() {
 
     private lateinit var binding: AddclothesBinding
-    private  lateinit var imageUri: Uri
+    private lateinit var imageUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +48,7 @@ class AddClothes : AppCompatActivity() {
 
         binding.camara.setOnClickListener {
             intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            intent.putExtra(EXTRA_OUTPUT, imageUri)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
             resultLauncher.launch(intent)
         }
 
@@ -87,8 +88,12 @@ class AddClothes : AppCompatActivity() {
         }
     }
 
-    private fun createImageUri():Uri {
-        val image = File(filesDir, "camera_photos.png")
+    private fun createImageUri() : Uri {
+        val dir = File("${externalMediaDirs.first()}/Photos")
+        if (!dir.exists()) dir.mkdirs()
+        val image = File(dir, //or filesDir
+            SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.US)
+                .format(System.currentTimeMillis()) + ".png")
         return FileProvider.getUriForFile(this, "com.apm.ropapp.FileProvider", image)
     }
 }

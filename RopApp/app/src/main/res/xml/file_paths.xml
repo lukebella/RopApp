@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
 
-    <files-path
-        name="camera_photos"
-        path="."
+    <external-media-path
+        name="Photos"
+        path="Photos"
         />
 </paths>
