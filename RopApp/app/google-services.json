@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "381231263922-8b4silb32hc5o3pcah63vjsljr6a0psn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apm.ropapp",
+            "certificate_hash": "10ec3f16dde257a0a0b02f26fbe6e618311f316a"
+          }
+        },
+        {
           "client_id": "381231263922-i3ip3jbcdmn641h4uvde1gbrg7noue5m.apps.googleusercontent.com",
           "client_type": 3
         }

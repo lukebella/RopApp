@@ -58,6 +58,8 @@ dependencies {
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
 
     implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation ("com.facebook.android:facebook-login:latest.release")
+
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
