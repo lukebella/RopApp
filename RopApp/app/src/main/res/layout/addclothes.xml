@@ -40,23 +40,23 @@
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <ImageButton
-        android:id="@+id/imageButton11"
+        android:id="@+id/camara"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="100dp"
         android:src="@drawable/baseline_add_a_photo_24"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton13"
+        app:layout_constraintEnd_toStartOf="@+id/galeria"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton13"
+        android:id="@+id/galeria"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginTop="100dp"
         android:src="@drawable/baseline_add_photo_alternate_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButton11"
+        app:layout_constraintStart_toEndOf="@+id/camara"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -67,7 +67,7 @@
         android:text="Camara"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView11"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton11" />
+        app:layout_constraintTop_toBottomOf="@+id/camara" />
 
     <TextView
         android:id="@+id/textView11"
@@ -78,7 +78,7 @@
         android:text="Galeria"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton13" />
+        app:layout_constraintTop_toBottomOf="@+id/galeria" />
 
 
    <Button

@@ -1,31 +1,26 @@
 package com.apm.ropapp.ui.home
 
+//import com.google.android.gms.maps.model.LatLng
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import android.Manifest
-import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
-import android.location.Geocoder.GeocodeListener
-import android.location.Location
-import android.os.AsyncTask
-import android.os.Build
-import android.util.Log
-import android.widget.TextView
-import androidx.annotation.RequiresApi
+import com.apm.ropapp.MainActivity
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import java.util.Locale
-//import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.firestore.FirebaseFirestore
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -33,6 +28,7 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Calendar
+import java.util.Locale
 import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
@@ -72,7 +68,10 @@ class HomeFragment : Fragment() {
     }
     val meGusta: Button = binding.meGusta
     meGusta.setOnClickListener {
-      findNavController().navigate(R.id.navigation_calendar)
+      Log.d("HomeFragment", "Continue to Fragment Calendar")
+      val intent = Intent(it.context, MainActivity::class.java)
+      intent.putExtra("fragment", R.id.navigation_calendar)
+      startActivity(intent)
     }
     return root
   }
@@ -94,7 +93,7 @@ class HomeFragment : Fragment() {
 
   private fun retrieveCity(locationTextView: TextView, callback: (Double, Double) -> Unit) {
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-    var city: String = ""
+    var city: String
 
     Log.d("Home", "after fusedLocationClient instance")
     if (ActivityCompat.checkSelfPermission(
@@ -125,22 +124,22 @@ class HomeFragment : Fragment() {
           geocoder.getFromLocation(
             location.latitude,
             location.longitude,
-            1,
-            Geocoder.GeocodeListener { addresses ->
-              if (addresses.isNotEmpty()) {
-                Log.d("HOME", "address")
-                city = addresses[0].locality
-                locationTextView.text = city
-                callback(location.latitude, location.longitude)
-              } else {
-                Log.d("HOME", "no address")
-                locationTextView.text = "City not found"
-              }
+            1
+          ) { addresses ->
+            if (addresses.isNotEmpty()) {
+              Log.d("HOME", "address")
+              city = addresses[0].locality
+              locationTextView.text = city
+              callback(location.latitude, location.longitude)
+            } else {
+              Log.d("HOME", "no address")
+              locationTextView.text = "City not found"
+            }
 
-            })
+          }
         } else {
           val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-          if (addresses != null && addresses.isNotEmpty()) {
+          if (!addresses.isNullOrEmpty()) {
             Log.d("HOME", "address")
             city = addresses[0].locality
             locationTextView.text = city
@@ -157,6 +156,7 @@ class HomeFragment : Fragment() {
 
   inner class FetchWeatherTask : AsyncTask<String, Void, String>() {
 
+    @Deprecated("Deprecated in Java")
     override fun doInBackground(vararg params: String?): String {
       var result = ""
       var urlConnection: HttpURLConnection? = null
@@ -179,6 +179,7 @@ class HomeFragment : Fragment() {
       return result
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPostExecute(result: String?) {
       super.onPostExecute(result)
       if (!result.isNullOrEmpty()) {
@@ -199,11 +200,11 @@ class HomeFragment : Fragment() {
       val month = calendar.get(Calendar.MONTH) + 1 // Month is zero-based
       val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-      var tempMin: Int = 0
-      var tempMax: Int = 0
-      var weat: String = ""
+      var tempMin = 0
+      var tempMax = 0
+      var weat = ""
 
-      val dateToday: String = year.toString() + "-0" + month.toString() + "-" + day.toString()
+      val dateToday = "$year-0$month-$day"
       val jsonObject = JSONObject(jsonString)
       val listArray = jsonObject.getJSONArray("list")
       for (i in 0 until listArray.length()) {
