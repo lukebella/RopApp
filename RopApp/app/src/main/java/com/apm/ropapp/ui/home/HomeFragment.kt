@@ -32,6 +32,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.Calendar
 import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
@@ -57,10 +58,9 @@ class HomeFragment : Fragment() {
     val locationTextView = binding.aCoruna
 
     //get city
-    retrieveCity(locationTextView) { city ->
-      Log.d("CITY", city)
+    retrieveCity(locationTextView) { lat, long ->
       //get weather
-      weatherForecast(city, weatherKey)
+      weatherForecast(lat, long, weatherKey)
     }
 
 
@@ -77,8 +77,8 @@ class HomeFragment : Fragment() {
     return root
   }
 
-  private fun weatherForecast(city: String, key: String) {
-      val url = "https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$key&units=metric"
+  private fun weatherForecast(lat: Double, longit: Double, key: String) {
+      val url ="https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$longit&appid=$key"
       FetchWeatherTask().execute(url)
   }
 
@@ -92,7 +92,7 @@ class HomeFragment : Fragment() {
     private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
   }
 
-  private fun retrieveCity(locationTextView: TextView, callback: (String) -> Unit) {
+  private fun retrieveCity(locationTextView: TextView, callback: (Double, Double) -> Unit) {
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
     var city: String = ""
 
@@ -131,7 +131,7 @@ class HomeFragment : Fragment() {
                 Log.d("HOME", "address")
                 city = addresses[0].locality
                 locationTextView.text = city
-                callback(city)
+                callback(location.latitude, location.longitude)
               } else {
                 Log.d("HOME", "no address")
                 locationTextView.text = "City not found"
@@ -144,7 +144,7 @@ class HomeFragment : Fragment() {
             Log.d("HOME", "address")
             city = addresses[0].locality
             locationTextView.text = city
-            callback(city)
+            callback(location.latitude, location.longitude)
           } else {
             Log.d("HOME", "no address")
             locationTextView.text = "City not found"
@@ -183,8 +183,9 @@ class HomeFragment : Fragment() {
       super.onPostExecute(result)
       if (!result.isNullOrEmpty()) {
         val weatherData = parseWeatherData(result)
-        val temperature: String = weatherData.tempMax.toString()+"/"+weatherData.tempMin.toString()+"°C"
-        binding.temperature.text =temperature
+        val temperature: String =
+          weatherData.tempMax.toString() + "/" + weatherData.tempMin.toString() + "°C"
+        binding.temperature.text = temperature
         // Do something with the weather data
         Log.d("WeatherForecast", weatherData.toString())
       } else {
@@ -193,11 +194,29 @@ class HomeFragment : Fragment() {
     }
 
     private fun parseWeatherData(jsonString: String): WeatherData {
+      val calendar = Calendar.getInstance()
+      val year = calendar.get(Calendar.YEAR)
+      val month = calendar.get(Calendar.MONTH) + 1 // Month is zero-based
+      val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+      var tempMin: Int = 0
+      var tempMax: Int = 0
+      var weat: String = ""
+
+      val dateToday: String = year.toString() + "-0" + month.toString() + "-" + day.toString()
       val jsonObject = JSONObject(jsonString)
-      val weat = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main")
-      val tempMin = jsonObject.getJSONObject("main").getDouble("temp_min").roundToInt()
-      val tempMax = jsonObject.getJSONObject("main").getDouble("temp_max").roundToInt()
+      val listArray = jsonObject.getJSONArray("list")
+      for (i in 0 until listArray.length()) {
+        val forecast = listArray.getJSONObject(i)
+
+        if (forecast.getString("dt_txt").startsWith(dateToday)) {
+          tempMin = forecast.getJSONObject("main").getDouble("temp_min").roundToInt() - 273
+          tempMax = forecast.getJSONObject("main").getDouble("temp_max").roundToInt() - 273
+          weat = forecast.getJSONArray("weather").getJSONObject(0).getString("main")
+        }
+      }
       return WeatherData(weat, tempMin, tempMax)
+
     }
   }
 
