@@ -151,13 +151,13 @@
             android:layout_marginBottom="2dp"
             android:text="Vie 23 Feb"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/textView9"
+            app:layout_constraintBottom_toTopOf="@+id/temperature"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="51dp"
@@ -292,7 +292,7 @@
         android:layout_marginTop="84dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="sans-serif-black"
-        android:text=""
+        android:text="Location"
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
