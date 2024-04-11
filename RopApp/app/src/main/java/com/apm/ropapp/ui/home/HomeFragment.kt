@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.MainActivity
@@ -21,12 +22,19 @@ import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.io.BufferedReader
+import java.io.File
+import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 import kotlin.math.roundToInt
@@ -52,9 +60,10 @@ class HomeFragment : Fragment() {
     _binding = FragmentHomeBinding.inflate(inflater, container, false)
     val root: View = binding.root
     val locationTextView = binding.aCoruna
+    val weatherDate = binding.weatherDate
 
     //get city
-    retrieveCity(locationTextView) { lat, long ->
+    retrieveCity(locationTextView, weatherDate) { lat, long ->
       //get weather
       weatherForecast(lat, long, weatherKey)
     }
@@ -91,7 +100,7 @@ class HomeFragment : Fragment() {
     private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
   }
 
-  private fun retrieveCity(locationTextView: TextView, callback: (Double, Double) -> Unit) {
+  private fun retrieveCity(locationTextView: TextView, dateTextView: TextView, callback: (Double, Double) -> Unit) {
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
     var city: String
 
@@ -179,6 +188,7 @@ class HomeFragment : Fragment() {
       return result
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @Deprecated("Deprecated in Java")
     override fun onPostExecute(result: String?) {
       super.onPostExecute(result)
@@ -187,6 +197,7 @@ class HomeFragment : Fragment() {
         val temperature: String =
           weatherData.tempMax.toString() + "/" + weatherData.tempMin.toString() + "°C"
         binding.temperature.text = temperature
+        binding.weatherDate.text = weatherData.data
         // Do something with the weather data
         Log.d("WeatherForecast", weatherData.toString())
       } else {
@@ -194,6 +205,7 @@ class HomeFragment : Fragment() {
       }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun parseWeatherData(jsonString: String): WeatherData {
       val calendar = Calendar.getInstance()
       val year = calendar.get(Calendar.YEAR)
@@ -204,7 +216,7 @@ class HomeFragment : Fragment() {
       var tempMax = 0
       var weat = ""
 
-      val dateToday = "$year-0$month-$day"
+      var dateToday = "$year-0$month-$day"
       val jsonObject = JSONObject(jsonString)
       val listArray = jsonObject.getJSONArray("list")
       for (i in 0 until listArray.length()) {
@@ -213,15 +225,39 @@ class HomeFragment : Fragment() {
         if (forecast.getString("dt_txt").startsWith(dateToday)) {
           tempMin = forecast.getJSONObject("main").getDouble("temp_min").roundToInt() - 273
           tempMax = forecast.getJSONObject("main").getDouble("temp_max").roundToInt() - 273
-          weat = forecast.getJSONArray("weather").getJSONObject(0).getString("main")
+          weat = forecast.getJSONArray("weather").getJSONObject(0).getString("icon")
         }
       }
-      return WeatherData(weat, tempMin, tempMax)
+      val imgurl = "https://openweathermap.org/img/wn/$weat@2x.png"
+      Log.d("URL", imgurl)
+      downloadImage(imgurl, "RopApp/app/src/main/res/drawable/imageweather.png")
+      val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+      val date = LocalDate.parse(dateToday, formatter)
+      dateToday = date.dayOfWeek.toString().substring(0,3)+" "+date.dayOfMonth+" "+date.month.toString().substring(0,3)
+      return WeatherData(weat, tempMin, tempMax, dateToday)
 
+    }
+
+    fun downloadImage(imageUrl: String, destinationFile: String) {
+      runBlocking {
+        launch(Dispatchers.IO) {
+          try {
+            val url = URL(imageUrl)
+            val connection = url.openConnection().getInputStream()
+            val file = File(destinationFile)
+            file.outputStream().use { output ->
+              connection.copyTo(output)
+            }
+            println("Image downloaded successfully to $destinationFile")
+          } catch (e: Exception) {
+            println("Error downloading image: ${e.message}")
+          }
+        }
+      }
     }
   }
 
-  data class WeatherData(val weat: String, val tempMin: Int, val tempMax: Int)
+  data class WeatherData(val weat: String, val tempMin: Int, val tempMax: Int, val data: String)
 
 }
 
