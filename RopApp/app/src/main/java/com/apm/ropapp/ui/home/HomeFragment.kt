@@ -28,7 +28,6 @@ import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.File
-import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -48,8 +47,6 @@ class HomeFragment : Fragment() {
   private val binding get() = _binding!!
   private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-  val weatherKey = "704f6e60299aa4605accec614d63a67b"
-
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
@@ -65,7 +62,7 @@ class HomeFragment : Fragment() {
     //get city
     retrieveCity(locationTextView, weatherDate) { lat, long ->
       //get weather
-      weatherForecast(lat, long, weatherKey)
+      weatherForecast(lat, long, R.string.weather_key.toString())
     }
 
 

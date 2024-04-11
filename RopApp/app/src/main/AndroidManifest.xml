@@ -45,7 +45,6 @@
             android:name=".SignUp"
             android:exported="true"
             android:label="SignUp">
-
         </activity>
 
         <activity
@@ -78,12 +77,6 @@
             android:label="AddDetails">
         </activity>
 
-        <!--<activity
-            android:name=".Calendar"
-            android:exported="true"
-            android:label="Calendar">
-        </activity> -->
-
         <activity
             android:name=".SelectItem"
             android:exported="true"
@@ -114,18 +107,21 @@
             android:label="EditProfile">
         </activity>
 
-        <!--<activity
-            android:name=".Profile"
-            android:exported="true"
-            android:label="Profile">
-        </activity>-->
-
         <activity
             android:name=".EditPassword"
             android:exported="true"
             android:label="EditPassword">
         </activity>
 
-    </application>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.apm.ropapp.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
+    </application>
 </manifest>
