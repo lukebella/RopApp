@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -39,57 +38,65 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton" />
+
     <ImageButton
         android:id="@+id/camara"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:src="@drawable/baseline_add_a_photo_24"
         app:layout_constraintEnd_toStartOf="@+id/galeria"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ImageButton
         android:id="@+id/galeria"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:src="@drawable/baseline_add_photo_alternate_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/camara"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/textViewCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:text="Camara"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="@+id/camara"
+        app:layout_constraintStart_toStartOf="@+id/camara"
         app:layout_constraintTop_toBottomOf="@+id/camara" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/textViewGaleria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-
+        android:layout_marginTop="10dp"
         android:text="Galeria"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView10"
+        app:layout_constraintEnd_toEndOf="@+id/galeria"
+        app:layout_constraintStart_toStartOf="@+id/galeria"
         app:layout_constraintTop_toBottomOf="@+id/galeria" />
 
 
-   <Button
-        android:id="@+id/temporada"
+    <Button
+        android:id="@+id/categoria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Temporada"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Categoría"
+        app:layout_constraintBottom_toTopOf="@+id/estilo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detalles" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewCamera" />
 
     <Button
         android:id="@+id/estilo"
@@ -112,15 +119,14 @@
         app:layout_constraintTop_toBottomOf="@+id/estilo" />
 
     <Button
-        android:id="@+id/categoria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:text="Categoría"
-        app:layout_constraintBottom_toTopOf="@+id/estilo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+         android:id="@+id/temporada"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Temporada"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/detalles" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

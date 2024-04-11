@@ -13,6 +13,7 @@ import androidx.core.content.FileProvider
 import com.apm.ropapp.databinding.AddclothesBinding
 import java.io.File
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class AddClothes : AppCompatActivity() {
@@ -42,7 +43,8 @@ class AddClothes : AppCompatActivity() {
         val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                Log.d("Camara", imageUri.toString())
+                Log.d("Camara", "Captured URI: $imageUri")
+                binding.imageView.setImageURI(imageUri)
             }
         }
 
@@ -57,6 +59,7 @@ class AddClothes : AppCompatActivity() {
             // photo picker.
             if (uri != null) {
                 Log.d("PhotoPicker", "Selected URI: $uri")
+                binding.imageView.setImageURI(uri)
             } else {
                 Log.d("PhotoPicker", "No media selected")
             }
@@ -92,8 +95,8 @@ class AddClothes : AppCompatActivity() {
         val dir = File("${externalMediaDirs.first()}/Photos")
         if (!dir.exists()) dir.mkdirs()
         val image = File(dir, //or filesDir
-            SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.US)
-                .format(System.currentTimeMillis()) + ".png")
+            SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US)
+                .format(Date()) + ".png")
         return FileProvider.getUriForFile(this, "com.apm.ropapp.FileProvider", image)
     }
 }
