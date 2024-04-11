@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.security.MessageDigest
 
 class SignUp : AppCompatActivity() {
 
@@ -71,7 +72,7 @@ class SignUp : AppCompatActivity() {
 
                         val uid = firebaseAuth.currentUser?.uid
                         if (uid != null && selectedGender != null){
-                            writeNewUser(uid,username,email,password,birthdate, selectedGender!!)
+                            writeNewUser(uid,username,email,birthdate, selectedGender!!)
                         }else{
                             Toast.makeText(this, it.exception.toString(),Toast.LENGTH_SHORT).show()
                         }
@@ -93,11 +94,10 @@ class SignUp : AppCompatActivity() {
 
     }
 
-    private fun writeNewUser(userId: String, username: String, email: String, password: String, birthdate: String, selectedGender: String) {
+    private fun writeNewUser(userId: String, username: String, email: String, birthdate: String, selectedGender: String) {
         val userData = HashMap<String, Any>()
         userData["username"] = username
         userData["email"] = email
-        userData["password"] = password
         userData["birthdate"] = birthdate
         userData["gender"] = selectedGender
 

@@ -13,6 +13,10 @@
     <string name="plus">+</string>
     <string name="usuario">\@Usuario</string>
 
+    <string name="facebook_application_id">1539004846661058</string>
+    <string name="fb_login_protocol_scheme">fb1539004846661058</string>
+    <string name="facebook_client_token">54259a471de5bfd3b437918c6421ad02</string>
+
     <!-- Definición de valores de Dropdown de Género en la vista de crear cuenta -->
     <string-array name="genero_options">
         <!-- Este será el marcador de posición -->
@@ -48,9 +52,7 @@
     </string-array>
 
 
-    <string name="facebook_app_id">1539004846661058</string>
-    <string name="fb_login_protocol_scheme">fb1234</string>
-    <string name="facebook_client_token">54259a471de5bfd3b437918c6421ad02</string>
+
 
 
 

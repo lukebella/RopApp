@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.apm.ropapp">
 
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
 
+
     <application
+
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -25,13 +29,6 @@
             android:label="Login">
             <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
             <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
-
-        </activity>
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -39,9 +36,16 @@
         </activity>
 
         <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="MainActivity">
+        </activity>
+
+        <activity
             android:name=".SignUp"
             android:exported="true"
             android:label="SignUp">
+
         </activity>
 
         <activity
@@ -74,6 +78,12 @@
             android:label="AddDetails">
         </activity>
 
+        <!--<activity
+            android:name=".Calendar"
+            android:exported="true"
+            android:label="Calendar">
+        </activity> -->
+
         <activity
             android:name=".SelectItem"
             android:exported="true"
@@ -104,21 +114,17 @@
             android:label="EditProfile">
         </activity>
 
+        <!--<activity
+            android:name=".Profile"
+            android:exported="true"
+            android:label="Profile">
+        </activity>-->
+
         <activity
             android:name=".EditPassword"
             android:exported="true"
             android:label="EditPassword">
         </activity>
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.apm.ropapp.FileProvider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
 
     </application>
 

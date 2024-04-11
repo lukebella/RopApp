@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="374dp"
+        android:layout_marginTop="350dp"
         android:backgroundTint="@color/gray"
         android:text="Iniciar sesion"
         app:layout_constraintTop_toTopOf="parent"
@@ -65,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="422dp"
+        android:layout_marginTop="400dp"
         android:backgroundTint="@color/gray"
         android:text="Crear Cuenta"
         app:layout_constraintTop_toTopOf="parent"
@@ -76,7 +76,7 @@
         android:id="@+id/textOR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="475dp"
+        android:layout_marginTop="450dp"
         android:foregroundGravity="center_vertical"
         android:text="OR"
         android:textSize="20sp"
@@ -90,38 +90,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/loginXbutton"
+        android:layout_marginTop="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textOR"
+        app:layout_constraintTop_toBottomOf="@+id/loginGooglebutton"
         app:strokeColor="#858484" />
-
-    <Button
-        android:id="@+id/loginXbutton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:backgroundTint="@color/gray"
-        android:text="Login with X"
-        app:layout_constraintBottom_toTopOf="@+id/loginGooglebutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginFacebookbutton" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/loginGooglebutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="60dp"
         android:backgroundTint="@color/gray"
         android:text="Login with google"
         app:buttonSize="wide"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginXbutton" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

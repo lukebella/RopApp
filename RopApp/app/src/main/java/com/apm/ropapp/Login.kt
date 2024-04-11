@@ -7,9 +7,15 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.apm.ropapp.databinding.LoginBinding
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
@@ -17,11 +23,14 @@ import com.google.firebase.auth.GoogleAuthProvider
 class Login : AppCompatActivity() {
     private lateinit var binding: LoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
+    private val callbackManager= CallbackManager.Factory.create()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = LoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         firebaseAuth= FirebaseAuth.getInstance()
+
 
         binding.loginButton.setOnClickListener() {
             Log.d("Login", "Se hizo clic en Iniciar sesión")
@@ -54,16 +63,47 @@ class Login : AppCompatActivity() {
         binding.loginFacebookbutton.setOnClickListener() {
             Log.d("Login", "Se hizo clic en Iniciar sesión con Facebook")
 
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
+            Log.d("1", "pasa por aqui")
 
+            LoginManager.getInstance().registerCallback(callbackManager,
+                object:FacebookCallback<LoginResult>{
+
+                    override fun onSuccess(result: LoginResult) {
+                        result?.let {
+                            val token = it.accessToken
+                            val credential = FacebookAuthProvider.getCredential(token.token)
+                            Log.d("2", "pasa por aqui")
+                            firebaseAuth.signInWithCredential(credential)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        val user = firebaseAuth.currentUser
+                                        Toast.makeText(this@Login, "Signed in as ", Toast.LENGTH_SHORT).show()
+                                        val intent = Intent(this@Login, MainActivity::class.java)
+                                        startActivity(intent)
+                                    } else {
+                                        Log.d("Login", "Authentication failed")
+                                        Toast.makeText(this@Login, "Authentication failed", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                        }
+                    }
+
+                    override fun onCancel() {
+                        Log.d("Login", "Authentication cancelled")
+                        Toast.makeText(this@Login, "Authentication cancelled", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onError(error: FacebookException) {
+                        Log.d("Login", "Authentication failed")
+                        Toast.makeText(this@Login, "Authentication failed", Toast.LENGTH_SHORT).show()
+                    }
+                })
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        binding.loginXbutton.setOnClickListener() {
-            Log.d("Login", "Se hizo clic en Iniciar sesión con X")
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
+
 
 
         binding.loginGooglebutton.setOnClickListener() {
@@ -85,6 +125,8 @@ class Login : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 1) {
@@ -107,7 +149,6 @@ class Login : AppCompatActivity() {
                     Toast.makeText(this, "Signed in as ${user?.displayName}", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
-                    finish()
                 } else {
                     Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
@@ -116,3 +157,4 @@ class Login : AppCompatActivity() {
 
 
 }
+
