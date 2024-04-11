@@ -235,7 +235,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun downloadImage(imageUrl: String, destinationFile: String) {
+    private fun downloadImage(imageUrl: String, destinationFile: String) {
       runBlocking {
         launch(Dispatchers.IO) {
           try {

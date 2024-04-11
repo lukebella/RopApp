@@ -11,6 +11,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.apm.ropapp.databinding.AddclothesBinding
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -19,13 +21,16 @@ import java.util.Locale
 class AddClothes : AppCompatActivity() {
 
     private lateinit var binding: AddclothesBinding
+    private lateinit var storage: StorageReference
     private lateinit var imageUri: Uri
+    private var imageUriUpload: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = AddclothesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        storage = FirebaseStorage.getInstance("gs://ropapp-743fd.appspot.com").reference
 
         binding.backButton.setOnClickListener {
             intent = Intent(this, MainActivity::class.java)
@@ -34,32 +39,50 @@ class AddClothes : AppCompatActivity() {
         }
 
         binding.guardar.setOnClickListener {
+            binding.guardar.isSelected = true
+
+            if (imageUriUpload != null) {
+                val path = imageUriUpload.toString()
+                val filename = path.substring(path.lastIndexOf("IMG"))
+                val ref = storage.child("Photos/$filename")
+                val uploadTask = ref.putFile(imageUriUpload!!)
+
+                // Register observers to listen for when the download is done or if it fails
+                uploadTask.addOnFailureListener {
+                    // Handle unsuccessful uploads
+                    Log.d("AddClothes","Upload Failed: ${it.stackTrace}")
+                }.addOnSuccessListener {
+                    // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                    Log.d("AddClothes","Upload Success: $filename")
+                }
+            }
             intent = Intent(this, MainActivity::class.java)
             Log.d("AddClothes","Dress Added")
             startActivity(intent)
         }
 
-        imageUri = createImageUri()
         val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                Log.d("Camara", "Captured URI: $imageUri")
-                binding.imageView.setImageURI(imageUri)
+                imageUriUpload = imageUri
+                Log.d("Camara", "Captured URI: $imageUriUpload")
+                binding.imageView.setImageURI(imageUriUpload)
             }
         }
 
         binding.camara.setOnClickListener {
+            imageUri = createImageUri()
             intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
             resultLauncher.launch(intent)
         }
 
         val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            // Callback is invoked after the user selects a media item or closes the
-            // photo picker.
+            // Callback is invoked after the user selects a media item or closes the photo picker.
             if (uri != null) {
-                Log.d("PhotoPicker", "Selected URI: $uri")
-                binding.imageView.setImageURI(uri)
+                imageUriUpload = uri
+                Log.d("PhotoPicker", "Selected URI: $imageUriUpload")
+                binding.imageView.setImageURI(imageUriUpload)
             } else {
                 Log.d("PhotoPicker", "No media selected")
             }
@@ -95,7 +118,7 @@ class AddClothes : AppCompatActivity() {
         val dir = File("${externalMediaDirs.first()}/Photos")
         if (!dir.exists()) dir.mkdirs()
         val image = File(dir, //or filesDir
-            SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US)
+            "IMG_" + SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US)
                 .format(Date()) + ".png")
         return FileProvider.getUriForFile(this, "com.apm.ropapp.FileProvider", image)
     }

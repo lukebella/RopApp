@@ -33,12 +33,6 @@ class ClosetFragment : Fragment() {
         _binding = FragmentClosetBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        val closetViewModel = ViewModelProvider(this)[ClosetViewModel::class.java]
-//        val textView: TextView = binding.textView1
-//        closetViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
-
         buttonSelected = binding.button1
         buttonSelected.isSelected = true
 
