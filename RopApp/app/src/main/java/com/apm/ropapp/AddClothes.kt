@@ -30,7 +30,7 @@ class AddClothes : AppCompatActivity() {
 
         binding = AddclothesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        storage = FirebaseStorage.getInstance("gs://ropapp-743fd.appspot.com").reference
+        storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
 
         binding.backButton.setOnClickListener {
             intent = Intent(this, MainActivity::class.java)

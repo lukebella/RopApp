@@ -10,9 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.SignUpBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import java.security.MessageDigest
+import com.google.firebase.database.FirebaseDatabase
 
 class SignUp : AppCompatActivity() {
 
@@ -27,7 +25,7 @@ class SignUp : AppCompatActivity() {
         binding = SignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
-        database = Firebase.database.reference
+        database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
 
         // Crear un ArrayAdapter utilizando el array de opciones y un diseño predefinido para los elementos de lista
         ArrayAdapter.createFromResource(
