@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,10 +9,11 @@
         android:layout_width="269dp"
         android:layout_height="239dp"
         android:layout_marginEnd="384dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:scaleType="fitCenter"
         android:src="@drawable/user_icon"
         app:layout_constraintEnd_toEndOf="@+id/editTextText3"
-        tools:layout_editor_absoluteY="101dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/cancel_button2"
@@ -43,6 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        android:textColor="@color/white"
         android:text="Change Password"
         app:layout_constraintBottom_toTopOf="@+id/save_button2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +90,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
-        android:text="Save"
+        android:background="@color/white"
+        android:textColor="@color/white"
+        android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/password_change"
         app:layout_constraintHorizontal_bias="0.351"

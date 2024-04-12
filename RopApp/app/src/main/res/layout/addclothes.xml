@@ -4,30 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/guardar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:background="@drawable/button_default"
-        android:text="Guardar"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="28dp"
-        android:text="Añadir Prenda"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/backButton"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
@@ -37,6 +13,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_revert" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Añadir Prenda"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/guardar"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/guardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:background="@drawable/button_default_click"
+        android:text="Guardar"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -93,7 +93,9 @@
         android:id="@+id/categoria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/yellow"
         android:text="Categoría"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/estilo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +105,9 @@
         android:id="@+id/estilo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/yellow"
         android:text="Estilo"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/detalles"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -113,21 +117,25 @@
         android:id="@+id/detalles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/yellow"
         android:text="Detalles"
+        app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@+id/temporada"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/estilo" />
 
     <Button
-         android:id="@+id/temporada"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:text="Temporada"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toBottomOf="@+id/detalles" />
+        android:id="@+id/temporada"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/yellow"
+        android:text="Temporada"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detalles" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
