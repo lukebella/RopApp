@@ -100,6 +100,7 @@ class SignUp : AppCompatActivity() {
         userData["gender"] = selectedGender
 
         database.child("users").child(userId).setValue(userData)
+        database.push()
     }
 
 }

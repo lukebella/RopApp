@@ -2,10 +2,10 @@ package com.apm.ropapp
 
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.LoginBinding
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -17,12 +17,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
+import com.google.firebase.database.ValueEventListener
 
 
 class Login : AppCompatActivity() {
     private lateinit var binding: LoginBinding
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var database: DatabaseReference
     private val callbackManager= CallbackManager.Factory.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +38,7 @@ class Login : AppCompatActivity() {
         binding = LoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         firebaseAuth= FirebaseAuth.getInstance()
-
+        database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
 
         binding.loginButton.setOnClickListener() {
             Log.d("Login", "Se hizo clic en Iniciar sesión")
@@ -141,12 +149,14 @@ class Login : AppCompatActivity() {
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
+
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
                     Toast.makeText(this, "Signed in as ${user?.displayName}", Toast.LENGTH_SHORT).show()
+                    writeNewUser(user)
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 } else {
@@ -155,6 +165,32 @@ class Login : AppCompatActivity() {
             }
     }
 
+    private fun writeNewUser(user: FirebaseUser?) {
+        val userData = HashMap<String, Any>()
+        val userId = user?.uid.toString()
 
+        val queryToGetData: Query = database.child("Biodata")
+            .orderByChild("Email").equalTo("MyUser@email.com")
+        queryToGetData.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    userData["username"] = user?.displayName.toString()
+                    userData["email"] = user?.email.toString()
+
+                    database.child("users").child(userId).setValue(userData)
+                    database.push()
+
+                    //Mandar a página intermedia para obtener más datos que no podemos
+                    //obtener con GMail
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+
+
+
+
+    }
 }
 
