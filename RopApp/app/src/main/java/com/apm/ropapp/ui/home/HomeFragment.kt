@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
     //get city
     retrieveCity(locationTextView, weatherDate) { lat, long ->
       //get weather
-      weatherForecast(lat, long, R.string.weather_key.toString())
+      weatherForecast(lat, long, getString(R.string.weather_key))
     }
 
 
