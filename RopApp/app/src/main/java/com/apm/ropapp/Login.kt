@@ -78,7 +78,7 @@ class Login : AppCompatActivity() {
                 object:FacebookCallback<LoginResult>{
 
                     override fun onSuccess(result: LoginResult) {
-                        result?.let {
+                        result.let {
                             val token = it.accessToken
                             val credential = FacebookAuthProvider.getCredential(token.token)
                             Log.d("2", "pasa por aqui")
@@ -178,7 +178,6 @@ class Login : AppCompatActivity() {
                     userData["email"] = user?.email.toString()
 
                     database.child("users").child(userId).setValue(userData)
-                    database.push()
 
                     //Mandar a página intermedia para obtener más datos que no podemos
                     //obtener con GMail
