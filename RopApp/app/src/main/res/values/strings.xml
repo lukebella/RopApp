@@ -17,6 +17,8 @@
     <string name="fb_login_protocol_scheme">fb1539004846661058</string>
     <string name="facebook_client_token">54259a471de5bfd3b437918c6421ad02</string>
     <string name="weather_key">704f6e60299aa4605accec614d63a67b</string>
+    <string name="database_url">https://ropapp-743fd-default-rtdb.europe-west1.firebasedatabase.app</string>
+    <string name="storage_url">gs://ropapp-743fd.appspot.com</string>
 
     <!-- Definición de valores de Dropdown de Género en la vista de crear cuenta -->
     <string-array name="genero_options">

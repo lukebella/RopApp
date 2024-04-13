@@ -11,16 +11,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.apm.ropapp.databinding.AddclothesBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.UUID
 
 class AddClothes : AppCompatActivity() {
 
     private lateinit var binding: AddclothesBinding
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
     private lateinit var imageUri: Uri
     private var imageUriUpload: Uri? = null
@@ -30,7 +33,9 @@ class AddClothes : AppCompatActivity() {
 
         binding = AddclothesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        storage = FirebaseStorage.getInstance("gs://ropapp-743fd.appspot.com").reference
+        firebaseAuth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
+        storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
 
         binding.backButton.setOnClickListener {
             intent = Intent(this, MainActivity::class.java)
@@ -41,21 +46,20 @@ class AddClothes : AppCompatActivity() {
         binding.guardar.setOnClickListener {
             binding.guardar.isSelected = true
 
-            if (imageUriUpload != null) {
-                val path = imageUriUpload.toString()
-                val filename = path.substring(path.lastIndexOf("IMG"))
-                val ref = storage.child("Photos/$filename")
-                val uploadTask = ref.putFile(imageUriUpload!!)
+            val uploadData = HashMap<String, Any>()
+            val details = HashMap<String, Any>()
+            uploadData["category"] = "Top"
+            uploadData["style"] = "Vintage"
+            details["brand"] = "M&M"
+            details["state"] = "Prestado"
+            details["price"] = "20 €"
+            details["size"] = "L"
+            uploadData["details"] = details
+            uploadData["season"] = listOf("Spring", "Summer")
+            uploadData["photo"] = uploadPhoto()
 
-                // Register observers to listen for when the download is done or if it fails
-                uploadTask.addOnFailureListener {
-                    // Handle unsuccessful uploads
-                    Log.d("AddClothes","Upload Failed: ${it.stackTrace}")
-                }.addOnSuccessListener {
-                    // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                    Log.d("AddClothes","Upload Success: $filename")
-                }
-            }
+            uploadNewClothes(uploadData)
+
             intent = Intent(this, MainActivity::class.java)
             Log.d("AddClothes","Dress Added")
             startActivity(intent)
@@ -115,11 +119,40 @@ class AddClothes : AppCompatActivity() {
     }
 
     private fun createImageUri() : Uri {
-        val dir = File("${externalMediaDirs.first()}/Photos")
+        //or filesDir -> carpeta interna
+        //or externalMediaDirs -> carpeta media
+        //or getExternalFilesDir(null) -> carpeta data/files
+        //or getExternalFilesDir(Environment.DIRECTORY_PICTURES)} -> carpeta data/files/Pictures
+        val dir = File("${getExternalFilesDir(null)}/Photos")
         if (!dir.exists()) dir.mkdirs()
-        val image = File(dir, //or filesDir
-            "IMG_" + SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US)
-                .format(Date()) + ".png")
+        val image = File(dir, "IMG_" + UUID.randomUUID() + ".png")
         return FileProvider.getUriForFile(this, "com.apm.ropapp.FileProvider", image)
+    }
+
+    private fun uploadPhoto(): String {
+        if (imageUriUpload != null) {
+            val path = imageUriUpload.toString()
+            val filename = path.substring(path.lastIndexOf("IMG"))
+            val ref = storage.child("Photos/$filename")
+            val uploadTask = ref.putFile(imageUriUpload!!)
+
+            // Register observers to listen for when the download is done or if it fails
+            uploadTask.addOnFailureListener {
+                // Handle unsuccessful uploads
+                Log.d("AddClothes","Upload Failed: ${it.stackTrace}")
+            }.addOnSuccessListener {
+                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                Log.d("AddClothes","Upload Success: $filename")
+
+            }
+            return filename
+        }
+        return TODO("Provide the return value")
+    }
+
+    private fun uploadNewClothes(data: HashMap<String, Any>) {
+        if (firebaseAuth.currentUser != null)
+            database.child("clothes").child(firebaseAuth.currentUser!!.uid)
+                .child(UUID.randomUUID().toString()).setValue(data)
     }
 }

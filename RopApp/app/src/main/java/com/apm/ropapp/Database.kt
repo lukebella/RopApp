@@ -50,8 +50,8 @@ class Database : AppCompatActivity() {
         Firebase.appCheck.installAppCheckProviderFactory(
             PlayIntegrityAppCheckProviderFactory.getInstance(),
         )
-        database = FirebaseDatabase.getInstance("https://ropapp-743fd-default-rtdb.europe-west1.firebasedatabase.app").reference
-        storage = FirebaseStorage.getInstance("gs://ropapp-743fd.appspot.com").reference
+        database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
+        storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
         imageView = binding.imgView
         setUpActions()
         database.child("ruta/data").addValueEventListener(object : ValueEventListener {
