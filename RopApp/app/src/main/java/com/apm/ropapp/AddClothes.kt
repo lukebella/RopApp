@@ -26,7 +26,7 @@ class AddClothes : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
     private lateinit var imageUri: Uri
-    private var imageUriUpload: Uri? = null
+    private lateinit var fileNameUpload: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +56,11 @@ class AddClothes : AppCompatActivity() {
             details["size"] = "L"
             uploadData["details"] = details
             uploadData["season"] = listOf("Spring", "Summer")
-            uploadData["photo"] = uploadPhoto()
 
+            if (this::fileNameUpload.isInitialized) {
+                uploadData["photo"] = fileNameUpload
+                uploadPhoto()
+            }
             uploadNewClothes(uploadData)
 
             intent = Intent(this, MainActivity::class.java)
@@ -68,10 +71,12 @@ class AddClothes : AppCompatActivity() {
         val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 // There are no request codes
-                imageUriUpload = imageUri
-                Log.d("Camara", "Captured URI: $imageUriUpload")
-                binding.imageView.setImageURI(imageUriUpload)
+                Log.d("Camara", "Captured URI: $imageUri")
+                binding.imageView.setImageURI(imageUri)
+                fileNameUpload = imageUri.toString().substring(
+                    imageUri.toString().lastIndexOf("IMG"))
             }
+            else Log.d("Camara", "No media captured")
         }
 
         binding.camara.setOnClickListener {
@@ -84,12 +89,12 @@ class AddClothes : AppCompatActivity() {
         val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             // Callback is invoked after the user selects a media item or closes the photo picker.
             if (uri != null) {
-                imageUriUpload = uri
-                Log.d("PhotoPicker", "Selected URI: $imageUriUpload")
-                binding.imageView.setImageURI(imageUriUpload)
-            } else {
-                Log.d("PhotoPicker", "No media selected")
+                imageUri = uri
+                Log.d("PhotoPicker", "Selected URI: $imageUri")
+                binding.imageView.setImageURI(imageUri)
+                fileNameUpload = generateFileName()
             }
+            else Log.d("PhotoPicker", "No media selected")
         }
 
         binding.galeria.setOnClickListener {
@@ -118,41 +123,45 @@ class AddClothes : AppCompatActivity() {
         }
     }
 
-    private fun createImageUri() : Uri {
+    private fun generateFileName(): String {
+        return "IMG_" + UUID.randomUUID() + ".png"
+    }
+
+    private fun createImageUri(): Uri {
         //or filesDir -> carpeta interna
         //or externalMediaDirs -> carpeta media
         //or getExternalFilesDir(null) -> carpeta data/files
         //or getExternalFilesDir(Environment.DIRECTORY_PICTURES)} -> carpeta data/files/Pictures
         val dir = File("${getExternalFilesDir(null)}/Photos")
         if (!dir.exists()) dir.mkdirs()
-        val image = File(dir, "IMG_" + UUID.randomUUID() + ".png")
-        return FileProvider.getUriForFile(this, "com.apm.ropapp.FileProvider", image)
+        val imageFile = File(dir, generateFileName())
+        return FileProvider.getUriForFile(this, "com.apm.ropapp.FileProvider", imageFile)
     }
 
-    private fun uploadPhoto(): String {
-        if (imageUriUpload != null) {
-            val path = imageUriUpload.toString()
-            val filename = path.substring(path.lastIndexOf("IMG"))
-            val ref = storage.child("Photos/$filename")
-            val uploadTask = ref.putFile(imageUriUpload!!)
-
-            // Register observers to listen for when the download is done or if it fails
-            uploadTask.addOnFailureListener {
-                // Handle unsuccessful uploads
-                Log.d("AddClothes","Upload Failed: ${it.stackTrace}")
-            }.addOnSuccessListener {
-                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                Log.d("AddClothes","Upload Success: $filename")
-
-            }
-            return filename
+    private fun uploadPhoto() {
+        val uploadTask = storage.child("Photos/$fileNameUpload").putFile(imageUri)
+        // Register observers to listen for when the upload is done or if it fails
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+            Log.d("PhotoUpdate","Upload Failed: ${it.stackTrace}")
+        }.addOnSuccessListener {
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            Log.d("PhotoUpdate","Upload Success: $fileNameUpload")
         }
-        return TODO("Provide the return value")
     }
 
     private fun uploadNewClothes(data: HashMap<String, Any>) {
-        if (firebaseAuth.currentUser != null)
-            database.child("clothes").child(firebaseAuth.currentUser!!.uid)
+        if (firebaseAuth.currentUser != null) {
+            val uploadTask = database.child("clothes").child(firebaseAuth.currentUser!!.uid)
                 .child(UUID.randomUUID().toString()).setValue(data)
+            // Register observers to listen for when the upload is done or if it fails
+            uploadTask.addOnFailureListener {
+                // Handle unsuccessful uploads
+                Log.d("DatabaseUpdate","Upload Failed: ${it.stackTrace}")
+            }.addOnSuccessListener {
+                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                Log.d("DatabaseUpdate","Upload Success: $data")
+            }
+        }
     }
 }
