@@ -2,9 +2,13 @@ package com.apm.ropapp.ui.home
 
 //import com.google.android.gms.maps.model.LatLng
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Geocoder
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +21,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.apm.ropapp.MainActivity
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
@@ -28,6 +33,7 @@ import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.File
+import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -74,10 +80,15 @@ class HomeFragment : Fragment() {
     }
     val meGusta: Button = binding.meGusta
     meGusta.setOnClickListener {
-      Log.d("HomeFragment", "Continue to Fragment Calendar")
-      val intent = Intent(it.context, MainActivity::class.java)
-      intent.putExtra("fragment", R.id.navigation_calendar)
-      startActivity(intent)
+      if (isAdded) {
+        /*Log.d("HomeFragment", "Continue to Fragment Calendar")
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.putExtra("fragment", R.id.navigation_calendar)
+        startActivity(intent)*/
+        findNavController().navigate(R.id.navigation_calendar)
+      } else {
+        Log.e("HomeFragment", "Fragment not attached to activity")
+      }
     }
     return root
   }
@@ -102,16 +113,16 @@ class HomeFragment : Fragment() {
     var city: String
 
     Log.d("Home", "after fusedLocationClient instance")
-    if (ActivityCompat.checkSelfPermission(
+    if ((ActivityCompat.checkSelfPermission(
         requireContext(),
         Manifest.permission.ACCESS_COARSE_LOCATION
-      ) != PackageManager.PERMISSION_GRANTED
-    ) {
-      // Request coarse location permission if not granted
+      ) != PackageManager.PERMISSION_GRANTED))
+    {
+      //Request coarse location permission if not granted
       Log.d("Home", "No permission")
       ActivityCompat.requestPermissions(
         requireActivity(),
-        arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+        arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE),
         LOCATION_PERMISSION_REQUEST_CODE
       )
     }
@@ -202,6 +213,7 @@ class HomeFragment : Fragment() {
       }
     }
 
+    @SuppressLint("DiscouragedApi")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun parseWeatherData(jsonString: String): WeatherData {
       val calendar = Calendar.getInstance()
@@ -225,9 +237,13 @@ class HomeFragment : Fragment() {
           weat = forecast.getJSONArray("weather").getJSONObject(0).getString("icon")
         }
       }
-      val imgurl = "https://openweathermap.org/img/wn/$weat@2x.png"
+     /* val imgurl = "https://openweathermap.org/img/wn/$weat@2x.png"
       Log.d("URL", imgurl)
-      downloadImage(imgurl, "RopApp/app/src/main/res/drawable/imageweather.png")
+      downloadImage(imgurl, "/data/local/tmp")*/
+      val resourceName = "w"+weat+"_2x" // Replace with your resource name
+      val resourceId = resources.getIdentifier(resourceName, "drawable", requireContext().packageName)
+      binding.weatImg.setImageResource(resourceId)
+      Log.d("HOME", "Changed weather image")
       val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
       val date = LocalDate.parse(dateToday, formatter)
       dateToday = date.dayOfWeek.toString().substring(0,3)+" "+date.dayOfMonth+" "+date.month.toString().substring(0,3)
@@ -235,23 +251,6 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun downloadImage(imageUrl: String, destinationFile: String) {
-      runBlocking {
-        launch(Dispatchers.IO) {
-          try {
-            val url = URL(imageUrl)
-            val connection = url.openConnection().getInputStream()
-            val file = File(destinationFile)
-            file.outputStream().use { output ->
-              connection.copyTo(output)
-            }
-            println("Image downloaded successfully to $destinationFile")
-          } catch (e: Exception) {
-            println("Error downloading image: ${e.message}")
-          }
-        }
-      }
-    }
   }
 
   data class WeatherData(val weat: String, val tempMin: Int, val tempMax: Int, val data: String)

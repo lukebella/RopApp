@@ -171,15 +171,15 @@
             app:layout_constraintTop_toBottomOf="@+id/weatherDate" />
 
         <ImageView
-            android:id="@+id/imageView7"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:id="@+id/weatImg"
+            android:layout_width="52dp"
+            android:layout_height="53dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.148"
+            app:layout_constraintHorizontal_bias="0.084"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/imageweather" />
+            app:srcCompat="@drawable/w01d_2x" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -265,7 +265,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.366"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/w"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/placeholder" />
 
