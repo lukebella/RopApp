@@ -55,7 +55,15 @@ class EditProfile : AppCompatActivity() {
         }
         binding.saveButton2.setOnClickListener {
             Log.d("EditProfile", "Edit Profile")
-            intent = Intent(this, MainActivity::class.java) // Maybe editOutfit?
+
+            // Get the updated username from the EditText
+            val updatedUsername = binding.editUsername.text.toString()
+
+            // Update the username in the Firebase database
+            databaseReference.child("username").setValue(updatedUsername)
+
+            // Navigate back to MainActivity
+            intent = Intent(this, MainActivity::class.java)
             intent.putExtra("fragment", R.id.navigation_user)
             startActivity(intent)
         }

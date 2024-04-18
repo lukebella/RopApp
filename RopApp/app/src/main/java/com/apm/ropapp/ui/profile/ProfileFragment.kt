@@ -12,6 +12,10 @@ import com.apm.ropapp.EditProfile
 import com.apm.ropapp.Login
 import com.apm.ropapp.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class ProfileFragment : Fragment(){
 
@@ -28,6 +32,23 @@ class ProfileFragment : Fragment(){
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            val databaseReference = FirebaseDatabase.getInstance().reference.child("users").child(userId)
+            databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        val username = dataSnapshot.child("username").getValue(String::class.java)
+                        binding.textView6.text = username
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d("ProfileFragment", "Failed to get user data.", databaseError.toException())
+                }
+            })
+        }
 
         binding.configButton.setOnClickListener {
             val intent = Intent(requireContext(), EditProfile::class.java)
