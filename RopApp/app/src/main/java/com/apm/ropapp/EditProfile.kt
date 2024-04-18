@@ -3,7 +3,6 @@ package com.apm.ropapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.EditprofileBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -68,29 +67,29 @@ class EditProfile : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.editAddress.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                val address = binding.editAddress.text.toString()
-                Log.d("EditProfile", "Address: $address")
-                // You can now use the address variable
-            }
-        }
+//        binding.editAddress.setOnFocusChangeListener { v, hasFocus ->
+//            if (!hasFocus) {
+//                val address = binding.editAddress.text.toString()
+//                Log.d("EditProfile", "Address: $address")
+//                // You can now use the address variable
+//            }
+//        }
 
-        binding.editPhone.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                val phone = binding.editPhone.text.toString()
-                Log.d("EditProfile", "Phone: $phone")
-                // You can now use the phone variable
-            }
-        }
+//        binding.editPhone.setOnFocusChangeListener { v, hasFocus ->
+//            if (!hasFocus) {
+//                val phone = binding.editPhone.text.toString()
+//                Log.d("EditProfile", "Phone: $phone")
+//                // You can now use the phone variable
+//            }
+//        }
 
-        binding.editGender.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                val email = binding.editGender.text.toString()
-                Log.d("EditProfile", "Email: $email")
-                // You can now use the email variable
-            }
-        }
+//        binding.editMail.setOnFocusChangeListener { v, hasFocus ->
+//            if (!hasFocus) {
+//                val email = binding.editMail.text.toString()
+//                Log.d("EditProfile", "Email: $email")
+//                // You can now use the email variable
+//            }
+//        }
 
         binding.passwordChange.setOnClickListener() {
             intent = Intent(this, EditPassword::class.java)

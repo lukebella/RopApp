@@ -58,7 +58,7 @@
         android:layout_marginTop="36dp"
         android:background="@color/white"
         android:textColor="@color/white"
-        android:text="Información Figura"
+        android:text="Información Cuenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stat_button" />

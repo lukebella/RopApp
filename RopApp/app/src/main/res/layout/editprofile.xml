@@ -28,16 +28,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@android:drawable/ic_delete" />
 
+    <!--        app:layout_constraintBottom_toTopOf="@+id/edit_mail"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/edit_mail" />-->
+
     <EditText
         android:id="@+id/editUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="224dp"
         android:ems="10"
         android:inputType="text"
         android:text="@string/usuario"
-        app:layout_constraintBottom_toTopOf="@+id/editGender"
-        app:layout_constraintEnd_toEndOf="@+id/editGender" />
+        app:layout_constraintBottom_toTopOf="@+id/password_change"
+        app:layout_constraintEnd_toEndOf="@+id/password_change" />
 
     <Button
         android:id="@+id/password_change"
@@ -51,38 +55,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/editGender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:ems="10"
-        android:text="Email@something.com"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/edit_phone"
-        app:layout_constraintEnd_toEndOf="@+id/edit_phone" />
+<!--    <EditText-->
+<!--        android:id="@+id/edit_mail"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:ems="10"-->
+<!--        android:text="Email@something.com"-->
+<!--        android:inputType="textEmailAddress"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/edit_phone"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/edit_phone" />-->
 
-    <EditText
-        android:id="@+id/edit_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="21dp"
-        android:ems="10"
-        android:inputType="phone"
-        android:text="123456789"
-        app:layout_constraintBottom_toTopOf="@+id/edit_address"
-        app:layout_constraintEnd_toEndOf="@+id/edit_address" />
+<!--    <EditText-->
+<!--        android:id="@+id/edit_phone"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="21dp"-->
+<!--        android:ems="10"-->
+<!--        android:inputType="phone"-->
+<!--        android:text="123456789"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/edit_address"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/edit_address" />-->
 
-    <EditText
-        android:id="@+id/edit_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="35dp"
-        android:ems="10"
-        android:text="Ronda de Outeiro"
-        android:inputType="textPostalAddress"
-        app:layout_constraintBottom_toTopOf="@+id/password_change"
-        app:layout_constraintEnd_toEndOf="@+id/password_change" />
+<!--    <EditText-->
+<!--        android:id="@+id/edit_address"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="35dp"-->
+<!--        android:ems="10"-->
+<!--        android:text="Ronda de Outeiro"-->
+<!--        android:inputType="textPostalAddress"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/password_change"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/password_change" />-->
 
     <Button
         android:id="@+id/save_button2"
