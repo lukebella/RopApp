@@ -116,11 +116,6 @@ class AddClothes : AppCompatActivity() {
             Log.d("AddClothes","Add Details")
             startActivity(intent)
         }
-        binding.temporada.setOnClickListener {
-            intent = Intent(this, AddSeason::class.java)
-            Log.d("AddClothes","Add Season")
-            startActivity(intent)
-        }
     }
 
     private fun generateFileName(): String {

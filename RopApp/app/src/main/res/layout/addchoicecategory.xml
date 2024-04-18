@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contourn"
-        android:layout_width="352dp"
-        android:layout_height="850dp"
+        android:layout_width="match_parent"
+        android:layout_height="800dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginEnd="24dp"
         android:background="#E1D4D4"
         android:backgroundTint="#A8A7CE"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,23 +19,49 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/backButtonChoice"
-            android:layout_width="88dp"
-            android:layout_height="56dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@android:drawable/ic_menu_revert" />
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:background="@drawable/button_default_click"
+            android:text="Confirm"
+            app:backgroundTint="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="325dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="90dp"
+            android:background="#FAF0F0"
+            android:fontFamily="casual"
+            android:text="Select the categories of your dress"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
             android:id="@+id/top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginBottom="33dp"
             android:text="Top"
-            app:layout_constraintBottom_toTopOf="@+id/bottom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -49,36 +70,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="147dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="21dp"
-            android:layout_marginBottom="34dp"
             android:text="Accessories"
-            app:layout_constraintBottom_toTopOf="@+id/shoe"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/top"
-            app:layout_constraintTop_toBottomOf="@+id/textView12"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
         <CheckBox
             android:id="@+id/bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="128dp"
-            android:layout_marginBottom="34dp"
             android:text="Bottom"
-            app:layout_constraintBottom_toTopOf="@+id/dress"
-            app:layout_constraintEnd_toStartOf="@+id/shoe"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/top" />
 
         <CheckBox
             android:id="@+id/dress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="30dp"
             android:text="Dress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottom" />
@@ -88,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="30dp"
             android:text="Outerwear"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dress" />
@@ -98,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="30dp"
             android:text="Activewear"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/outerwear" />
@@ -108,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="30dp"
             android:text="Formalwear"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activewear" />
@@ -118,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="30dp"
             android:text="Loungewear"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/formalwear" />
@@ -127,7 +142,7 @@
             android:id="@+id/shoe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="61dp"
             android:text="Shoe"
             app:layout_constraintEnd_toEndOf="parent"
@@ -137,7 +152,7 @@
             android:id="@+id/bag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="68dp"
             android:text="Bag"
             app:layout_constraintEnd_toEndOf="parent"
@@ -147,7 +162,7 @@
             android:id="@+id/hat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="70dp"
             android:text="Hat"
             app:layout_constraintEnd_toEndOf="parent"
@@ -157,7 +172,7 @@
             android:id="@+id/scarf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="60dp"
             android:text="Scarf"
             app:layout_constraintEnd_toEndOf="parent"
@@ -167,7 +182,7 @@
             android:id="@+id/gloves"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="51dp"
             android:text="Gloves"
             app:layout_constraintEnd_toEndOf="parent"
@@ -177,7 +192,7 @@
             android:id="@+id/socks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="56dp"
             android:text="Socks"
             app:layout_constraintEnd_toEndOf="parent"
@@ -188,7 +203,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:layout_marginTop="34dp"
+            android:layout_marginTop="30dp"
             android:text="Belts"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loungewear" />
@@ -197,45 +212,11 @@
             android:id="@+id/sunglasses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
             android:text="Sunglasses"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/socks" />
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="325dp"
-            android:layout_height="34dp"
-            android:layout_marginStart="69dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginEnd="65dp"
-            android:layout_marginBottom="1dp"
-            android:background="#FAF0F0"
-            android:fontFamily="casual"
-            android:text="Select the categories of your dress"
-            android:textSize="20sp"
-            android:textStyle="bold|italic"
-            app:layout_constraintBottom_toTopOf="@+id/top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <Button
-            android:id="@+id/confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="135dp"
-            android:layout_marginTop="39dp"
-            android:layout_marginEnd="115dp"
-            android:layout_marginBottom="19dp"
-            android:text="Confirm"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sunglasses" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+</ScrollView>

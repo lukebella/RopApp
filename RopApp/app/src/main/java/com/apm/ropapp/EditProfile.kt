@@ -46,11 +46,8 @@ class EditProfile : AppCompatActivity() {
 
         // Initialize your views here
         // For example, to set a click listener on the floating action button:
-        binding.cancelButton2.setOnClickListener {
-            Log.d("EditProfile", "Back to Profile")
-            intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("fragment", R.id.navigation_user)
-            startActivity(intent)
+        binding.cancelButton.setOnClickListener {
+            finish()
         }
         binding.saveButton2.setOnClickListener {
             Log.d("EditProfile", "Edit Profile")

@@ -20,6 +20,12 @@
     <string name="database_url">https://ropapp-743fd-default-rtdb.europe-west1.firebasedatabase.app</string>
     <string name="storage_url">gs://ropapp-743fd.appspot.com</string>
 
+    <string name="spring">Primavera</string>
+    <string name="summer">Verano</string>
+    <string name="autumn">Otoño</string>
+    <string name="winter">Invierno</string>
+
+
     <!-- Definición de valores de Dropdown de Género en la vista de crear cuenta -->
     <string-array name="genero_options">
         <!-- Este será el marcador de posición -->

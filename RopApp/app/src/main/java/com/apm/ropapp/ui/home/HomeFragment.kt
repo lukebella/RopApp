@@ -3,6 +3,7 @@ package com.apm.ropapp.ui.home
 //import com.google.android.gms.maps.model.LatLng
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.AsyncTask
@@ -17,7 +18,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import com.apm.ropapp.MainActivity
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -71,11 +72,11 @@ class HomeFragment : Fragment() {
     val meGusta: Button = binding.meGusta
     meGusta.setOnClickListener {
       if (isAdded) {
-        /*Log.d("HomeFragment", "Continue to Fragment Calendar")
+        Log.d("HomeFragment", "Continue to Fragment Calendar")
         val intent = Intent(requireContext(), MainActivity::class.java)
         intent.putExtra("fragment", R.id.navigation_calendar)
-        startActivity(intent)*/
-        findNavController().navigate(R.id.navigation_calendar)
+        startActivity(intent)
+        //findNavController().navigate(R.id.navigation_calendar)
       } else {
         Log.e("HomeFragment", "Fragment not attached to activity")
       }

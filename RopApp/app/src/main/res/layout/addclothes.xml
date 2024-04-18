@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -20,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="Añadir Prenda"
-        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/guardar"
         app:layout_constraintStart_toEndOf="@+id/backButton"
@@ -32,110 +32,151 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:background="@drawable/button_default_click"
         android:text="Guardar"
-        app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backButton"
-        android:src="@drawable/rectangle_borders"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/camara"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:src="@drawable/baseline_add_a_photo_24"
-        app:layout_constraintEnd_toStartOf="@+id/galeria"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <ImageButton
-        android:id="@+id/galeria"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:src="@drawable/baseline_add_photo_alternate_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/camara"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:src="@drawable/rectangle_borders"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewCamera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Camara"
-        app:layout_constraintEnd_toEndOf="@+id/camara"
-        app:layout_constraintStart_toStartOf="@+id/camara"
-        app:layout_constraintTop_toBottomOf="@+id/camara" />
+            <ImageButton
+                android:id="@+id/camara"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:src="@drawable/baseline_add_a_photo_24"
+                app:layout_constraintEnd_toStartOf="@+id/galeria"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <TextView
-        android:id="@+id/textViewGaleria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Galeria"
-        app:layout_constraintEnd_toEndOf="@+id/galeria"
-        app:layout_constraintStart_toStartOf="@+id/galeria"
-        app:layout_constraintTop_toBottomOf="@+id/galeria" />
+            <ImageButton
+                android:id="@+id/galeria"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:src="@drawable/baseline_add_photo_alternate_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/camara"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+            <TextView
+                android:id="@+id/textViewCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Camara"
+                app:layout_constraintEnd_toEndOf="@+id/camara"
+                app:layout_constraintStart_toStartOf="@+id/camara"
+                app:layout_constraintTop_toBottomOf="@+id/camara" />
 
-    <Button
-        android:id="@+id/categoria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/yellow"
-        android:text="Categoría"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toTopOf="@+id/estilo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCamera" />
+            <TextView
+                android:id="@+id/textViewGaleria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Galeria"
+                app:layout_constraintEnd_toEndOf="@+id/galeria"
+                app:layout_constraintStart_toStartOf="@+id/galeria"
+                app:layout_constraintTop_toBottomOf="@+id/galeria" />
 
-    <Button
-        android:id="@+id/estilo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/yellow"
-        android:text="Estilo"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toTopOf="@+id/detalles"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categoria" />
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewCamera">
 
-    <Button
-        android:id="@+id/detalles"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/yellow"
-        android:text="Detalles"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toTopOf="@+id/temporada"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/estilo" />
+                <com.google.android.material.chip.ChipGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true">
 
-    <Button
-        android:id="@+id/temporada"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/yellow"
-        android:text="Temporada"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/detalles" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@color/chip_state_list"
+                        android:checkable="true"
+                        android:text="@string/spring" />
 
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@color/chip_state_list"
+                        android:checkable="true"
+                        android:text="@string/summer" />
 
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@color/chip_state_list"
+                        android:checkable="true"
+                        android:text="@string/autumn" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:chipBackgroundColor="@color/chip_state_list"
+                        android:checkable="true"
+                        android:text="@string/winter" />
+
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/categoria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="Categoría"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+            <Button
+                android:id="@+id/estilo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="Estilo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/categoria" />
+
+            <Button
+                android:id="@+id/detalles"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="Detalles"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/estilo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
