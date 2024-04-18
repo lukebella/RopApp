@@ -3,8 +3,10 @@ package com.apm.ropapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.EditprofileBinding
+import com.google.firebase.auth.FirebaseAuth
 
 
 class EditProfile : AppCompatActivity() {
@@ -59,6 +61,8 @@ class EditProfile : AppCompatActivity() {
             Log.d("EditProfile", "Change Password")
             startActivity(intent)
         }
+
+
 
         // Similarly, initialize other views and set their behavior
     }

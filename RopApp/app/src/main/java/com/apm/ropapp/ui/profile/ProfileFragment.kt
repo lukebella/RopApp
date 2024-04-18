@@ -6,9 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.EditProfile
+import com.apm.ropapp.Login
 import com.apm.ropapp.databinding.FragmentProfileBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment(){
 
@@ -37,6 +40,13 @@ class ProfileFragment : Fragment(){
 
         binding.statButton.setOnClickListener {
             Log.d("Profile", "Stats button clicked")
+        }
+
+        binding.logOutButton.setOnClickListener(){
+            FirebaseAuth.getInstance().signOut()
+            Toast.makeText(requireContext(), "Signed Out", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), Login::class.java)
+            startActivity(intent)
         }
 
         return root
