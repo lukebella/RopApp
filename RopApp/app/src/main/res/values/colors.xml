@@ -17,14 +17,17 @@
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#C0E8FF</color>
     <color name="md_theme_onPrimaryContainer">#001E2B</color>
+
     <color name="md_theme_secondary">#4D616C</color>
     <color name="md_theme_onSecondary">#FFFFFF</color>
     <color name="md_theme_secondaryContainer">#D0E6F3</color>
     <color name="md_theme_onSecondaryContainer">#091E27</color>
+
     <color name="md_theme_tertiary">#7C580D</color>
     <color name="md_theme_onTertiary">#FFFFFF</color>
     <color name="md_theme_tertiaryContainer">#FFDEAB</color>
     <color name="md_theme_onTertiaryContainer">#271900</color>
+
     <color name="md_theme_error">#BA1A1A</color>
     <color name="md_theme_onError">#FFFFFF</color>
     <color name="md_theme_errorContainer">#FFDAD6</color>
