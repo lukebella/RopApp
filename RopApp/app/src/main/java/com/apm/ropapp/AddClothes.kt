@@ -39,7 +39,7 @@ class AddClothes : AppCompatActivity() {
 
         binding.backButton.setOnClickListener {
             intent = Intent(this, MainActivity::class.java)
-            Log.d("AddClothes","Back to Main Activity")
+            Log.d("AddClothes", "Back to Main Activity")
             startActivity(intent)
         }
 
@@ -64,20 +64,21 @@ class AddClothes : AppCompatActivity() {
             uploadNewClothes(uploadData)
 
             intent = Intent(this, MainActivity::class.java)
-            Log.d("AddClothes","Dress Added")
+            Log.d("AddClothes", "Dress Added")
             startActivity(intent)
         }
 
-        val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                // There are no request codes
-                Log.d("Camara", "Captured URI: $imageUri")
-                binding.imageView.setImageURI(imageUri)
-                fileNameUpload = imageUri.toString().substring(
-                    imageUri.toString().lastIndexOf("IMG"))
+        val resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    // There are no request codes
+                    Log.d("Camara", "Captured URI: $imageUri")
+                    binding.imageView.setImageURI(imageUri)
+                    fileNameUpload = imageUri.toString().substring(
+                        imageUri.toString().lastIndexOf("IMG")
+                    )
+                } else Log.d("Camara", "No media captured")
             }
-            else Log.d("Camara", "No media captured")
-        }
 
         binding.camara.setOnClickListener {
             imageUri = createImageUri()
@@ -86,34 +87,42 @@ class AddClothes : AppCompatActivity() {
             resultLauncher.launch(intent)
         }
 
-        val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            // Callback is invoked after the user selects a media item or closes the photo picker.
-            if (uri != null) {
-                imageUri = uri
-                Log.d("PhotoPicker", "Selected URI: $imageUri")
-                binding.imageView.setImageURI(imageUri)
-                fileNameUpload = generateFileName()
+        val pickMedia =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                // Callback is invoked after the user selects a media item or closes the photo picker.
+                if (uri != null) {
+                    imageUri = uri
+                    Log.d("PhotoPicker", "Selected URI: $imageUri")
+                    binding.imageView.setImageURI(imageUri)
+                    fileNameUpload = generateFileName()
+                } else Log.d("PhotoPicker", "No media selected")
             }
-            else Log.d("PhotoPicker", "No media selected")
-        }
 
         binding.galeria.setOnClickListener {
             pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
+        val startForResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val intent = result.data
+                    Log.d("AddClothes", intent?.extras?.getStringArrayList("result").toString())
+                }
+            }
+
         binding.categoria.setOnClickListener {
-            intent = Intent(this, AddCategories::class.java)
-            Log.d("AddClothes","Add category")
-            startActivity(intent)
+            Log.d("AddClothes", "Add category")
+            startForResult.launch(Intent(this, AddCategories::class.java))
+
         }
         binding.estilo.setOnClickListener {
             intent = Intent(this, AddStyle::class.java)
-            Log.d("AddClothes","Add Style")
+            Log.d("AddClothes", "Add Style")
             startActivity(intent)
         }
         binding.detalles.setOnClickListener {
             intent = Intent(this, AddDetails::class.java)
-            Log.d("AddClothes","Add Details")
+            Log.d("AddClothes", "Add Details")
             startActivity(intent)
         }
     }
@@ -138,10 +147,10 @@ class AddClothes : AppCompatActivity() {
         // Register observers to listen for when the upload is done or if it fails
         uploadTask.addOnFailureListener {
             // Handle unsuccessful uploads
-            Log.d("PhotoUpdate","Upload Failed: ${it.stackTrace}")
+            Log.d("PhotoUpdate", "Upload Failed: ${it.stackTrace}")
         }.addOnSuccessListener {
             // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            Log.d("PhotoUpdate","Upload Success: $fileNameUpload")
+            Log.d("PhotoUpdate", "Upload Success: $fileNameUpload")
         }
     }
 
@@ -152,10 +161,10 @@ class AddClothes : AppCompatActivity() {
             // Register observers to listen for when the upload is done or if it fails
             uploadTask.addOnFailureListener {
                 // Handle unsuccessful uploads
-                Log.d("DatabaseUpdate","Upload Failed: ${it.stackTrace}")
+                Log.d("DatabaseUpdate", "Upload Failed: ${it.stackTrace}")
             }.addOnSuccessListener {
                 // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                Log.d("DatabaseUpdate","Upload Success: $data")
+                Log.d("DatabaseUpdate", "Upload Success: $data")
             }
         }
     }
