@@ -19,7 +19,6 @@ class SignUp : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private var selectedGender: String? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = SignUpBinding.inflate(layoutInflater)
@@ -62,34 +61,23 @@ class SignUp : AppCompatActivity() {
             val username = binding.registerUsername.text.toString()
             val birthdate = binding.editTextDate.text.toString()
 
-            if(email.isNotEmpty() && password.isNotEmpty()){
+            if (email.isNotEmpty() && password.isNotEmpty()) {
 
-                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener()
-                {
-                    if(it.isSuccessful){
+                firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                    if (it.isSuccessful) {
 
                         val uid = firebaseAuth.currentUser?.uid
-                        if (uid != null && selectedGender != null){
-                            writeNewUser(uid,username,email,birthdate, selectedGender!!)
-                        }else{
-                            Toast.makeText(this, it.exception.toString(),Toast.LENGTH_SHORT).show()
-                        }
-
+                        if (uid != null && selectedGender != null)
+                            writeNewUser(uid, username, email, birthdate, selectedGender!!)
+                        else Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
 
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
-                    }else{
-                        Toast.makeText(this, it.exception.toString(),Toast.LENGTH_SHORT).show()
-                    }
+
+                    } else Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
                 }
-            }else{
-                Toast.makeText(this, "Debe rellenar todos los campos",Toast.LENGTH_SHORT).show()
-            }
-
-
+            } else Toast.makeText(this, "Debe rellenar todos los campos", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
     private fun writeNewUser(userId: String, username: String, email: String, birthdate: String, selectedGender: String) {

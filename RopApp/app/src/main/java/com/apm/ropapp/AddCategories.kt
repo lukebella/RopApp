@@ -16,6 +16,27 @@ class AddCategories : AppCompatActivity() {
         binding = AddchoicecategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val checkedList = intent.extras?.getStringArrayList("checked")
+        if (checkedList != null) {
+            if (checkedList.contains(binding.top.text)) binding.top.toggle()
+            if (checkedList.contains(binding.accessories.text)) binding.accessories.toggle()
+            if (checkedList.contains(binding.bottom.text)) binding.bottom.toggle()
+            if (checkedList.contains(binding.shoe.text)) binding.shoe.toggle()
+            if (checkedList.contains(binding.dress.text)) binding.dress.toggle()
+            if (checkedList.contains(binding.bag.text)) binding.bag.toggle()
+            if (checkedList.contains(binding.outerwear.text)) binding.outerwear.toggle()
+            if (checkedList.contains(binding.hat.text)) binding.hat.toggle()
+            if (checkedList.contains(binding.activewear.text)) binding.activewear.toggle()
+            if (checkedList.contains(binding.scarf.text)) binding.scarf.toggle()
+            if (checkedList.contains(binding.formalwear.text)) binding.formalwear.toggle()
+            if (checkedList.contains(binding.gloves.text)) binding.gloves.toggle()
+            if (checkedList.contains(binding.loungewear.text)) binding.loungewear.toggle()
+            if (checkedList.contains(binding.socks.text)) binding.socks.toggle()
+            if (checkedList.contains(binding.belts.text)) binding.belts.toggle()
+            if (checkedList.contains(binding.socks.text)) binding.socks.toggle()
+            if (checkedList.contains(binding.sunglasses.text)) binding.sunglasses.toggle()
+        }
+
         binding.backButtonChoice.setOnClickListener {
             Log.d("AddCategories", "Back to Add Clothes")
             finish()
@@ -41,7 +62,7 @@ class AddCategories : AppCompatActivity() {
             if (binding.sunglasses.isChecked) result.add(binding.sunglasses.text.toString())
 
             val intent = Intent()
-            intent.putExtra("result", result)
+            intent.putExtra("category", result)
             setResult(RESULT_OK, intent)
             Log.d("AddCategories", "Categories Added")
             finish()

@@ -98,7 +98,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/galeria" />
 
             <TextView
-                android:id="@+id/seasons"
+                android:id="@+id/seasonsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -115,9 +115,10 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seasons">
+                app:layout_constraintTop_toBottomOf="@+id/seasonsText">
 
                 <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/seasonsChipGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:singleLine="true">
@@ -185,6 +186,7 @@
                     android:hint="Selecciona las categorías"
                     android:maxWidth="180dp"
                     android:maxLines="1"
+                    android:textAlignment="textEnd"
                     app:layout_constraintEnd_toStartOf="@+id/categoryButton"
                     app:layout_constraintTop_toTopOf="@+id/categoryText" />
 
@@ -228,6 +230,7 @@
                     android:hint="Selecciona los estilos"
                     android:maxWidth="180dp"
                     android:maxLines="1"
+                    android:textAlignment="textEnd"
                     app:layout_constraintEnd_toStartOf="@+id/styleButton"
                     app:layout_constraintTop_toTopOf="@+id/styleText" />
 
@@ -271,6 +274,7 @@
                     android:hint="Edita los detalles"
                     android:maxWidth="180dp"
                     android:maxLines="1"
+                    android:textAlignment="textEnd"
                     app:layout_constraintEnd_toStartOf="@+id/detailsButton"
                     app:layout_constraintTop_toTopOf="@+id/detailsText" />
 

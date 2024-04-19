@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.apm.ropapp.databinding.AddclothesBinding
+import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -18,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.util.UUID
+import kotlin.collections.set
 
 class AddClothes : AppCompatActivity() {
 
@@ -27,6 +29,7 @@ class AddClothes : AppCompatActivity() {
     private lateinit var storage: StorageReference
     private lateinit var imageUri: Uri
     private lateinit var fileNameUpload: String
+    private val uploadData = HashMap<String, Any>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,19 +47,22 @@ class AddClothes : AppCompatActivity() {
         }
 
         binding.guardar.setOnClickListener {
-            binding.guardar.isSelected = true
-
-            val uploadData = HashMap<String, Any>()
             val details = HashMap<String, Any>()
-            uploadData["category"] = "Top"
-            uploadData["style"] = "Vintage"
             details["brand"] = "M&M"
             details["state"] = "Prestado"
             details["price"] = "20 €"
             details["size"] = "L"
             uploadData["details"] = details
-            uploadData["season"] = listOf("Spring", "Summer")
 
+            val seasonsChipGroup = binding.seasonsChipGroup
+            if (seasonsChipGroup.checkedChipIds.isNotEmpty()) {
+                val seasonsList = arrayListOf<String>()
+                seasonsChipGroup.checkedChipIds.forEach {
+                    val chip = seasonsChipGroup.findViewById<Chip>(it)
+                    seasonsList.add(chip.text.toString())
+                }
+                uploadData["seasons"] = seasonsList
+            }
             if (this::fileNameUpload.isInitialized) {
                 uploadData["photo"] = fileNameUpload
                 uploadPhoto()
@@ -64,7 +70,7 @@ class AddClothes : AppCompatActivity() {
             uploadNewClothes(uploadData)
 
             intent = Intent(this, MainActivity::class.java)
-            Log.d("AddClothes", "Dress Added")
+            Log.d("AddClothes", "Dress added: $uploadData")
             startActivity(intent)
         }
 
@@ -105,26 +111,49 @@ class AddClothes : AppCompatActivity() {
         val startForResult =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
-                    val intent = result.data
-                    Log.d("AddClothes", intent?.extras?.getStringArrayList("result").toString())
+                    val extras = result.data?.extras
+                    if (extras?.getStringArrayList("category") != null) {
+                        uploadData["category"] = extras.getStringArrayList("category")!!
+                        binding.categoryTextView.text = updateTextView("category")
+                        Log.d("AddCategories", uploadData["category"].toString())
+                    }
+                    if (extras?.getStringArrayList("style") != null) {
+                        uploadData["style"] = extras.getStringArrayList("style")!!
+                        binding.styleTextView.text = updateTextView("style")
+                        Log.d("AddStyle", uploadData["style"].toString())
+                    }
                 }
             }
 
         binding.categoryButton.setOnClickListener {
-            Log.d("AddClothes", "Add category")
-            startForResult.launch(Intent(this, AddCategories::class.java))
+            Log.d("AddClothes", "Add Category")
+            val intent = Intent(this, AddCategories::class.java)
+            if (uploadData["category"] != null)
+                intent.putExtra("checked", uploadData["category"] as ArrayList<*>)
+            startForResult.launch(intent)
+        }
 
-        }
         binding.styleButton.setOnClickListener {
-            intent = Intent(this, AddStyle::class.java)
             Log.d("AddClothes", "Add Style")
-            startActivity(intent)
+            val intent = Intent(this, AddStyle::class.java)
+            if (uploadData["style"] != null)
+                intent.putExtra("checked", uploadData["style"] as ArrayList<*>)
+            startForResult.launch(intent)
         }
+
         binding.detailsButton.setOnClickListener {
-            intent = Intent(this, AddDetails::class.java)
             Log.d("AddClothes", "Add Details")
+            intent = Intent(this, AddDetails::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun updateTextView(data: String): String {
+        if (uploadData[data] != null) {
+            val dataString = uploadData[data].toString()
+            return dataString.substring(1, dataString.length - 1)
+        }
+        return ""
     }
 
     private fun generateFileName(): String {

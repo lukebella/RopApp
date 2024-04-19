@@ -20,9 +20,9 @@
 
         <!-- Actividad principal -->
         <activity
-            android:name=".Login"
+            android:name=".MainActivity"
             android:exported="true"
-            android:label="Login">
+            android:label="MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,9 +30,9 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Login"
             android:exported="true"
-            android:label="MainActivity">
+            android:label="Login">
         </activity>
 
         <activity
