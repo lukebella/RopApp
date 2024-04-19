@@ -42,6 +42,12 @@
         </activity>
 
         <activity
+            android:name=".CompleteData"
+            android:exported="true"
+            android:label="CompleteData">
+        </activity>
+
+        <activity
             android:name=".AddClothes"
             android:exported="true"
             android:label="AddClothes">

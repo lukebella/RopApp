@@ -51,8 +51,7 @@ class Login : AppCompatActivity() {
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener()
                 {
                     if(it.isSuccessful){
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
+                        finish()
                     }else{
                         Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
                     }
@@ -87,8 +86,7 @@ class Login : AppCompatActivity() {
                                     if (task.isSuccessful) {
                                         val user = firebaseAuth.currentUser
                                         Toast.makeText(this@Login, "Signed in as ", Toast.LENGTH_SHORT).show()
-                                        val intent = Intent(this@Login, MainActivity::class.java)
-                                        startActivity(intent)
+                                        finish()
                                     } else {
                                         Log.d("Login", "Authentication failed")
                                         Toast.makeText(this@Login, "Authentication failed", Toast.LENGTH_SHORT).show()
@@ -155,41 +153,31 @@ class Login : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = firebaseAuth.currentUser
-                    Toast.makeText(this, "Signed in as ${user?.displayName}", Toast.LENGTH_SHORT).show()
-                    writeNewUser(user)
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    val userId = user?.uid.toString()
+
+                    val queryToGetData: Query = database.child("users").child(userId).equalTo(user?.uid.toString())
+                    queryToGetData.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            if (!dataSnapshot.exists()) {
+                                //val intent = Intent(this@Login, CompleteData::class.java)
+                                //startActivity(intent)
+                                finish()
+
+                            }else {
+                                val intent = Intent(this@Login, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
                 } else {
                     Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
-    private fun writeNewUser(user: FirebaseUser?) {
-        val userData = HashMap<String, Any>()
-        val userId = user?.uid.toString()
-
-        val queryToGetData: Query = database.child("Biodata")
-            .orderByChild("Email").equalTo("MyUser@email.com")
-        queryToGetData.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (!dataSnapshot.exists()) {
-                    userData["username"] = user?.displayName.toString()
-                    userData["email"] = user?.email.toString()
-
-                    database.child("users").child(userId).setValue(userData)
-
-                    //Mandar a página intermedia para obtener más datos que no podemos
-                    //obtener con GMail
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-
-
-
-
-    }
 }
 
