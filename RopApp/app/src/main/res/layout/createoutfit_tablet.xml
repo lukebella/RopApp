@@ -100,11 +100,9 @@
         android:layout_width="228dp"
         android:layout_height="91dp"
         android:layout_marginBottom="104dp"
-        android:textColor="@color/white"
         android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/shoe_button"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/bottom_button" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

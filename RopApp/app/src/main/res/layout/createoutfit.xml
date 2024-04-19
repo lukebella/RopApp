@@ -52,7 +52,7 @@
         android:layout_marginTop="61dp"
         android:layout_marginEnd="80dp"
         android:text="@string/plus"
-        android:textColor="@color/white"
+        style="@style/Widget.AppCompat.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/outfit_name" />
 
@@ -72,7 +72,7 @@
         android:layout_height="125dp"
         android:layout_marginEnd="80dp"
         android:text="+"
-        android:textColor="@color/white"
+        style="@style/Widget.AppCompat.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_button" />
 
@@ -102,9 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:background="@drawable/button_default_click"
         android:text="Guardar"
-        app:backgroundTint="@color/yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

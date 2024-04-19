@@ -29,23 +29,19 @@
 
     <Button
         android:id="@+id/config_button"
-        android:layout_width="160dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:background="@color/white"
-        android:textColor="@color/white"
+        android:layout_marginTop="32dp"
         android:text="Configuración"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:layout_constraintTop_toBottomOf="@+id/logOutButton" />
 
     <Button
         android:id="@+id/stat_button"
-        android:layout_width="160dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:background="@color/white"
-        android:textColor="@color/white"
         android:text="Estadísticas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,11 +49,9 @@
 
     <Button
         android:id="@+id/info_button"
-        android:layout_width="160dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="36dp"
-        android:background="@color/white"
-        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Información Cuenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,12 +61,11 @@
         android:id="@+id/logOutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         android:text="Sign Out"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/config_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.859" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

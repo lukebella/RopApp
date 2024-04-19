@@ -61,11 +61,10 @@
 
     <Button
         android:id="@+id/share_button"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@color/white"
-        android:textColor="@color/white"
+        android:background="@drawable/button_default"
         android:text="Compartir"
         app:layout_constraintBottom_toTopOf="@+id/calendar_button"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,16 +72,14 @@
 
     <Button
         android:id="@+id/calendar_button"
-        android:layout_width="160dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:background="@color/white"
-        android:textColor="@color/white"
+        android:background="@drawable/button_default"
         android:text="Añadir al calendario"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

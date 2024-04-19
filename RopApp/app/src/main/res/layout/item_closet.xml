@@ -16,7 +16,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/yellow"
+            android:background="@color/md_theme_tertiaryContainer"
             android:src="@drawable/tshirt"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true" />
@@ -25,13 +25,12 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dark_white"
+            android:background="@color/md_theme_surfaceContainer"
             android:maxWidth="@dimen/activity_horizontal_margin"
             android:minHeight="50dp"
             android:paddingHorizontal="8dp"
             android:orientation="horizontal"
             android:text="Armario Principal"
-            android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/imageButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:text="ESTADO DE LA BASE DE DATOS"
         android:textSize="17sp"
-        android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/imgView"
         app:layout_constraintEnd_toEndOf="parent"
