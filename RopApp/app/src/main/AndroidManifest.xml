@@ -60,12 +60,6 @@
         </activity>
 
         <activity
-            android:name=".AddSeason"
-            android:exported="true"
-            android:label="AddSeason">
-        </activity>
-
-        <activity
             android:name=".AddDetails"
             android:exported="true"
             android:label="AddDetails">

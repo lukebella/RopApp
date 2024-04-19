@@ -7,7 +7,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contourn"
         android:layout_width="match_parent"
-        android:layout_height="800dp"
+        android:layout_height="wrap_content"
+        android:minHeight="800dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
@@ -31,11 +32,9 @@
             android:id="@+id/confirm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:background="@drawable/button_default_click"
-            android:text="Confirm"
-            app:backgroundTint="@null"
+            android:text="Guardar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
