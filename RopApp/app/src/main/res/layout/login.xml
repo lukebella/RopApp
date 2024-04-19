@@ -8,16 +8,12 @@
         android:id="@+id/imageView"
         android:layout_width="115dp"
         android:layout_height="115dp"
-        android:layout_marginStart="175dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="175dp"
         android:layout_marginBottom="55dp"
         app:layout_constraintBottom_toTopOf="@+id/userLogin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/ropapplogo" />
 
     <EditText
@@ -30,7 +26,6 @@
         android:hint="Nombre de usuario o Email "
         app:layout_constraintBottom_toTopOf="@+id/userPassword"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,7 +37,6 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:inputType="textPassword"
         android:hint="Contraseña"
-        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userLogin" />
@@ -52,8 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="350dp"
-        android:backgroundTint="@color/gray"
+        android:layout_marginTop="380dp"
         android:text="Iniciar sesion"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,8 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="400dp"
-        android:backgroundTint="@color/gray"
+        android:layout_marginTop="450dp"
         android:text="Crear Cuenta"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,21 +63,20 @@
         android:id="@+id/textOR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="450dp"
         android:foregroundGravity="center_vertical"
         android:text="OR"
         android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/loginGooglebutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/signup_button" />
 
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/loginFacebookbutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="8dp"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginGooglebutton"
