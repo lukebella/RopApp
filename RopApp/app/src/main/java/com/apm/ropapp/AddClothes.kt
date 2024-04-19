@@ -110,17 +110,17 @@ class AddClothes : AppCompatActivity() {
                 }
             }
 
-        binding.categoria.setOnClickListener {
+        binding.categoryButton.setOnClickListener {
             Log.d("AddClothes", "Add category")
             startForResult.launch(Intent(this, AddCategories::class.java))
 
         }
-        binding.estilo.setOnClickListener {
+        binding.styleButton.setOnClickListener {
             intent = Intent(this, AddStyle::class.java)
             Log.d("AddClothes", "Add Style")
             startActivity(intent)
         }
-        binding.detalles.setOnClickListener {
+        binding.detailsButton.setOnClickListener {
             intent = Intent(this, AddDetails::class.java)
             Log.d("AddClothes", "Add Details")
             startActivity(intent)
