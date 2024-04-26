@@ -1,5 +1,6 @@
 package com.apm.ropapp.ui.closet
 
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.apm.ropapp.R
 
 
-class CustomAdapter(private val stringList: MutableList<String>, private val imageList: MutableList<Int>) :
+class CustomAdapter(private val stringList: MutableList<String>, private val imageList: MutableList<Uri>) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     /**
@@ -44,8 +45,8 @@ class CustomAdapter(private val stringList: MutableList<String>, private val ima
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.textView.text = stringList[position]
-        viewHolder.imageButton.setImageResource(imageList[position])
+        viewHolder.textView.text = stringList.elementAt(position)
+        viewHolder.imageButton.setImageURI(imageList[position])
     }
 
     // Return the size of your dataset (invoked by the layout manager)

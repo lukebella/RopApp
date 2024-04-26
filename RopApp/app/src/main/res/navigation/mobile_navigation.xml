@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_closet"
         android:name="com.apm.ropapp.ui.closet.ClosetFragment"
-        android:label="Closet"
+        android:label="@string/title_closet"
         tools:layout="@layout/fragment_closet" />
 
     <fragment

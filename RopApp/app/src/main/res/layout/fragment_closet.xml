@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_default"
-        android:text="Armarios"
+        android:text="Prendas"
         app:backgroundTint="@null"
         android:layout_marginTop="25dp"
         app:layout_constraintEnd_toStartOf="@+id/button2"

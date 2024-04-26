@@ -53,7 +53,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="26dp"
                 android:fontFamily="sans-serif-black"
-                android:text="Que te apatece poner hoy?"
+                android:text="Que te apetece poner hoy?"
                 android:textSize="24sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintBottom_toTopOf="@+id/recomendprenda"

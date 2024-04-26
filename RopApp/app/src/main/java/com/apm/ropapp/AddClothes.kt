@@ -21,6 +21,7 @@ import java.io.File
 import java.util.UUID
 import kotlin.collections.set
 
+
 class AddClothes : AppCompatActivity() {
 
     private lateinit var binding: AddclothesBinding
@@ -165,14 +166,14 @@ class AddClothes : AppCompatActivity() {
         //or externalMediaDirs -> carpeta media
         //or getExternalFilesDir(null) -> carpeta data/files
         //or getExternalFilesDir(Environment.DIRECTORY_PICTURES)} -> carpeta data/files/Pictures
-        val dir = File("${getExternalFilesDir(null)}/Photos")
+        val dir = File("${getExternalFilesDir(null)}/clothes")
         if (!dir.exists()) dir.mkdirs()
         val imageFile = File(dir, generateFileName())
         return FileProvider.getUriForFile(this, "com.apm.ropapp.FileProvider", imageFile)
     }
 
     private fun uploadPhoto() {
-        val uploadTask = storage.child("Photos/$fileNameUpload").putFile(imageUri)
+        val uploadTask = storage.child("clothes/$fileNameUpload").putFile(imageUri)
         // Register observers to listen for when the upload is done or if it fails
         uploadTask.addOnFailureListener {
             // Handle unsuccessful uploads

@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">RopApp</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_closet">Closet</string>
-    <string name="title_calendar">Calendar</string>
-    <string name="title_user">User</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_closet">Armario</string>
+    <string name="title_calendar">Calendario</string>
+    <string name="title_user">Perfil</string>
     <string name="additemtitle">Añadir Item</string>
     <string name="additemdesc">Selecciona que item deseas añadir</string>
     <string name="additem_action_1">Añadir Prenda</string>
