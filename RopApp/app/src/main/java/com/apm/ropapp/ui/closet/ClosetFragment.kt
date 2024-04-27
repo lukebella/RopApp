@@ -53,7 +53,7 @@ class ClosetFragment : Fragment() {
         val userUid = firebaseAuth.currentUser?.uid
 
         val recyclerView: RecyclerView = binding.root.findViewById(R.id.recycler_view)
-        //recyclerView.adapter = CustomAdapter(stringList, imageList)
+        recyclerView.adapter = CustomAdapter(mutableListOf(), mutableListOf())
         recyclerView.autoFitColumns(150)
 
         fun getImageUri(fileName: String, photos: StorageReference): Uri {
@@ -80,26 +80,22 @@ class ClosetFragment : Fragment() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
-                        val value = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
+                        val data = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
                         //{aa3722c9-f5c9-4d6c-b5dc-f04bce8d29b3={seasons=[Verano, Invierno], photo=IMG_67929f11-76ac-452e-bcc3-101fa466ed2a.png,
                         // details={size=L, price=20 €, state=Prestado, brand=M&M}, style=[Vintage, Glamorous], category=[Scarf]}}
-                        if (value != null) {
-                            val names = mutableListOf<String>()
-                            val images = mutableListOf<String>()
+                        if (data != null) {
+                            val nameList = mutableListOf<String>()
                             val imageList = mutableListOf<Uri>()
-
-                            value.values.forEach { x ->
-                                names.add(x["category"].toString())
-                                images.add(x["photo"].toString())
-                            }
-
                             val photos = storage.child(folderName)
-                            for (image in value.values) {
-                                imageList.add(getImageUri(image["photo"].toString(), photos))
+
+                            data.values.forEach { value ->
+                                nameList.add(value["category"].toString())
+                                if (value["photo"] == null) imageList.add(Uri.EMPTY)
+                                else imageList.add(getImageUri(value["photo"].toString(), photos))
                             }
 
                             Log.d("TAG", "Value is: $imageList")
-                            recyclerView.adapter = CustomAdapter(names, imageList)
+                            recyclerView.adapter = CustomAdapter(nameList, imageList)
                         }
                     }
 
