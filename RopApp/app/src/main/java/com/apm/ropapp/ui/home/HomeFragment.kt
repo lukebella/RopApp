@@ -62,8 +62,8 @@ class HomeFragment : Fragment() {
     loadData(sharedPreferences)
 
     var tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
-    val timeUpdate = 2 * 60 * 60 * 1000
-    if (System.currentTimeMillis() >= tmsUpdate + timeUpdate) {
+    val delta = 2 * 60 * 60 * 1000
+    if (System.currentTimeMillis() >= tmsUpdate + delta) {
       tmsUpdate = System.currentTimeMillis()
       sharedPreferences.edit().putLong("LONG_KEY", tmsUpdate).apply()
       //get city
