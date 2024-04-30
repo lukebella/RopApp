@@ -3,7 +3,10 @@ package com.apm.ropapp.ui.home
 //import com.google.android.gms.maps.model.LatLng
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.AsyncTask
@@ -43,25 +46,32 @@ class HomeFragment : Fragment() {
   // onDestroyView.
   private val binding get() = _binding!!
   private lateinit var fusedLocationClient: FusedLocationProviderClient
-
   override fun onCreateView(
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
   ): View {
     Log.d("HOME", "init")
-
     _binding = FragmentHomeBinding.inflate(inflater, container, false)
     val root: View = binding.root
     val locationTextView = binding.aCoruna
-    val weatherDate = binding.weatherDate
 
-    //get city
-    retrieveCity(locationTextView, weatherDate) { lat, long ->
-      //get weather
-      weatherForecast(lat, long, getString(R.string.weather_key))
+    val sharedPreferences =
+      requireContext().getSharedPreferences("MySharedPreferences", MODE_PRIVATE)
+
+    loadData(sharedPreferences)
+
+    var tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
+    val timeUpdate = 2 * 60 * 60 * 1000
+    if (System.currentTimeMillis() >= tmsUpdate + timeUpdate) {
+      tmsUpdate = System.currentTimeMillis()
+      sharedPreferences.edit().putLong("LONG_KEY", tmsUpdate).apply()
+      //get city
+      retrieveCity(locationTextView, sharedPreferences) { lat, long ->
+        //get weather
+        weatherForecast(lat, long, getString(R.string.weather_key))
+      }
     }
-
 
     val noMeGusta: Button = binding.noMeGusta
     noMeGusta.setOnClickListener {
@@ -71,7 +81,7 @@ class HomeFragment : Fragment() {
     }
     val meGusta: Button = binding.meGusta
     meGusta.setOnClickListener {
-      if (isAdded) {
+      /*if (isAdded) {
         Log.d("HomeFragment", "Continue to Fragment Calendar")
         val intent = Intent(requireContext(), MainActivity::class.java)
         intent.putExtra("fragment", R.id.navigation_calendar)
@@ -79,7 +89,7 @@ class HomeFragment : Fragment() {
         //findNavController().navigate(R.id.navigation_calendar)
       } else {
         Log.e("HomeFragment", "Fragment not attached to activity")
-      }
+      }*/
     }
     return root
   }
@@ -99,7 +109,7 @@ class HomeFragment : Fragment() {
     private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
   }
 
-  private fun retrieveCity(locationTextView: TextView, dateTextView: TextView, callback: (Double, Double) -> Unit) {
+  private fun retrieveCity(locationTextView: TextView , sharedPreferences: SharedPreferences, callback: (Double, Double) -> Unit) {
     fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
     var city: String
 
@@ -137,7 +147,8 @@ class HomeFragment : Fragment() {
             if (addresses.isNotEmpty()) {
               Log.d("HOME", "address")
               city = addresses[0].locality
-              locationTextView.text = city
+              sharedPreferences.edit().putString("LOC", city).apply()
+              //locationTextView.text = city
               callback(location.latitude, location.longitude)
             } else {
               Log.d("HOME", "no address")
@@ -150,7 +161,8 @@ class HomeFragment : Fragment() {
           if (!addresses.isNullOrEmpty()) {
             Log.d("HOME", "address")
             city = addresses[0].locality
-            locationTextView.text = city
+            sharedPreferences.edit().putString("LOC", city).apply()
+            //locationTextView.text = city
             callback(location.latitude, location.longitude)
           } else {
             Log.d("HOME", "no address")
@@ -163,7 +175,8 @@ class HomeFragment : Fragment() {
   }
 
   inner class FetchWeatherTask : AsyncTask<String, Void, String>() {
-
+    val sharedPreferences =
+      requireContext().getSharedPreferences("MySharedPreferences", MODE_PRIVATE)
     @Deprecated("Deprecated in Java")
     override fun doInBackground(vararg params: String?): String {
       var result = ""
@@ -195,9 +208,10 @@ class HomeFragment : Fragment() {
         val weatherData = parseWeatherData(result)
         val temperature: String =
           weatherData.tempMax.toString() + "/" + weatherData.tempMin.toString() + "°C"
-        binding.temperature.text = temperature
-        binding.weatherDate.text = weatherData.data
-        // Do something with the weather data
+
+        sharedPreferences.edit().putString("DATE", weatherData.data).apply()
+        sharedPreferences.edit().putString("TEMP", temperature).apply()
+
         Log.d("WeatherForecast", weatherData.toString())
       } else {
         Log.e("FetchWeatherTask", "Empty result")
@@ -216,6 +230,7 @@ class HomeFragment : Fragment() {
       var tempMax = 0
       var weat = ""
 
+
       var dateToday = "$year-0$month-$day"
       val jsonObject = JSONObject(jsonString)
       val listArray = jsonObject.getJSONArray("list")
@@ -228,19 +243,34 @@ class HomeFragment : Fragment() {
           weat = forecast.getJSONArray("weather").getJSONObject(0).getString("icon")
         }
       }
-     /* val imgurl = "https://openweathermap.org/img/wn/$weat@2x.png"
-      Log.d("URL", imgurl)
-      downloadImage(imgurl, "/data/local/tmp")*/
-      val resourceName = "w"+weat+"_2x" // Replace with your resource name
-      val resourceId = resources.getIdentifier(resourceName, "drawable", requireContext().packageName)
-      binding.weatImg.setImageResource(resourceId)
+      val resourceName = "w" + weat + "_2x" // Replace with your resource name
+      val resourceId =
+        resources.getIdentifier(resourceName, "drawable", requireContext().packageName)
+      sharedPreferences.edit().putInt("IMG", resourceId).apply()
+      //binding.weatImg.setImageResource(resourceId)
       Log.d("HOME", "Changed weather image")
       val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
       val date = LocalDate.parse(dateToday, formatter)
-      dateToday = date.dayOfWeek.toString().substring(0,3)+" "+date.dayOfMonth+" "+date.month.toString().substring(0,3)
+      dateToday = date.dayOfWeek.toString()
+        .substring(0, 3) + " " + date.dayOfMonth + " " + date.month.toString().substring(0, 3)
       return WeatherData(weat, tempMin, tempMax, dateToday)
 
     }
+
+  }
+
+  private fun loadData(sharedPreferences: SharedPreferences) {
+    val dateUpdate = sharedPreferences.getString("DATE", binding.weatherDate.text.toString())
+    val tempUpdate = sharedPreferences.getString("TEMP", binding.temperature.text.toString())
+    val loc = sharedPreferences.getString("LOC", binding.aCoruna.text.toString())
+
+    val resourceId =
+      resources.getIdentifier("w01d_2x", "drawable", requireContext().packageName)
+
+    binding.aCoruna.text = loc
+    binding.weatherDate.text = dateUpdate
+    binding.temperature.text = tempUpdate
+    binding.weatImg.setImageResource(resourceId)
 
   }
 
