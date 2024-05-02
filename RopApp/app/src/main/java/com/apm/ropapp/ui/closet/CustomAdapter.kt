@@ -9,9 +9,13 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.apm.ropapp.R
+import com.bumptech.glide.Glide
 
 
-class CustomAdapter(private val stringList: MutableList<String>, private val imageList: MutableList<Uri>) :
+class CustomAdapter(
+    private val stringList: MutableList<String>,
+    private val imageList: MutableList<Uri>
+) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     /**
@@ -19,15 +23,13 @@ class CustomAdapter(private val stringList: MutableList<String>, private val ima
      * (custom ViewHolder)
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView
-        val imageButton: ImageButton
+        val textView: TextView = view.findViewById(R.id.textView)
+        val imageButton: ImageButton = view.findViewById(R.id.imageButton)
 
         init {
             // Define click listener for the ViewHolder's View
-            textView = view.findViewById(R.id.textView)
-            imageButton = view.findViewById(R.id.imageButton)
             imageButton.setOnClickListener {
-                Log.d("Closet","Has pulsado el armario ${this.layoutPosition}")
+                Log.d("Closet", "Has pulsado el armario ${this.layoutPosition}")
             }
         }
     }
@@ -47,7 +49,8 @@ class CustomAdapter(private val stringList: MutableList<String>, private val ima
         // contents of the view with that element
         viewHolder.textView.text = stringList.elementAt(position)
         if (imageList[position] != Uri.EMPTY)
-            viewHolder.imageButton.setImageURI(imageList[position])
+            Glide.with(viewHolder.itemView.context).load(imageList[position])
+                .into(viewHolder.imageButton)
     }
 
     // Return the size of your dataset (invoked by the layout manager)

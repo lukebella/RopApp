@@ -62,8 +62,10 @@ class ClosetFragment : Fragment() {
             //or getExternalFilesDir(null) -> carpeta data/files
             //or getExternalFilesDir(Environment.DIRECTORY_PICTURES)} -> carpeta data/files/Pictures
             val dir = File("${root.context.getExternalFilesDir(null)}/clothes")
+            if (!dir.exists()) dir.mkdirs()
             val imageFile = File(dir, fileName)
             if (!imageFile.exists()) {
+                imageFile.createNewFile()
                 photos.child(fileName).getFile(imageFile)
             }
             return FileProvider.getUriForFile(
