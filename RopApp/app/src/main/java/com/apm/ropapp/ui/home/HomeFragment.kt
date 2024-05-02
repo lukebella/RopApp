@@ -14,12 +14,14 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.MainActivity
 import com.apm.ropapp.R
@@ -62,34 +64,52 @@ class HomeFragment : Fragment() {
     loadData(sharedPreferences)
 
     var tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
-    val delta = 2 * 60 * 60 * 1000
+    val delta =  2 * 60 * 60 * 1000
+    Log.d("delta", delta.toString())
+    Log.d("TMSU", tmsUpdate.toString())
+    Log.d("TMS", System.currentTimeMillis().toString())
+    Log.d("TMSD", (tmsUpdate + delta).toString())
+
     if (System.currentTimeMillis() >= tmsUpdate + delta) {
-      tmsUpdate = System.currentTimeMillis()
-      sharedPreferences.edit().putLong("LONG_KEY", tmsUpdate).apply()
+      Log.d("m", "OOHH")
       //get city
       retrieveCity(locationTextView, sharedPreferences) { lat, long ->
         //get weather
         weatherForecast(lat, long, getString(R.string.weather_key))
       }
+      tmsUpdate = System.currentTimeMillis()
+      sharedPreferences.edit().putLong("LONG_KEY", tmsUpdate).apply()
     }
 
     val noMeGusta: Button = binding.noMeGusta
-    noMeGusta.setOnClickListener {
-      //findNavController().navigate(R.id.navigation_profile)
-      // crea una doble barra de navegación
-      //parentFragmentManager.popBackStack()
+    noMeGusta.setOnHoverListener { view, event ->
+      when (event.action) {
+        MotionEvent.ACTION_HOVER_ENTER -> {
+          view.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_error)
+          true
+        }
+        MotionEvent.ACTION_HOVER_EXIT -> {
+          view.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_default)
+          true
+        }
+        else -> false
+      }
     }
+
     val meGusta: Button = binding.meGusta
-    meGusta.setOnClickListener {
-      /*if (isAdded) {
-        Log.d("HomeFragment", "Continue to Fragment Calendar")
-        val intent = Intent(requireContext(), MainActivity::class.java)
-        intent.putExtra("fragment", R.id.navigation_calendar)
-        startActivity(intent)
-        //findNavController().navigate(R.id.navigation_calendar)
-      } else {
-        Log.e("HomeFragment", "Fragment not attached to activity")
-      }*/
+
+    meGusta.setOnHoverListener { view, event ->
+      when (event.action) {
+        MotionEvent.ACTION_HOVER_ENTER -> {
+          view.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_confirm)
+          true
+        }
+        MotionEvent.ACTION_HOVER_EXIT -> {
+          view.background = ContextCompat.getDrawable(requireContext(), R.drawable.button_default)
+          true
+        }
+        else -> false
+      }
     }
     return root
   }
@@ -226,12 +246,18 @@ class HomeFragment : Fragment() {
       val month = calendar.get(Calendar.MONTH) + 1 // Month is zero-based
       val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+      var dayString = if (day < 10) {
+        "0$day" // Adding leading zero if dayOfMonth is less than 10
+      } else {
+        day.toString()
+      }
+
       var tempMin = 0
       var tempMax = 0
       var weat = ""
 
 
-      var dateToday = "$year-0$month-$day"
+      var dateToday = "$year-0$month-$dayString"
       val jsonObject = JSONObject(jsonString)
       val listArray = jsonObject.getJSONArray("list")
       for (i in 0 until listArray.length()) {
