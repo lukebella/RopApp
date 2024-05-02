@@ -126,7 +126,7 @@ class AddClothes : AppCompatActivity() {
                 }
             }
 
-        binding.categoryButton.setOnClickListener {
+        binding.categoryLayout.setOnClickListener {
             Log.d("AddClothes", "Add Category")
             val intent = Intent(this, AddCategories::class.java)
             if (uploadData["category"] != null)
@@ -134,7 +134,7 @@ class AddClothes : AppCompatActivity() {
             startForResult.launch(intent)
         }
 
-        binding.styleButton.setOnClickListener {
+        binding.styleLayout.setOnClickListener {
             Log.d("AddClothes", "Add Style")
             val intent = Intent(this, AddStyle::class.java)
             if (uploadData["style"] != null)
@@ -142,7 +142,7 @@ class AddClothes : AppCompatActivity() {
             startForResult.launch(intent)
         }
 
-        binding.detailsButton.setOnClickListener {
+        binding.detailsLayout.setOnClickListener {
             Log.d("AddClothes", "Add Details")
             intent = Intent(this, AddDetails::class.java)
             startActivity(intent)
