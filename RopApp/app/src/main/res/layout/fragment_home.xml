@@ -24,28 +24,22 @@
             android:id="@+id/constraintLayout2"
             android:layout_width="338dp"
             android:layout_height="460dp"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="156dp"
-            android:layout_marginEnd="20dp"
             android:background="@color/md_theme_surfaceContainer"
+            android:elevation="12dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.484"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            android:elevation="12dp">
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
 
             <ImageView
                 android:id="@+id/logoRecommend"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="13dp"
-                app:layout_constraintBottom_toTopOf="@+id/recomendprenda"
-                app:layout_constraintEnd_toStartOf="@+id/textPregunta"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.212"
                 app:srcCompat="@drawable/ropapplogo" />
 
             <TextView
@@ -53,7 +47,7 @@
                 android:layout_width="181dp"
                 android:layout_height="70dp"
                 android:layout_marginStart="28dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_marginBottom="26dp"
                 android:fontFamily="sans-serif-black"
                 android:text="Que te apetece poner hoy?"
@@ -61,16 +55,12 @@
                 android:textStyle="bold|italic"
                 app:layout_constraintBottom_toTopOf="@+id/recomendprenda"
                 app:layout_constraintStart_toEndOf="@+id/logoRecommend"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/recomendprenda"
                 android:layout_width="173dp"
                 android:layout_height="202dp"
-
-                android:layout_marginStart="86dp"
-                android:layout_marginEnd="79dp"
                 android:layout_marginBottom="12dp"
                 app:layout_constraintBottom_toTopOf="@+id/recomendacionDelDia"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -181,14 +171,13 @@
             android:id="@+id/constraintLayout4"
             android:layout_width="342dp"
             android:layout_height="85dp"
-            android:layout_marginStart="36dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="21dp"
             android:background="@drawable/rectangle_borders"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView"
-            app:layout_constraintVertical_bias="0.347">
+            app:layout_constraintTop_toBottomOf="@+id/imageView">
 
 
             <TextView
@@ -196,7 +185,7 @@
                 android:layout_width="88dp"
                 android:layout_height="21dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:text="Vie 23 Feb"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -208,31 +197,27 @@
                 android:id="@+id/temperature"
                 android:layout_width="87dp"
                 android:layout_height="23dp"
-                android:layout_marginStart="7dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="11dp"
                 android:text="20/10 °C"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.87"
-                app:layout_constraintStart_toEndOf="@+id/aCoruna"
                 app:layout_constraintTop_toBottomOf="@+id/weatherDate" />
 
             <TextView
                 android:id="@+id/aCoruna"
                 android:layout_width="113dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginEnd="21dp"
+                android:layout_marginStart="8dp"
                 android:fontFamily="sans-serif-black"
                 android:text="Location"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
                 android:textSize="17sp"
                 android:textStyle="bold|italic"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/weatImg"
                 app:layout_constraintStart_toEndOf="@+id/imageView6"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -241,9 +226,8 @@
                 android:id="@+id/imageView6"
                 android:layout_width="27dp"
                 android:layout_height="39dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="21dp"
-                app:layout_constraintEnd_toStartOf="@+id/aCoruna"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/placeholder" />
@@ -252,8 +236,8 @@
                 android:id="@+id/weatImg"
                 android:layout_width="58dp"
                 android:layout_height="44dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/weatherDate"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/w01d_2x" />
