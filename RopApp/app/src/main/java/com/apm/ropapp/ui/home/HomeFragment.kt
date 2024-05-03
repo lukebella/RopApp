@@ -176,7 +176,7 @@ class HomeFragment : Fragment() {
                             Log.d("HOME", "address")
                             city = addresses[0].locality
                             sharedPreferences.edit().putString("LOC", city).apply()
-                            //locationTextView.text = city
+                            locationTextView.text = city
                             callback(location.latitude, location.longitude)
                         } else {
                             Log.d("HOME", "no address")
@@ -191,7 +191,7 @@ class HomeFragment : Fragment() {
                         Log.d("HOME", "address")
                         city = addresses[0].locality
                         sharedPreferences.edit().putString("LOC", city).apply()
-                        //locationTextView.text = city
+                        locationTextView.text = city
                         callback(location.latitude, location.longitude)
                     } else {
                         Log.d("HOME", "no address")

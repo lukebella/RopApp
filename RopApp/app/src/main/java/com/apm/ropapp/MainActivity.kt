@@ -20,8 +20,7 @@ private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
 
         val user = FirebaseAuth.getInstance().currentUser
         if(user == null){
@@ -32,6 +31,9 @@ private lateinit var binding: ActivityMainBinding
             Log.d("Main Activity", "User logged")
             Toast.makeText(this, "Signed in as ${user.displayName}", Toast.LENGTH_SHORT).show()
         }
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment

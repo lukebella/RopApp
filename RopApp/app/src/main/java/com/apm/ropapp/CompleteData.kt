@@ -45,7 +45,6 @@ class CompleteData : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
                 selectedGender = parent.getItemAtPosition(position).toString()
                 Log.d("SignUp", "Se seleccionó el género: $selectedGender")
-                Toast.makeText(applicationContext, "Selected gender: $selectedGender", Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
