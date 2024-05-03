@@ -14,20 +14,17 @@ import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
-private lateinit var binding: ActivityMainBinding
-
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         val user = FirebaseAuth.getInstance().currentUser
-        if(user == null){
+        if (user == null) {
             Log.d("Main Activity", "No user logged")
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
-        }else{
+        } else {
             Log.d("Main Activity", "User logged")
             Toast.makeText(this, "Signed in as ${user.displayName}", Toast.LENGTH_SHORT).show()
         }
@@ -57,7 +54,6 @@ private lateinit var binding: ActivityMainBinding
             //onDestinationchangedListener
         }
     }
-
 
     private fun showCustomDialog() {
         // Crear e instanciar el Custom Dialog

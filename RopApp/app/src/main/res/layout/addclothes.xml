@@ -65,7 +65,7 @@
                 android:src="@drawable/baseline_add_a_photo_24"
                 android:background="@drawable/button_default_click"
                 app:backgroundTint="@null"
-                app:tint="@color/md_theme_surface"
+                app:tint="@color/md_theme_inverseOnSurface"
                 app:layout_constraintEnd_toStartOf="@+id/galeria"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -78,7 +78,7 @@
                 android:src="@drawable/baseline_add_photo_alternate_24"
                 android:background="@drawable/button_default_click"
                 app:backgroundTint="@null"
-                app:tint="@color/md_theme_surface"
+                app:tint="@color/md_theme_inverseOnSurface"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/camara"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />

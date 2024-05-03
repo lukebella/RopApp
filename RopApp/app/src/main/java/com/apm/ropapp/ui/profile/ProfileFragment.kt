@@ -2,7 +2,6 @@ package com.apm.ropapp.ui.profile
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,9 +18,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class ProfileFragment : Fragment(){
+class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -34,23 +34,22 @@ class ProfileFragment : Fragment(){
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val button = binding.logOutButton
-        button.setBackgroundColor(Color.parseColor("#FF0000"))
+
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
-            val databaseReference = FirebaseDatabase.getInstance().reference.child("users").child(userId)
-            databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        val username = dataSnapshot.child("username").getValue(String::class.java)
-                        binding.textView6.text = username
-                    }
-                }
+            FirebaseDatabase.getInstance().reference.child("users")
+                .child(userId).addValueEventListener(object : ValueEventListener {
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                    Log.d("ProfileFragment", "Failed to get user data.", databaseError.toException())
-                }
-            })
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists())
+                            binding.textView6.text =
+                                dataSnapshot.child("username").getValue(String::class.java)
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        Log.d("ProfileFragment", "Failed to get user data.", databaseError.toException())
+                    }
+                })
         }
 
         binding.configButton.setOnClickListener {
@@ -66,11 +65,11 @@ class ProfileFragment : Fragment(){
             Log.d("Profile", "Stats button clicked")
         }
 
-        binding.logOutButton.setOnClickListener(){
+        binding.logOutButton.setOnClickListener {
             AlertDialog.Builder(requireContext())
                 .setTitle("Logout")
                 .setMessage("Are you sure you want to logout?")
-                .setPositiveButton("Yes") { dialog, which ->
+                .setPositiveButton("Yes") { _, _ ->
                     FirebaseAuth.getInstance().signOut()
                     Toast.makeText(requireContext(), "Signed Out", Toast.LENGTH_SHORT).show()
                     val intent = Intent(requireContext(), Login::class.java)
