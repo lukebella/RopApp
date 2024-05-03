@@ -62,12 +62,11 @@ class HomeFragment : Fragment() {
 
         var tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
         val delta = 2 * 60 * 60 * 1000
-        Log.d("delta", delta.toString())
         Log.d("TMSU", tmsUpdate.toString())
         Log.d("TMS", System.currentTimeMillis().toString())
         Log.d("TMSD", (tmsUpdate + delta).toString())
 
-        if (System.currentTimeMillis() >= tmsUpdate + delta) {
+        //if (System.currentTimeMillis() >= tmsUpdate + delta) {
             Log.d("m", "OOHH")
             //get city
             retrieveCity(locationTextView, sharedPreferences) { lat, long ->
@@ -76,7 +75,7 @@ class HomeFragment : Fragment() {
             }
             tmsUpdate = System.currentTimeMillis()
             sharedPreferences.edit().putLong("LONG_KEY", tmsUpdate).apply()
-        }
+        //}
 
         val noMeGusta: Button = binding.noMeGusta
         noMeGusta.setOnHoverListener { view, event ->
