@@ -49,42 +49,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val meGustaButton = binding.meGusta
-        val noMeGustaButton = binding.noMeGusta
-
-        meGustaButton.setOnHoverListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_HOVER_ENTER -> {
-                    Log.d("Hover", "Hover")
-                    // Change the color when the mouse enters
-                    meGustaButton.backgroundTintList = ColorStateList.valueOf(Color.RED)
-                }
-                MotionEvent.ACTION_HOVER_EXIT -> {
-                    // Reset the color when the mouse exits
-                    meGustaButton.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
-                }
-            }
-            false
-        }
-
-        noMeGustaButton.setOnHoverListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_HOVER_ENTER -> {
-                    Log.d("Hover", "Hover")
-                    // Change the color when the mouse enters
-                    noMeGustaButton.backgroundTintList = ColorStateList.valueOf(Color.RED)
-                }
-                MotionEvent.ACTION_HOVER_EXIT -> {
-                    // Reset the color when the mouse exits
-                    noMeGustaButton.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
-                }
-            }
-            false
-        }
-
-    }*/
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
