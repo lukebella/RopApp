@@ -27,7 +27,7 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="119dp"
+                    android:layout_width="118dp"
                     android:layout_height="129dp"
                     android:layout_marginStart="146dp"
                     android:layout_marginTop="64dp"
@@ -46,7 +46,6 @@
                     android:textColor="@color/md_theme_onPrimary"
                     android:textSize="30sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -74,12 +73,12 @@
 
                 <ImageView
                     android:id="@+id/imageView9"
-                    android:layout_width="40dp"
-                    android:layout_height="31dp"
-                    android:layout_marginTop="60dp"
+                    android:layout_width="45dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="56dp"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:src="@drawable/statistics"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.05"
+                    app:tint="@color/md_theme_inverseOnSurface"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,7 +99,6 @@
                     android:text="Información Cuenta"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <ImageView
@@ -108,9 +106,9 @@
                     android:layout_width="36dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:src="@drawable/info_cuenta"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.049"
+                    app:tint="@color/md_theme_inverseOnSurface"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -140,9 +138,9 @@
                     android:layout_width="36dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:src="@drawable/conf"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.049"
+                    app:tint="@color/md_theme_inverseOnSurface"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -160,8 +158,8 @@
                     android:id="@+id/logOutButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/md_theme_error_mediumContrast"
                     android:text="Sign Out"
-                    android:textColor="#FFFFFF"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -172,9 +170,9 @@
                     android:layout_width="36dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:src="@drawable/logout"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.049"
+                    app:tint="@color/md_theme_inverseOnSurface"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

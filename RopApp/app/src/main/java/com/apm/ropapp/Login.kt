@@ -139,13 +139,13 @@ class Login : AppCompatActivity() {
                 val user = firebaseAuth.currentUser
                 val userId = user?.uid.toString()
 
-                val queryToGetData: Query =
-                    database.child("users").child(userId).equalTo(user?.uid.toString())
-                queryToGetData.addListenerForSingleValueEvent(object : ValueEventListener {
+                val usersRef = database.child("users")
+
+                usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        if (!dataSnapshot.exists()) {
-                            //val intent = Intent(this@Login, CompleteData::class.java)
-                            //startActivity(intent)
+                        if (dataSnapshot.child(userId).value == null){
+                            val intent = Intent(this@Login, CompleteData::class.java)
+                            startActivity(intent)
                             finish()
 
                         } else {
