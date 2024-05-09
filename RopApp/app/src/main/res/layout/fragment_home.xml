@@ -71,8 +71,9 @@
                 android:id="@+id/recomendacionDelDia"
                 android:layout_width="252dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="42dp"
+                android:layout_marginStart="41dp"
                 android:layout_marginEnd="41dp"
+                android:layout_marginBottom="9dp"
                 android:fontFamily="sans-serif-black"
                 android:text="Recomendación del día"
                 android:textAlignment="center"
@@ -83,89 +84,37 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
+
+            <ImageButton
                 android:id="@+id/meGusta"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="100dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="50dp"
-                android:background="@drawable/button_default"
-                android:text="Me gusta"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="70dp"
+                android:background="@drawable/selector_button_megusta"
+                android:src="@drawable/thumbsup"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/noMeGusta"
                 app:layout_constraintTop_toBottomOf="@+id/recomendacionDelDia" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/noMeGusta"
-                style="@style/Widget.AppCompat.Button"
-                android:layout_width="100dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/button_default"
-                android:text="No me Gusta"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/selector_button_nomegusta"
+                android:src="@drawable/thumbsdown"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/meGusta"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recomendacionDelDia" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--<androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout3"
-            android:layout_width="138dp"
-            android:layout_height="58dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="126dp"
-            android:layout_marginEnd="68dp"
-            android:layout_marginBottom="21dp"
-            android:background="@drawable/rectangle_borders"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout4"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="29dp"
-                android:text="Sab 24 Feb"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="63dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="8dp"
-                android:text="12/5 °C"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/lluvia" />
-        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"

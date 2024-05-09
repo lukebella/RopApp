@@ -6,6 +6,8 @@ import android.annotation.SuppressLint
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.location.Geocoder
 import android.os.AsyncTask
 import android.os.Build
@@ -16,6 +18,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -45,6 +48,43 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val meGustaButton = binding.meGusta
+        val noMeGustaButton = binding.noMeGusta
+
+        meGustaButton.setOnHoverListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_HOVER_ENTER -> {
+                    Log.d("Hover", "Hover")
+                    // Change the color when the mouse enters
+                    meGustaButton.backgroundTintList = ColorStateList.valueOf(Color.RED)
+                }
+                MotionEvent.ACTION_HOVER_EXIT -> {
+                    // Reset the color when the mouse exits
+                    meGustaButton.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
+                }
+            }
+            false
+        }
+
+        noMeGustaButton.setOnHoverListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_HOVER_ENTER -> {
+                    Log.d("Hover", "Hover")
+                    // Change the color when the mouse enters
+                    noMeGustaButton.backgroundTintList = ColorStateList.valueOf(Color.RED)
+                }
+                MotionEvent.ACTION_HOVER_EXIT -> {
+                    // Reset the color when the mouse exits
+                    noMeGustaButton.backgroundTintList = ColorStateList.valueOf(Color.TRANSPARENT)
+                }
+            }
+            false
+        }
+
+    }*/
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -77,44 +117,7 @@ class HomeFragment : Fragment() {
             sharedPreferences.edit().putLong("LONG_KEY", tmsUpdate).apply()
         //}
 
-        val noMeGusta: Button = binding.noMeGusta
-        noMeGusta.setOnHoverListener { view, event ->
-            when (event.action) {
-                MotionEvent.ACTION_HOVER_ENTER -> {
-                    view.background =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.button_error)
-                    true
-                }
 
-                MotionEvent.ACTION_HOVER_EXIT -> {
-                    view.background =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.button_default)
-                    true
-                }
-
-                else -> false
-            }
-        }
-
-        val meGusta: Button = binding.meGusta
-
-        meGusta.setOnHoverListener { view, event ->
-            when (event.action) {
-                MotionEvent.ACTION_HOVER_ENTER -> {
-                    view.background =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.button_confirm)
-                    true
-                }
-
-                MotionEvent.ACTION_HOVER_EXIT -> {
-                    view.background =
-                        ContextCompat.getDrawable(requireContext(), R.drawable.button_default)
-                    true
-                }
-
-                else -> false
-            }
-        }
         return root
     }
 
