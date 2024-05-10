@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.EditProfile
 import com.apm.ropapp.Login
+import com.apm.ropapp.Stats
 import com.apm.ropapp.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -62,7 +63,9 @@ class ProfileFragment : Fragment() {
         }
 
         binding.statsButton.setOnClickListener {
+            val intent = Intent(requireContext(), Stats::class.java)
             Log.d("Profile", "Stats button clicked")
+            startActivity(intent)
         }
 
         binding.logOutButton.setOnClickListener {

@@ -109,6 +109,18 @@
             android:label="EditPassword">
         </activity>
 
+        <activity
+            android:name=".Stats"
+            android:exported="true"
+            android:label="Stats">
+        </activity>
+
+        <activity
+            android:name=".StatsSeason"
+            android:exported="true"
+            android:label="StatsSeason">
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.apm.ropapp.FileProvider"
