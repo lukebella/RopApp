@@ -61,7 +61,7 @@ class ProfileFragment : Fragment() {
             Log.d("Profile", "Info button clicked")
         }
 
-        binding.statButton.setOnClickListener {
+        binding.statsButton.setOnClickListener {
             Log.d("Profile", "Stats button clicked")
         }
 

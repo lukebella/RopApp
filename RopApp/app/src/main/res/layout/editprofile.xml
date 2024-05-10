@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/edit_genero"
+        android:layout_width="207dp"
+        android:layout_height="42dp"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginVertical="@dimen/activity_vertical_margin"
+        android:layout_marginTop="24dp"
+        android:entries="@array/genero_options"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editBirthdate" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -38,6 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
     <Button
         android:id="@+id/password_change"
         android:layout_width="wrap_content"
@@ -48,38 +62,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-<!--    <EditText-->
-<!--        android:id="@+id/edit_mail"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:ems="10"-->
-<!--        android:text="Email@something.com"-->
-<!--        android:inputType="textEmailAddress"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/edit_phone"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/edit_phone" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/edit_phone"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="21dp"-->
-<!--        android:ems="10"-->
-<!--        android:inputType="phone"-->
-<!--        android:text="123456789"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/edit_address"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/edit_address" />-->
-
-<!--    <EditText-->
-<!--        android:id="@+id/edit_address"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="35dp"-->
-<!--        android:ems="10"-->
-<!--        android:text="Ronda de Outeiro"-->
-<!--        android:inputType="textPostalAddress"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/password_change"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/password_change" />-->
 
     <Button
         android:id="@+id/save_button2"
@@ -93,6 +75,17 @@
         app:layout_constraintHorizontal_bias="0.351"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <EditText
+        android:id="@+id/editBirthdate"
+        android:layout_width="210dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="21dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editUsername" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

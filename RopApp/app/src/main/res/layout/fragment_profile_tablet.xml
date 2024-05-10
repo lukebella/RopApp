@@ -6,7 +6,7 @@
     tools:context=".ui.profile.ProfileFragment">
 
     <Button
-        android:id="@+id/stat_button"
+        android:id="@+id/season_button"
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginTop="32dp"
@@ -38,13 +38,13 @@
         app:layout_constraintStart_toEndOf="@+id/imageView2" />
 
     <Button
-        android:id="@+id/info_button"
+        android:id="@+id/clothes_button"
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginTop="36dp"
         android:text="Información Figura"
-        app:layout_constraintStart_toStartOf="@+id/stat_button"
-        app:layout_constraintTop_toBottomOf="@+id/stat_button" />
+        app:layout_constraintStart_toStartOf="@+id/season_button"
+        app:layout_constraintTop_toBottomOf="@+id/season_button" />
 
     <ImageView
         android:id="@+id/imageView2"

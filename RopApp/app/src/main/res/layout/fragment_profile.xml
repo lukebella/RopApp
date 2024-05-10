@@ -61,7 +61,7 @@
                 android:layout_marginBottom="16dp">
 
                 <Button
-                    android:id="@+id/stat_button"
+                    android:id="@+id/stats_button"
                     android:layout_width="match_parent"
                     android:layout_height="49dp"
                     android:layout_marginTop="50dp"

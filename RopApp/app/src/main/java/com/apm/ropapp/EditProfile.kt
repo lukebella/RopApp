@@ -3,6 +3,8 @@ package com.apm.ropapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.AdapterView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.EditprofileBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -11,10 +13,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
 
 class EditProfile : AppCompatActivity() {
     private lateinit var binding: EditprofileBinding
     private lateinit var databaseReference: DatabaseReference
+    private var selectedGender: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +37,20 @@ class EditProfile : AppCompatActivity() {
                 if (dataSnapshot.exists()) {
                     // Obtener los datos del usuario actual
                     val username = dataSnapshot.child("username").getValue(String::class.java)
+                    val birthdate = dataSnapshot.child("birthdate").getValue(String::class.java)
+                    selectedGender = dataSnapshot.child("gender").getValue(String::class.java)
 
                     // Llenar los campos de EditText con la información del usuario actual
                     username?.let { binding.editUsername.setText(it) }
+                    birthdate?.let { binding.editBirthdate.setText(it) }
+                    selectedGender?.let {
+                        val spinnerPosition = when (it) {
+                            "Hombre" -> 0
+                            "Mujer" -> 1
+                            else -> 2
+                        }
+                        binding.editGenero.setSelection(spinnerPosition)
+                    }
                 }
             }
 
@@ -49,14 +64,28 @@ class EditProfile : AppCompatActivity() {
         binding.cancelButton.setOnClickListener {
             finish()
         }
+        binding.editGenero.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+                selectedGender = parent.getItemAtPosition(position).toString()
+                Log.d("EditProfile", "Se seleccionó el género: $selectedGender")
+//                Toast.makeText(applicationContext, "Selected gender: $selectedGender", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // No hacer nada si no se selecciona ningún elemento
+            }
+        }
         binding.saveButton2.setOnClickListener {
             Log.d("EditProfile", "Edit Profile")
 
             // Get the updated username from the EditText
             val updatedUsername = binding.editUsername.text.toString()
+            val updatedBirthdate = binding.editBirthdate.text.toString()
 
-            // Update the username in the Firebase database
+                // Update the username in the Firebase database
             databaseReference.child("username").setValue(updatedUsername)
+            databaseReference.child("birthdate").setValue(updatedBirthdate)
+            databaseReference.child("gender").setValue(selectedGender)
 
             // Navigate back to MainActivity
             intent = Intent(this, MainActivity::class.java)
@@ -64,29 +93,6 @@ class EditProfile : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        binding.editAddress.setOnFocusChangeListener { v, hasFocus ->
-//            if (!hasFocus) {
-//                val address = binding.editAddress.text.toString()
-//                Log.d("EditProfile", "Address: $address")
-//                // You can now use the address variable
-//            }
-//        }
-
-//        binding.editPhone.setOnFocusChangeListener { v, hasFocus ->
-//            if (!hasFocus) {
-//                val phone = binding.editPhone.text.toString()
-//                Log.d("EditProfile", "Phone: $phone")
-//                // You can now use the phone variable
-//            }
-//        }
-
-//        binding.editMail.setOnFocusChangeListener { v, hasFocus ->
-//            if (!hasFocus) {
-//                val email = binding.editMail.text.toString()
-//                Log.d("EditProfile", "Email: $email")
-//                // You can now use the email variable
-//            }
-//        }
 
         binding.passwordChange.setOnClickListener() {
             intent = Intent(this, EditPassword::class.java)
