@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.getValue
+
 
 class EditProfile : AppCompatActivity() {
     private lateinit var binding: EditprofileBinding
@@ -29,7 +29,8 @@ class EditProfile : AppCompatActivity() {
 
         // Obtener una referencia a la base de datos de Firebase para los datos del user actual
         databaseReference = userId?.let {
-            FirebaseDatabase.getInstance().reference.child("users").child(it) }!!
+            FirebaseDatabase.getInstance().reference.child("users").child(it)
+        }!!
 
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -62,10 +63,16 @@ class EditProfile : AppCompatActivity() {
         // Initialize your views here
         // For example, to set a click listener on the floating action button:
         binding.cancelButton.setOnClickListener {
+            Log.d("EditProfile", "Back to Profile")
             finish()
         }
         binding.editGenero.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: android.view.View?,
+                position: Int,
+                id: Long
+            ) {
                 selectedGender = parent.getItemAtPosition(position).toString()
                 Log.d("EditProfile", "Se seleccionó el género: $selectedGender")
 //                Toast.makeText(applicationContext, "Selected gender: $selectedGender", Toast.LENGTH_SHORT).show()
@@ -82,7 +89,7 @@ class EditProfile : AppCompatActivity() {
             val updatedUsername = binding.editUsername.text.toString()
             val updatedBirthdate = binding.editBirthdate.text.toString()
 
-                // Update the username in the Firebase database
+            // Update the username in the Firebase database
             databaseReference.child("username").setValue(updatedUsername)
             databaseReference.child("birthdate").setValue(updatedBirthdate)
             databaseReference.child("gender").setValue(selectedGender)
@@ -95,6 +102,17 @@ class EditProfile : AppCompatActivity() {
 
 
         binding.passwordChange.setOnClickListener() {
+            for (user in FirebaseAuth.getInstance().currentUser!!
+                .providerData) {
+                if (user.providerId == "facebook.com" || user.providerId == "google.com") {
+                    Log.d("EditProfile", "Not allowed to change password")
+                    Toast.makeText(
+                        applicationContext,
+                        "Not possible to change password, user signed with ${user.providerId}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
             intent = Intent(this, EditPassword::class.java)
             Log.d("EditProfile", "Change Password")
             startActivity(intent)

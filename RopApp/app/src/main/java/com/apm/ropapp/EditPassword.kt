@@ -28,8 +28,7 @@ class EditPassword : AppCompatActivity() {
         // For example, to set a click listener on the floating action button:
         binding.cancelButton3.setOnClickListener {
             Log.d("EditPassword", "Back to EditProfile")
-            intent = Intent(this, EditProfile::class.java)
-            startActivity(intent)
+            finish()
         }
         binding.saveButton3.setOnClickListener {
             Log.d("EditPassword", "Change Password")
