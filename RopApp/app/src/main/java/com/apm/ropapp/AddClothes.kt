@@ -1,9 +1,9 @@
 package com.apm.ropapp
 
-
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -20,7 +20,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.util.UUID
-import kotlin.collections.set
 
 
 class AddClothes : AppCompatActivity() {
@@ -42,10 +41,17 @@ class AddClothes : AppCompatActivity() {
         database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
         storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
 
+        val clothesData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            intent.extras?.getSerializable("clothes", HashMap<String, Any>().javaClass)
+        else intent.extras?.getSerializable("clothes")
+
+        if (clothesData != null) {
+            Log.d("Clothes", clothesData.toString())
+        }
+
         binding.backButton.setOnClickListener {
-            intent = Intent(this, MainActivity::class.java)
             Log.d("AddClothes", "Back to Main Activity")
-            startActivity(intent)
+            finish()
         }
 
         binding.guardar.setOnClickListener {
@@ -65,9 +71,11 @@ class AddClothes : AppCompatActivity() {
             }
             uploadNewClothes(uploadData)
 
-            intent = Intent(this, MainActivity::class.java)
+            val intent = Intent()
+            //intent.putExtra("category", result)
+            setResult(RESULT_OK, intent)
             Log.d("AddClothes", "Dress added: $uploadData")
-            startActivity(intent)
+            finish()
         }
 
         val resultLauncher =
@@ -118,8 +126,12 @@ class AddClothes : AppCompatActivity() {
                         binding.styleTextView.text = updateTextView("style")
                         Log.d("AddStyle", uploadData["style"].toString())
                     }
-                    if (extras?.getSerializable("details") != null) {
-                        uploadData["details"] = extras.getSerializable("details")!!
+
+                    val detailsData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                        extras?.getSerializable("details", HashMap<String, Any>().javaClass)
+                    else extras?.getSerializable("details")
+                    if (detailsData != null) {
+                        uploadData["details"] = detailsData
                         binding.detailsTextView.text = updateTextView("details")
                         Log.d("AddDetails", uploadData["details"].toString())
                     }
@@ -146,7 +158,7 @@ class AddClothes : AppCompatActivity() {
             Log.d("AddClothes", "Add Details")
             val intent = Intent(this, AddDetails::class.java)
             if (uploadData["details"] != null)
-                intent.putExtra("checked", uploadData["details"] as ArrayList<*>)
+                intent.putExtra("checked", uploadData["details"] as HashMap<*, *>)
             startForResult.launch(intent)
         }
     }
