@@ -91,7 +91,8 @@ class ClosetFragment : Fragment() {
                             val photos = storage.child(folderName)
 
                             data.values.forEach { value ->
-                                nameList.add(value["category"].toString())
+                                val nameString = value["category"].toString()
+                                nameList.add(nameString.substring(1, nameString.length-1))
                                 if (value["photo"] == null) imageList.add(Uri.EMPTY)
                                 else imageList.add(getImageUri(value["photo"].toString(), photos))
                             }
@@ -112,12 +113,10 @@ class ClosetFragment : Fragment() {
         binding.button1.setOnClickListener {
             selectButton(binding.button1)
             getDatabaseValues("clothes")
-            //recyclerView.adapter = CustomAdapter(stringList, imageList)
         }
         binding.button2.setOnClickListener {
             selectButton(binding.button2)
             getDatabaseValues("outfits")
-            //recyclerView.adapter = CustomAdapter(stringList2, imageList2)
         }
 
         return root

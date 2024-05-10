@@ -3,7 +3,10 @@ package com.apm.ropapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
 import com.apm.ropapp.databinding.AddchoicestyleBinding
 
 class AddStyle : AppCompatActivity() {
@@ -15,20 +18,13 @@ class AddStyle : AppCompatActivity() {
 
         binding = AddchoicestyleBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        val layout = binding.root.getChildAt(0)
         val checkedList = intent.extras?.getStringArrayList("checked")
-        if (checkedList != null) {
-            if (checkedList.contains(binding.classic.text)) binding.classic.toggle()
-            if (checkedList.contains(binding.bohemian.text)) binding.bohemian.toggle()
-            if (checkedList.contains(binding.preppy.text)) binding.preppy.toggle()
-            if (checkedList.contains(binding.streetwear.text)) binding.streetwear.toggle()
-            if (checkedList.contains(binding.streetwear.text)) binding.streetwear.toggle()
-            if (checkedList.contains(binding.romantic.text)) binding.romantic.toggle()
-            if (checkedList.contains(binding.minimalist.text)) binding.minimalist.toggle()
-            if (checkedList.contains(binding.vintage.text)) binding.vintage.toggle()
-            if (checkedList.contains(binding.sporty.text)) binding.sporty.toggle()
-            if (checkedList.contains(binding.glamorous.text)) binding.glamorous.toggle()
-            if (checkedList.contains(binding.eclectic.text)) binding.eclectic.toggle()
+
+        if (checkedList != null && layout is ConstraintLayout) {
+            for (checkBox in layout.children)
+                if (checkBox is CheckBox && checkedList.contains(checkBox.text))
+                    checkBox.toggle()
         }
 
         binding.backButtonChoice.setOnClickListener {
@@ -38,16 +34,12 @@ class AddStyle : AppCompatActivity() {
 
         binding.confirm.setOnClickListener {
             val result = arrayListOf<String>()
-            if (binding.classic.isChecked) result.add(binding.classic.text.toString())
-            if (binding.bohemian.isChecked) result.add(binding.bohemian.text.toString())
-            if (binding.preppy.isChecked) result.add(binding.preppy.text.toString())
-            if (binding.streetwear.isChecked) result.add(binding.streetwear.text.toString())
-            if (binding.romantic.isChecked) result.add(binding.romantic.text.toString())
-            if (binding.minimalist.isChecked) result.add(binding.minimalist.text.toString())
-            if (binding.vintage.isChecked) result.add(binding.vintage.text.toString())
-            if (binding.sporty.isChecked) result.add(binding.sporty.text.toString())
-            if (binding.glamorous.isChecked) result.add(binding.glamorous.text.toString())
-            if (binding.eclectic.isChecked) result.add(binding.eclectic.text.toString())
+
+            if (layout is ConstraintLayout) {
+                for (checkBox in layout.children)
+                    if (checkBox is CheckBox && checkBox.isChecked)
+                        result.add(checkBox.text.toString())
+            }
 
             val intent = Intent()
             intent.putExtra("style", result)
