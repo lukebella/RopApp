@@ -36,74 +36,46 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="13dp"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ropapplogo" />
 
+
             <TextView
                 android:id="@+id/textPregunta"
-                android:layout_width="181dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="28dp"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_marginBottom="26dp"
+                android:layout_width="217dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="36dp"
                 android:fontFamily="sans-serif-black"
-                android:text="Que te apetece poner hoy?"
-                android:textSize="22sp"
+                android:text="Recomendación del día"
+                android:textSize="21sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintBottom_toTopOf="@+id/recomendprenda"
                 app:layout_constraintStart_toEndOf="@+id/logoRecommend"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/recomendprenda"
-                android:layout_width="173dp"
-                android:layout_height="202dp"
-                android:layout_marginBottom="12dp"
-                app:layout_constraintBottom_toTopOf="@+id/recomendacionDelDia"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/recomendprenda" />
-
-            <TextView
-                android:id="@+id/recomendacionDelDia"
-                android:layout_width="252dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="41dp"
-                android:layout_marginEnd="41dp"
-                android:layout_marginBottom="9dp"
-                android:fontFamily="sans-serif-black"
-                android:text="Recomendación del día"
-                android:textAlignment="center"
-                android:textColor="@color/md_theme_onSurface"
-                android:textSize="20sp"
-                android:textStyle="bold|italic"
-                app:layout_constraintBottom_toTopOf="@+id/meGusta"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-
             <ImageButton
                 android:id="@+id/meGusta"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="70dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/selector_button_megusta"
                 android:src="@drawable/thumbsup"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/noMeGusta"
-                app:layout_constraintTop_toBottomOf="@+id/recomendacionDelDia" />
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
 
             <ImageButton
                 android:id="@+id/noMeGusta"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="70dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="60dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/selector_button_nomegusta"
@@ -111,7 +83,59 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/meGusta"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recomendacionDelDia" />
+                app:layout_constraintTop_toBottomOf="@+id/divider2" />
+
+            <ImageView
+                android:id="@+id/prenda1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="52dp"
+                android:layout_marginTop="53dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textPregunta"
+                app:srcCompat="@drawable/tshirt" />
+
+            <ImageView
+                android:id="@+id/prenda2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="52dp"
+                android:layout_marginEnd="52dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textPregunta"
+                app:srcCompat="@drawable/tshirt" />
+
+            <ImageView
+                android:id="@+id/prenda3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="52dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/divider2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:srcCompat="@drawable/tshirt" />
+
+            <ImageView
+                android:id="@+id/preda4"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="52dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toTopOf="@+id/divider2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/tshirt" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="350dp"
+                android:background="?android:attr/listDivider"
+                android:backgroundTint="#6A6767"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,12 +8,12 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="800dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="#E1D4D4"
-        android:backgroundTint="#A8A7CE"
+        android:backgroundTint="@color/md_theme_background"
+        android:minHeight="800dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -40,12 +40,12 @@
 
         <TextView
             android:id="@+id/textView12"
-            android:layout_width="325dp"
-            android:layout_height="30dp"
+            android:layout_width="330dp"
+            android:layout_height="58dp"
             android:layout_marginTop="90dp"
             android:background="#FAF0F0"
             android:fontFamily="casual"
-            android:text="Select the categories of your dress"
+            android:text="Selecciona las categorias de tu prenda:"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold|italic"
@@ -68,12 +68,10 @@
             android:id="@+id/accessories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="147dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="21dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="12dp"
             android:text="Accessories"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/top"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
         <CheckBox

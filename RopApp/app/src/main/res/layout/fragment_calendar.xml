@@ -24,42 +24,80 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_width="383dp"
+        android:layout_height="239dp"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:layout_marginTop="84dp"
         android:background="@drawable/rectangle_borders"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/simpleCalendarView">
 
         <TextView
             android:id="@+id/prendaMasUtilizada"
-            android:layout_width="218dp"
-            android:layout_height="27dp"
-            android:layout_marginStart="31dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="122dp"
-            android:layout_marginBottom="20dp"
+            android:layout_width="316dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="82dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="82dp"
+            android:layout_marginBottom="140dp"
             android:fontFamily="casual"
-            android:text="Prenda más utilizada"
+            android:text="Conjunto del día"
+            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textSize="20sp"
+            android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.681" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="85dp"
+            android:layout_marginBottom="26dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.76"
+            app:srcCompat="@drawable/tshirt" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="112dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.765"
+            app:srcCompat="@drawable/tshirt" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="108dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.765"
+            app:srcCompat="@drawable/tshirt" />
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="83dp"
-            android:layout_height="66dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="12dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/prendaMasUtilizada"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.769"
             app:srcCompat="@drawable/tshirt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

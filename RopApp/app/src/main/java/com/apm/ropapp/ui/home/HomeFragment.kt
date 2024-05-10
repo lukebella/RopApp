@@ -70,8 +70,8 @@ class HomeFragment : Fragment() {
         Log.d("TMS", System.currentTimeMillis().toString())
         Log.d("TMSD", (tmsUpdate + delta).toString())
 
-        //if (System.currentTimeMillis() >= tmsUpdate + delta) {
-            Log.d("m", "OOHH")
+        if (System.currentTimeMillis() >= tmsUpdate + delta) {
+            Log.d("m", "Update")
             //get city
             retrieveCity(locationTextView, sharedPreferences) { lat, long ->
                 //get weather
@@ -79,7 +79,7 @@ class HomeFragment : Fragment() {
             }
             tmsUpdate = System.currentTimeMillis()
             sharedPreferences.edit().putLong("LONG_KEY", tmsUpdate).apply()
-        //}
+        }
 
 
         return root
