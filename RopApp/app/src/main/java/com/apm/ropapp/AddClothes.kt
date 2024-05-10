@@ -1,5 +1,6 @@
 package com.apm.ropapp
 
+
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -48,12 +49,6 @@ class AddClothes : AppCompatActivity() {
         }
 
         binding.guardar.setOnClickListener {
-            val details = HashMap<String, Any>()
-            details["brand"] = "M&M"
-            details["state"] = "Prestado"
-            details["price"] = "20 €"
-            details["size"] = "L"
-            uploadData["details"] = details
 
             val seasonsChipGroup = binding.seasonsChipGroup
             if (seasonsChipGroup.checkedChipIds.isNotEmpty()) {
@@ -123,6 +118,11 @@ class AddClothes : AppCompatActivity() {
                         binding.styleTextView.text = updateTextView("style")
                         Log.d("AddStyle", uploadData["style"].toString())
                     }
+                    if (extras?.getSerializable("details") != null) {
+                        uploadData["details"] = extras.getSerializable("details")!!
+                        binding.detailsTextView.text = updateTextView("details")
+                        Log.d("AddDetails", uploadData["details"].toString())
+                    }
                 }
             }
 
@@ -144,8 +144,10 @@ class AddClothes : AppCompatActivity() {
 
         binding.detailsLayout.setOnClickListener {
             Log.d("AddClothes", "Add Details")
-            intent = Intent(this, AddDetails::class.java)
-            startActivity(intent)
+            val intent = Intent(this, AddDetails::class.java)
+            if (uploadData["details"] != null)
+                intent.putExtra("checked", uploadData["details"] as ArrayList<*>)
+            startForResult.launch(intent)
         }
     }
 

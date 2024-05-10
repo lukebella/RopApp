@@ -14,6 +14,8 @@ class AddDetails : AppCompatActivity() {
 
     private lateinit var spinnerTamano: Spinner
     private lateinit var spinnerEstado: Spinner
+    private lateinit var selectedEstado: String
+    private lateinit var selectedTamano: String
 
     private lateinit var binding: AddchoicedetailsBinding
 
@@ -26,24 +28,22 @@ class AddDetails : AppCompatActivity() {
         spinnerTamano = binding.tamanoSpinner
 
         binding.backButtonChoice.setOnClickListener {
-            intent = Intent(this, AddClothes::class.java)
-            Log.d("AddDetails","Back to Add Clothes")
-            startActivity(intent)
+            navigateToAddClothes()
         }
 
         binding.confirm.setOnClickListener {
-            intent = Intent(this, AddClothes::class.java)
-            Log.d("AddDetails","Confirm Details")
-            startActivity(intent)
+            confirmDetails()
         }
 
-        spinnerAdapter(R.array.estado_options, spinnerEstado, "Selecciona Estado")
-        spinnerAdapter(R.array.tamano_options, spinnerTamano, "Selecciona Tamaño")
-
+        spinnerAdapter(R.array.estado_options, spinnerEstado) { estado ->
+            selectedEstado = estado
+        }
+        spinnerAdapter(R.array.tamano_options, spinnerTamano) { tamano ->
+            selectedTamano = tamano
+        }
     }
 
-
-    private fun spinnerAdapter(options: Int, spinner: Spinner, text: String) {
+    private fun spinnerAdapter(options: Int, spinner: Spinner, onItemSelected: (String) -> Unit) {
         ArrayAdapter.createFromResource(
             this,
             options,
@@ -56,17 +56,45 @@ class AddDetails : AppCompatActivity() {
             spinner.adapter = adapter
         }
 
+
         // Manejar la selección del Spinner
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                val selectedGender = text+parent.getItemAtPosition(position).toString()
-                Toast.makeText(applicationContext, selectedGender, Toast.LENGTH_SHORT).show()
+                val selectedValue = parent.getItemAtPosition(position).toString()
+                onItemSelected(selectedValue)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
                 // No hacer nada si no se selecciona ningún elemento
             }
         }
-
     }
+
+    private fun navigateToAddClothes() {
+        intent = Intent(this, AddClothes::class.java)
+        Log.d("AddDetails","Back to Add Clothes")
+        finish()
+    }
+
+    private fun confirmDetails() {
+        val details = HashMap<String, Any>()
+
+        // Agregar los valores de los EditText al mapa details
+        binding.marca.text?.toString()?.let { details["brand"] = it }
+        binding.precio.text?.toString()?.let { details["price"] = it }
+        binding.colores.text?.toString()?.let { details["colors"] = it }
+
+        // Agregar los valores seleccionados de los spinners al mapa details
+        selectedEstado?.let { details["state"] = it }
+        selectedTamano?.let { details["size"] = it }
+
+        // Crear el intent y pasar el mapa details como extra
+        val intent = Intent(this, AddClothes::class.java)
+        intent.putExtra("details", details)
+        setResult(RESULT_OK, intent)
+
+        Log.d("AddDetails", "Details Added: $details")
+        finish()
+    }
+
 }

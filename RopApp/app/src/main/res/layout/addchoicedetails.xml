@@ -62,7 +62,6 @@
             android:layout_marginTop="9dp"
             android:ems="10"
             android:inputType="text"
-            android:text="Selecciona una marca"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/viewMarca" />
 
@@ -74,7 +73,6 @@
             android:layout_marginTop="9dp"
             android:ems="10"
             android:inputType="text"
-            android:text="€"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/viewPrecio" />
 
