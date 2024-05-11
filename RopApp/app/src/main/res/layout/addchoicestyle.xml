@@ -8,9 +8,7 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:background="#E1D4D4"
         android:backgroundTint="@color/md_theme_background"
         android:minHeight="700dp"
@@ -26,7 +24,7 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_revert" />
+            app:srcCompat="@android:drawable/ic_delete" />
 
         <Button
             android:id="@+id/confirm"

@@ -1,5 +1,6 @@
 package com.apm.ropapp.ui.closet
 
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,15 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
+import com.apm.ropapp.AddClothes
 import com.apm.ropapp.R
 import com.bumptech.glide.Glide
 
 
 class CustomAdapter(
-    private val stringList: MutableList<String>,
+    private val dataList: MutableList<HashMap<String, Any>>,
     private val imageList: MutableList<Uri>,
-    private val clickForResult: () -> Unit
+    private val startForResult: ActivityResultLauncher<Intent>
 ) :
     RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
@@ -41,19 +44,23 @@ class CustomAdapter(
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-
-        viewHolder.textView.text = stringList.elementAt(position)
+        val nameString = dataList.elementAt(position)["category"].toString()
+        viewHolder.textView.text = nameString.substring(1, nameString.length-1)
         if (imageList[position] != Uri.EMPTY)
             Glide.with(viewHolder.itemView.context).load(imageList[position])
                 .into(viewHolder.imageButton)
 
         viewHolder.imageButton.setOnClickListener {
             Log.d("Closet", "Has pulsado el armario $position")
-            clickForResult()
+
+            val intent = Intent(viewHolder.itemView.context, AddClothes::class.java)
+            intent.putExtra("clothesValues", dataList.elementAt(position))
+            intent.putExtra("image", imageList[position].toString())
+            startForResult.launch(intent)
         }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = stringList.size
+    override fun getItemCount() = dataList.size
 
 }

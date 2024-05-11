@@ -1,7 +1,6 @@
 package com.apm.ropapp.ui.closet
 
 import android.app.Activity
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +13,6 @@ import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.apm.ropapp.AddClothes
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentClosetBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -56,35 +54,30 @@ class ClosetFragment : Fragment() {
         buttonSelected.isSelected = true
         val userUid = firebaseAuth.currentUser?.uid
 
+        val startForResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    Log.d("EditClothes", "Updated")
+                } else Log.d("EditClothes", "Cancelled")
+            }
+
         val recyclerView: RecyclerView = binding.root.findViewById(R.id.recycler_view)
-        recyclerView.adapter = CustomAdapter(mutableListOf(), mutableListOf()) {}
+        recyclerView.adapter = CustomAdapter(mutableListOf(), mutableListOf(), startForResult)
         recyclerView.autoFitColumns(150)
 
         fun getImageUri(fileName: String, photos: StorageReference): Uri {
-            //or filesDir -> carpeta interna
-            //or externalMediaDirs -> carpeta media
-            //or getExternalFilesDir(null) -> carpeta data/files
-            //or getExternalFilesDir(Environment.DIRECTORY_PICTURES)} -> carpeta data/files/Pictures
             val dir = File("${root.context.getExternalFilesDir(null)}/clothes")
             if (!dir.exists()) dir.mkdirs()
             val imageFile = File(dir, fileName)
+
             if (!imageFile.exists()) {
                 imageFile.createNewFile()
                 photos.child(fileName).getFile(imageFile)
             }
             return FileProvider.getUriForFile(
-                root.context,
-                "com.apm.ropapp.FileProvider",
-                imageFile
+                root.context, "com.apm.ropapp.FileProvider", imageFile
             )
         }
-
-        val startForResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    Log.d("Result", "OK")
-                } else Log.d("Result", "FAIL")
-            }
 
         fun getDatabaseValues(folderName: String) {
             database.child("$folderName/$userUid")
@@ -97,22 +90,20 @@ class ClosetFragment : Fragment() {
                         //{aa3722c9-f5c9-4d6c-b5dc-f04bce8d29b3={seasons=[Verano, Invierno], photo=IMG_67929f11-76ac-452e-bcc3-101fa466ed2a.png,
                         // details={size=L, price=20 €, state=Prestado, brand=M&M}, style=[Vintage, Glamorous], category=[Scarf]}}
                         if (data != null) {
-                            val nameList = mutableListOf<String>()
+                            val dataList = mutableListOf<HashMap<String, Any>>()
                             val imageList = mutableListOf<Uri>()
                             val photos = storage.child(folderName)
 
-                            data.values.forEach { value ->
-                                val nameString = value["category"].toString()
-                                nameList.add(nameString.substring(1, nameString.length-1))
+                            data.forEach { (key, value) ->
+                                value["id"] = key
+                                dataList.add(value)
                                 if (value["photo"] == null) imageList.add(Uri.EMPTY)
                                 else imageList.add(getImageUri(value["photo"].toString(), photos))
                             }
 
-                            val intent = Intent(root.context, AddClothes::class.java)
-                            intent.putExtra("clothes", data)
-
                             Log.d("TAG", "Value is: $imageList")
-                            recyclerView.adapter = CustomAdapter(nameList, imageList) { startForResult.launch(intent) }
+                            recyclerView.adapter =
+                                CustomAdapter(dataList, imageList, startForResult)
                         }
                     }
 

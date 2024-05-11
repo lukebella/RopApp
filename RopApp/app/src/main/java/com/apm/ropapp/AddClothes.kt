@@ -11,6 +11,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.view.children
 import com.apm.ropapp.databinding.AddclothesBinding
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
@@ -20,6 +21,17 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.util.UUID
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
+import kotlin.collections.arrayListOf
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.contains
+import kotlin.collections.forEach
+import kotlin.collections.get
+import kotlin.collections.isNotEmpty
+import kotlin.collections.remove
+import kotlin.collections.set
 
 
 class AddClothes : AppCompatActivity() {
@@ -28,6 +40,7 @@ class AddClothes : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
+    private lateinit var clothesId: String
     private lateinit var imageUri: Uri
     private lateinit var fileNameUpload: String
     private val uploadData = HashMap<String, Any>()
@@ -42,11 +55,31 @@ class AddClothes : AppCompatActivity() {
         storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
 
         val clothesData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-            intent.extras?.getSerializable("clothes", HashMap<String, Any>().javaClass)
-        else intent.extras?.getSerializable("clothes")
+            intent.extras?.getSerializable("clothesValues", HashMap<String, Any>().javaClass)
+        else intent.extras?.getSerializable("clothesValues") as HashMap<*, *>
 
         if (clothesData != null) {
-            Log.d("Clothes", clothesData.toString())
+            Log.d("EditClothes", clothesData.toString())
+            clothesId = clothesData["id"].toString()
+            clothesData.remove("id")
+            clothesData.forEach { (key, value) -> uploadData[key.toString()] = value }
+
+            binding.seasonsChipGroup.children.forEach {
+                val chip = binding.seasonsChipGroup.findViewById<Chip>(it.id)
+                val seasonsList = clothesData["seasons"] as ArrayList<*>
+                if (seasonsList.contains(chip.text)) chip.toggle()
+            }
+
+            binding.categoryTextView.text = updateTextView("category")
+            binding.styleTextView.text = updateTextView("style")
+            binding.detailsTextView.text = updateTextView("details")
+
+            val imageString = intent.extras?.getString("image")
+            if (imageString != null) {
+                imageUri = Uri.parse(imageString)
+                binding.imageView.setImageURI(imageUri)
+                fileNameUpload = clothesData["photo"].toString()
+            }
         }
 
         binding.backButton.setOnClickListener {
@@ -56,11 +89,10 @@ class AddClothes : AppCompatActivity() {
 
         binding.guardar.setOnClickListener {
 
-            val seasonsChipGroup = binding.seasonsChipGroup
-            if (seasonsChipGroup.checkedChipIds.isNotEmpty()) {
+            if (binding.seasonsChipGroup.checkedChipIds.isNotEmpty()) {
                 val seasonsList = arrayListOf<String>()
-                seasonsChipGroup.checkedChipIds.forEach {
-                    val chip = seasonsChipGroup.findViewById<Chip>(it)
+                binding.seasonsChipGroup.checkedChipIds.forEach {
+                    val chip = binding.seasonsChipGroup.findViewById<Chip>(it)
                     seasonsList.add(chip.text.toString())
                 }
                 uploadData["seasons"] = seasonsList
@@ -72,7 +104,6 @@ class AddClothes : AppCompatActivity() {
             uploadNewClothes(uploadData)
 
             val intent = Intent()
-            //intent.putExtra("category", result)
             setResult(RESULT_OK, intent)
             Log.d("AddClothes", "Dress added: $uploadData")
             finish()
@@ -200,8 +231,9 @@ class AddClothes : AppCompatActivity() {
 
     private fun uploadNewClothes(data: HashMap<String, Any>) {
         if (firebaseAuth.currentUser != null) {
+            if (!this::clothesId.isInitialized) clothesId = UUID.randomUUID().toString()
             val uploadTask = database.child("clothes").child(firebaseAuth.currentUser!!.uid)
-                .child(UUID.randomUUID().toString()).setValue(data)
+                .child(clothesId).setValue(data)
             // Register observers to listen for when the upload is done or if it fails
             uploadTask.addOnFailureListener {
                 // Handle unsuccessful uploads
