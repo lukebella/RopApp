@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.location.Geocoder
+import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -19,22 +20,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
+import com.apm.ropapp.ui.closet.ClosetFragment
+import com.apm.ropapp.ui.closet.CustomAdapter
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import org.json.JSONObject
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -42,7 +53,9 @@ import java.net.URL
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
+import java.util.UUID
 import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
@@ -60,6 +73,12 @@ class HomeFragment : Fragment() {
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
 
+    val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH) + 1 // Month is zero-based
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    var recommendationId = calendar.time.toString()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,7 +89,6 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val locationTextView = binding.aCoruna
-
         val sharedPreferences =
             requireContext().getSharedPreferences("MySharedPreferences", MODE_PRIVATE)
 
@@ -78,9 +96,84 @@ class HomeFragment : Fragment() {
         database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
         storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
 
+        val noMeGustaButton = binding.noMeGusta
+        val meGustaButton = binding.meGusta
+        val userUid = firebaseAuth.currentUser?.uid
 
+
+        //metodo para recomendar
+        //TODO: comparar data sacada con la odierna para reinizializar buttons y recomendacion
 
         loadData(sharedPreferences)
+
+
+        fun getImageUri(fileName: String, photos: StorageReference): Uri {
+            val dir = File("${root.context.getExternalFilesDir(null)}/clothes")
+            if (!dir.exists()) dir.mkdirs()
+            val imageFile = File(dir, fileName)
+
+            if (!imageFile.exists()) {
+                imageFile.createNewFile()
+                photos.child(fileName).getFile(imageFile)
+            }
+            return FileProvider.getUriForFile(
+                root.context, "com.apm.ropapp.FileProvider", imageFile
+            )
+        }
+
+        fun getDatabaseValues(folderName: String) : HashMap<String, Any> {
+
+            val toRecommend = HashMap<String, Any> ()
+
+            database.child("$folderName/$userUid")
+                .addValueEventListener(object : ValueEventListener {
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        val data = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
+                        //{aa3722c9-f5c9-4d6c-b5dc-f04bce8d29b3={seasons=[Verano, Invierno], photo=IMG_67929f11-76ac-452e-bcc3-101fa466ed2a.png,
+                        // details={size=L, price=20 €, state=Prestado, brand=M&M}, style=[Vintage, Glamorous], category=[Scarf]}}
+                        if (data != null) {
+                            val dataList = mutableListOf<HashMap<String, Any>>()
+                            val imageList = mutableListOf<Uri>()
+                            val photos = storage.child(folderName)
+
+                            data.forEach { (key, value) ->
+                                value["id"] = key
+                                Log.d("Key", value.toString())
+                                dataList.add(value)
+                                if (value["photo"] == null) imageList.add(Uri.EMPTY)
+                                else imageList.add(getImageUri(value["photo"].toString(), photos))
+                            }
+
+                            fun updatePrendaRec(str: String, uri: Uri, img: ImageView) {
+                                sharedPreferences.edit().putString(str, uri.toString()).apply()
+                                Glide.with(requireContext()).load(uri).into(img)
+                            }
+
+                            //TODO: I put the first 4 clothes as recommendations, do the random process with the categories etc.
+
+                            updatePrendaRec("prenda1", imageList[0], binding.prenda1)
+                            updatePrendaRec("prenda2", imageList[1], binding.prenda2)
+                            updatePrendaRec("prenda3", imageList[2], binding.prenda3)
+                            updatePrendaRec("prenda4", imageList[3], binding.prenda4)
+
+                            toRecommend[recommendationId] = imageList.take(4)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.w("TAG", "Failed to read value.", error.toException())
+                    }
+                })
+
+            return toRecommend
+        }
+
+        val toRecommend = getDatabaseValues("clothes")
+
+
 
         var tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
         val delta = 2 * 60 * 60 * 1000
@@ -99,26 +192,8 @@ class HomeFragment : Fragment() {
             sharedPreferences.edit().putLong("LONG_KEY", tmsUpdate).apply()
         }
 
-        val noMeGustaButton = binding.noMeGusta
-        val meGustaButton = binding.meGusta
-
         noMeGustaButton.setOnClickListener {
-            // Change color when pressed
-            if(!pressedNo) {
-                noMeGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_error))
-                meGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_background))
-
-                sharedPreferences.edit().putInt("nomegusta", R.color.md_theme_error).apply()
-                sharedPreferences.edit().putInt("megusta", R.color.md_theme_background).apply()
-                pressedNo = true
-                pressedSi = false
-            }
-            else
-            {
-                noMeGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_background))
-                sharedPreferences.edit().putInt("nomegusta", R.color.md_theme_background).apply()
-                pressedNo = false
-            }
+            manageNoMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
 
             /*
             - Remove from the database the 4 clothes with the images (key is the date) if existent
@@ -126,39 +201,13 @@ class HomeFragment : Fragment() {
 
         }
         meGustaButton.setOnClickListener {
-            if(!pressedSi) {
-                meGustaButton.setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.md_theme_confirm
-                    )
-                )
-                sharedPreferences.edit().putInt("megusta", R.color.md_theme_confirm).apply()
-
-                noMeGustaButton.setBackgroundColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.md_theme_background
-                    )
-                )
-                sharedPreferences.edit().putInt("nomegusta", R.color.md_theme_background).apply()
-
-                pressedNo = false
-                pressedSi = true
-            }
-            else {
-                meGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_background))
-                sharedPreferences.edit().putInt("megusta", R.color.md_theme_background).apply()
-                pressedSi = false
-            }
-
+            manageMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
             /*
             - Write in the database the 4 clothes with the images (key is the date)
              */
-
+            uploadNewRecommendation(toRecommend)
 
         }
-
 
         return root
     }
@@ -168,43 +217,11 @@ class HomeFragment : Fragment() {
         FetchWeatherTask().execute(url)
     }
 
-    /*override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean("isPressed", pressedSi)
-        outState.putInt("buttonColor", buttonColorSi)
-        Log.d("bc", buttonColorSi.toString())
-
-        outState.putBoolean("isPressed", pressedNo)
-        outState.putInt("buttonColor", buttonColorNo)
-        Log.d("bc", buttonColorNo.toString())
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d("onCreate","oc")
-        savedInstanceState?.let {
-            Log.d("SavedInstance","si")
-            pressedSi = it.getBoolean("isPressed", false)
-            buttonColorSi = it.getInt("buttonColor", 0)
-            pressedNo = it.getBoolean("isPressed", false)
-            buttonColorNo = it.getInt("buttonColor", 0)
-            if (pressedSi) {
-                // Restore button color
-                Log.d("bc", buttonColorSi.toString())
-                view?.findViewById<ImageButton>(R.id.meGusta)?.setBackgroundColor(buttonColorSi)
-            }
-            else if (pressedNo) {
-                Log.d("bc", buttonColorNo.toString())
-                view?.findViewById<ImageButton>(R.id.noMeGusta)?.setBackgroundColor(buttonColorNo)
-            }
-            else return
-        }
-    }*/
-
-    override fun onDestroyView() {
+   override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
@@ -328,10 +345,7 @@ class HomeFragment : Fragment() {
         @SuppressLint("DiscouragedApi")
         @RequiresApi(Build.VERSION_CODES.O)
         private fun parseWeatherData(jsonString: String): WeatherData {
-            val calendar = Calendar.getInstance()
-            val year = calendar.get(Calendar.YEAR)
-            val month = calendar.get(Calendar.MONTH) + 1 // Month is zero-based
-            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
 
             val dayString = if (day < 10) {
                 "0$day" // Adding leading zero if dayOfMonth is less than 10
@@ -373,6 +387,12 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun convertToURI(img: ImageView, str: String, sharedPreferences: SharedPreferences) {
+        val uriString = sharedPreferences.getString(str, null)
+        val uri = if (uriString != null) Uri.parse(uriString) else Uri.EMPTY
+        Glide.with(requireContext()).load(uri).into(img)
+    }
+
     private fun loadData(sharedPreferences: SharedPreferences) {
 
         binding.aCoruna.text = sharedPreferences.getString("LOC", binding.aCoruna.text.toString())
@@ -385,6 +405,77 @@ class HomeFragment : Fragment() {
             (sharedPreferences.getInt("nomegusta",R.color.md_theme_background))))
         binding.meGusta.setBackgroundColor(ContextCompat.getColor(requireContext(),
             (sharedPreferences.getInt("megusta",R.color.md_theme_background))))
+
+        convertToURI(binding.prenda1, "prenda1", sharedPreferences)
+        convertToURI(binding.prenda2, "prenda2", sharedPreferences)
+        convertToURI(binding.prenda3, "prenda3", sharedPreferences)
+        convertToURI(binding.prenda4, "prenda4", sharedPreferences)
+
+
+    }
+
+    //TODO: upload recommendation
+    private fun uploadNewRecommendation(data: HashMap<String, Any>) {
+        if (firebaseAuth.currentUser != null) {
+            val uploadTask = database.child("recommendations").child(firebaseAuth.currentUser!!.uid)
+                .child(recommendationId).setValue(data)
+            // Register observers to listen for when the upload is done or if it fails
+            uploadTask.addOnFailureListener {
+                // Handle unsuccessful uploads
+                Log.d("DatabaseUpdate", "Upload Failed: ${it.stackTrace}")
+            }.addOnSuccessListener {
+                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+                Log.d("DatabaseUpdate", "Upload Success: $data")
+            }
+        }
+    }
+
+    private fun manageNoMeGusta(noMeGustaButton: ImageButton, meGustaButton: ImageButton, sharedPreferences: SharedPreferences) {
+        // Change color when pressed
+        if(!pressedNo) {
+            noMeGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_error))
+            meGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_background))
+
+            sharedPreferences.edit().putInt("nomegusta", R.color.md_theme_error).apply()
+            sharedPreferences.edit().putInt("megusta", R.color.md_theme_background).apply()
+            pressedNo = true
+            pressedSi = false
+        }
+        else
+        {
+            noMeGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_background))
+            sharedPreferences.edit().putInt("nomegusta", R.color.md_theme_background).apply()
+            pressedNo = false
+        }
+    }
+
+    private fun manageMeGusta(noMeGustaButton: ImageButton, meGustaButton: ImageButton, sharedPreferences: SharedPreferences) {
+        if(!pressedSi) {
+            meGustaButton.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.md_theme_confirm
+                )
+            )
+            sharedPreferences.edit().putInt("megusta", R.color.md_theme_confirm).apply()
+
+            noMeGustaButton.setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.md_theme_background
+                )
+            )
+            sharedPreferences.edit().putInt("nomegusta", R.color.md_theme_background).apply()
+
+            pressedNo = false
+            pressedSi = true
+        }
+        else {
+            meGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_background))
+            sharedPreferences.edit().putInt("megusta", R.color.md_theme_background).apply()
+            pressedSi = false
+        }
+
 
     }
 

@@ -116,7 +116,7 @@
                 app:srcCompat="@drawable/tshirt" />
 
             <ImageView
-                android:id="@+id/preda4"
+                android:id="@+id/prenda4"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="52dp"
