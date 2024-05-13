@@ -56,9 +56,9 @@ class AddClothes : AppCompatActivity() {
 
         val clothesData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             intent.extras?.getSerializable("clothesValues", HashMap<String, Any>().javaClass)
-        else intent.extras?.getSerializable("clothesValues") as HashMap<*, *>
+        else intent.extras?.getSerializable("clothesValues")
 
-        if (clothesData != null) {
+        if (clothesData != null && clothesData is HashMap<*, *>) {
             Log.d("EditClothes", clothesData.toString())
             clothesId = clothesData["id"].toString()
             clothesData.remove("id")
@@ -161,7 +161,7 @@ class AddClothes : AppCompatActivity() {
                     val detailsData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
                         extras?.getSerializable("details", HashMap<String, Any>().javaClass)
                     else extras?.getSerializable("details")
-                    if (detailsData != null) {
+                    if (detailsData != null && detailsData is HashMap<*, *>) {
                         uploadData["details"] = detailsData
                         binding.detailsTextView.text = updateTextView("details")
                         Log.d("AddDetails", uploadData["details"].toString())
