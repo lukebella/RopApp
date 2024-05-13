@@ -28,6 +28,11 @@ import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -48,6 +53,13 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    var pressedNo: Boolean = false
+    var pressedSi: Boolean = false
+
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private lateinit var storage: StorageReference
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +73,12 @@ class HomeFragment : Fragment() {
 
         val sharedPreferences =
             requireContext().getSharedPreferences("MySharedPreferences", MODE_PRIVATE)
+
+        firebaseAuth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
+        storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
+
+
 
         loadData(sharedPreferences)
 
@@ -81,6 +99,66 @@ class HomeFragment : Fragment() {
             sharedPreferences.edit().putLong("LONG_KEY", tmsUpdate).apply()
         }
 
+        val noMeGustaButton = binding.noMeGusta
+        val meGustaButton = binding.meGusta
+
+        noMeGustaButton.setOnClickListener {
+            // Change color when pressed
+            if(!pressedNo) {
+                noMeGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_error))
+                meGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_background))
+
+                sharedPreferences.edit().putInt("nomegusta", R.color.md_theme_error).apply()
+                sharedPreferences.edit().putInt("megusta", R.color.md_theme_background).apply()
+                pressedNo = true
+                pressedSi = false
+            }
+            else
+            {
+                noMeGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_background))
+                sharedPreferences.edit().putInt("nomegusta", R.color.md_theme_background).apply()
+                pressedNo = false
+            }
+
+            /*
+            - Remove from the database the 4 clothes with the images (key is the date) if existent
+             */
+
+        }
+        meGustaButton.setOnClickListener {
+            if(!pressedSi) {
+                meGustaButton.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.md_theme_confirm
+                    )
+                )
+                sharedPreferences.edit().putInt("megusta", R.color.md_theme_confirm).apply()
+
+                noMeGustaButton.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.md_theme_background
+                    )
+                )
+                sharedPreferences.edit().putInt("nomegusta", R.color.md_theme_background).apply()
+
+                pressedNo = false
+                pressedSi = true
+            }
+            else {
+                meGustaButton.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.md_theme_background))
+                sharedPreferences.edit().putInt("megusta", R.color.md_theme_background).apply()
+                pressedSi = false
+            }
+
+            /*
+            - Write in the database the 4 clothes with the images (key is the date)
+             */
+
+
+        }
+
 
         return root
     }
@@ -90,6 +168,38 @@ class HomeFragment : Fragment() {
         FetchWeatherTask().execute(url)
     }
 
+    /*override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("isPressed", pressedSi)
+        outState.putInt("buttonColor", buttonColorSi)
+        Log.d("bc", buttonColorSi.toString())
+
+        outState.putBoolean("isPressed", pressedNo)
+        outState.putInt("buttonColor", buttonColorNo)
+        Log.d("bc", buttonColorNo.toString())
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("onCreate","oc")
+        savedInstanceState?.let {
+            Log.d("SavedInstance","si")
+            pressedSi = it.getBoolean("isPressed", false)
+            buttonColorSi = it.getInt("buttonColor", 0)
+            pressedNo = it.getBoolean("isPressed", false)
+            buttonColorNo = it.getInt("buttonColor", 0)
+            if (pressedSi) {
+                // Restore button color
+                Log.d("bc", buttonColorSi.toString())
+                view?.findViewById<ImageButton>(R.id.meGusta)?.setBackgroundColor(buttonColorSi)
+            }
+            else if (pressedNo) {
+                Log.d("bc", buttonColorNo.toString())
+                view?.findViewById<ImageButton>(R.id.noMeGusta)?.setBackgroundColor(buttonColorNo)
+            }
+            else return
+        }
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -268,8 +378,16 @@ class HomeFragment : Fragment() {
         binding.aCoruna.text = sharedPreferences.getString("LOC", binding.aCoruna.text.toString())
         binding.weatherDate.text = sharedPreferences.getString("DATE", binding.weatherDate.text.toString())
         binding.temperature.text = sharedPreferences.getString("TEMP", binding.temperature.text.toString())
-        binding.weatImg.setImageResource(R.drawable.w01d_2x)
+
+        binding.weatImg.setImageResource(sharedPreferences.getInt("IMG", R.drawable.w01d_2x))
+
+        binding.noMeGusta.setBackgroundColor(ContextCompat.getColor(requireContext(),
+            (sharedPreferences.getInt("nomegusta",R.color.md_theme_background))))
+        binding.meGusta.setBackgroundColor(ContextCompat.getColor(requireContext(),
+            (sharedPreferences.getInt("megusta",R.color.md_theme_background))))
+
     }
+
 
     data class WeatherData(val weat: String, val tempMin: Int, val tempMax: Int, val data: String)
 
