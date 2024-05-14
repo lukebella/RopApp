@@ -173,8 +173,8 @@ class HomeFragment : Fragment() {
             return toRecommend
         }
 
-        toRecommend = getDatabaseValues("clothes")
-        uploadNewRecommendation(toRecommend)
+        //toRecommend = getDatabaseValues("clothes")
+        //uploadNewRecommendation(toRecommend)
 
         var tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
         val delta = 2 * 60 * 60 * 1000
@@ -420,15 +420,16 @@ class HomeFragment : Fragment() {
     //TODO: upload recommendation
     private fun uploadNewRecommendation(data: HashMap<String, Any>) {
         if (firebaseAuth.currentUser != null) {
+            Log.d("USER", firebaseAuth.currentUser!!.uid)
             val uploadTask = database.child("recommendations").child(firebaseAuth.currentUser!!.uid)
-                .child(recommendationId).setValue(data)
+                .child(recommendationId).setValue(data.get(recommendationId))
             // Register observers to listen for when the upload is done or if it fails
             uploadTask.addOnFailureListener {
                 // Handle unsuccessful uploads
                 Log.d("DatabaseUpdate", "Upload Failed: ${it.stackTrace}")
             }.addOnSuccessListener {
                 // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                Log.d("DatabaseUpdate", "Upload Success: $data")
+                Log.d("DatabaseUpdate", "Upload Success: ${data.get(recommendationId)}")
             }
         }
     }
