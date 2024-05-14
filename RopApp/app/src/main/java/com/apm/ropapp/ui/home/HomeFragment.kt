@@ -50,6 +50,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -78,7 +79,9 @@ class HomeFragment : Fragment() {
     val month = calendar.get(Calendar.MONTH) + 1 // Month is zero-based
     val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-    var recommendationId = calendar.time.toString()
+    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale("es", "ES"))
+    val recommendationId = dateFormat.format(calendar.time)
+    var toRecommend = HashMap<String, Any> ()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -105,7 +108,6 @@ class HomeFragment : Fragment() {
         //TODO: comparar data sacada con la odierna para reinizializar buttons y recomendacion
 
         loadData(sharedPreferences)
-
 
         fun getImageUri(fileName: String, photos: StorageReference): Uri {
             val dir = File("${root.context.getExternalFilesDir(null)}/clothes")
@@ -171,9 +173,8 @@ class HomeFragment : Fragment() {
             return toRecommend
         }
 
-        val toRecommend = getDatabaseValues("clothes")
-
-
+        toRecommend = getDatabaseValues("clothes")
+        uploadNewRecommendation(toRecommend)
 
         var tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
         val delta = 2 * 60 * 60 * 1000
@@ -187,11 +188,9 @@ class HomeFragment : Fragment() {
             retrieveCity(locationTextView, sharedPreferences) { lat, long ->
                 //get weather
                 weatherForecast(lat, long, getString(R.string.weather_key))
-            }
-            tmsUpdate = System.currentTimeMillis()
-            sharedPreferences.edit().putLong("LONG_KEY", tmsUpdate).apply()
-        }
 
+            }
+        }
         noMeGustaButton.setOnClickListener {
             manageNoMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
 
@@ -213,7 +212,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun weatherForecast(lat: Double, longit: Double, key: String) {
-        val url = "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$longit&appid=$key"
+        val url = "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$longit&lang=es&appid=$key"
         FetchWeatherTask().execute(url)
     }
 
@@ -271,6 +270,7 @@ class HomeFragment : Fragment() {
                             city = addresses[0].locality
                             sharedPreferences.edit().putString("LOC", city).apply()
                             locationTextView.text = city
+                            sharedPreferences.edit().putLong("LONG_KEY", System.currentTimeMillis()).apply()
                             callback(location.latitude, location.longitude)
                         } else {
                             Log.d("HOME", "no address")
@@ -346,7 +346,6 @@ class HomeFragment : Fragment() {
         @RequiresApi(Build.VERSION_CODES.O)
         private fun parseWeatherData(jsonString: String): WeatherData {
 
-
             val dayString = if (day < 10) {
                 "0$day" // Adding leading zero if dayOfMonth is less than 10
             } else {
@@ -377,11 +376,15 @@ class HomeFragment : Fragment() {
             sharedPreferences.edit().putInt("IMG", resourceId).apply()
             //binding.weatImg.setImageResource(resourceId)
             Log.d("HOME", "Changed weather image")
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale("es", "ES"))
             val date = LocalDate.parse(dateToday, formatter)
-            dateToday = date.dayOfWeek.toString().substring(0, 3) + " " +
-                    date.dayOfMonth + " " + date.month.toString().substring(0, 3)
-            return WeatherData(weat, tempMin, tempMax, dateToday)
+            val outputFormatter = DateTimeFormatter.ofPattern("EEE dd MMM", Locale("es", "ES"))
+
+            // Format the date to Spanish
+            val formattedDate = date.format(outputFormatter).uppercase(Locale("es", "ES"))
+            /*dateToday = date.dayOfWeek.toString().substring(0, 3) + " " +
+                    date.dayOfMonth + " " + date.month.toString().substring(0, 3)*/
+            return WeatherData(weat, tempMin, tempMax, formattedDate)
 
         }
 
