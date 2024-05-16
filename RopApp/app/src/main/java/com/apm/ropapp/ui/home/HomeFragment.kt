@@ -123,58 +123,39 @@ class HomeFragment : Fragment() {
             )
         }
 
-        fun getDatabaseValues(folderName: String) : HashMap<String, Any> {
-
-            val toRecommend = HashMap<String, Any> ()
-
+        fun getDatabaseValues(folderName: String, callback: (HashMap<String, Any>) -> Unit) {
             database.child("$folderName/$userUid")
-                .addValueEventListener(object : ValueEventListener {
-
+                .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
                         val data = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
-                        //{aa3722c9-f5c9-4d6c-b5dc-f04bce8d29b3={seasons=[Verano, Invierno], photo=IMG_67929f11-76ac-452e-bcc3-101fa466ed2a.png,
-                        // details={size=L, price=20 €, state=Prestado, brand=M&M}, style=[Vintage, Glamorous], category=[Scarf]}}
+                        val toRecommend = HashMap<String, Any>()
+
                         if (data != null) {
-                            val dataList = mutableListOf<HashMap<String, Any>>()
-                            val imageList = mutableListOf<Uri>()
+                            val photoUrls = mutableListOf<String>()
                             val photos = storage.child(folderName)
 
                             data.forEach { (key, value) ->
                                 value["id"] = key
                                 Log.d("Key", value.toString())
-                                dataList.add(value)
-                                if (value["photo"] == null) imageList.add(Uri.EMPTY)
-                                else imageList.add(getImageUri(value["photo"].toString(), photos))
+                                if (value["photo"] == null) photoUrls.add("")
+                                else photoUrls.add(getImageUri(value["photo"].toString(), photos).toString())
                             }
 
-                            fun updatePrendaRec(str: String, uri: Uri, img: ImageView) {
-                                sharedPreferences.edit().putString(str, uri.toString()).apply()
-                                Glide.with(requireContext()).load(uri).into(img)
-                            }
-
-                            //TODO: I put the first 4 clothes as recommendations, do the random process with the categories etc.
-
-                            updatePrendaRec("prenda1", imageList[0], binding.prenda1)
-                            updatePrendaRec("prenda2", imageList[1], binding.prenda2)
-                            updatePrendaRec("prenda3", imageList[2], binding.prenda3)
-                            updatePrendaRec("prenda4", imageList[3], binding.prenda4)
-
-                            toRecommend[recommendationId] = imageList.take(4)
+                            toRecommend[recommendationId] = photoUrls.take(4)
                         }
+                        callback(toRecommend)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
                         Log.w("TAG", "Failed to read value.", error.toException())
                     }
                 })
-
-            return toRecommend
         }
 
-        //toRecommend = getDatabaseValues("clothes")
-        //uploadNewRecommendation(toRecommend)
+
+        getDatabaseValues("clothes") { data ->
+            toRecommend = checkURI(data)
+        }
 
         var tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
         val delta = 2 * 60 * 60 * 1000
@@ -200,11 +181,14 @@ class HomeFragment : Fragment() {
 
         }
         meGustaButton.setOnClickListener {
-            manageMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
-            /*
+            if (firebaseAuth.currentUser != null) {
+                manageMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
+                Log.d("DatabaseUpdate", "toRecommend: $toRecommend")
+                uploadNewRecommendation(toRecommend[recommendationId]!!)
+            }            /*
             - Write in the database the 4 clothes with the images (key is the date)
              */
-            uploadNewRecommendation(toRecommend)
+
 
         }
 
@@ -212,7 +196,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun weatherForecast(lat: Double, longit: Double, key: String) {
-        val url = "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$longit&lang=es&appid=$key"
+        val url = "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$longit&appid=$key"
         FetchWeatherTask().execute(url)
     }
 
@@ -270,7 +254,6 @@ class HomeFragment : Fragment() {
                             city = addresses[0].locality
                             sharedPreferences.edit().putString("LOC", city).apply()
                             locationTextView.text = city
-                            sharedPreferences.edit().putLong("LONG_KEY", System.currentTimeMillis()).apply()
                             callback(location.latitude, location.longitude)
                         } else {
                             Log.d("HOME", "no address")
@@ -335,6 +318,7 @@ class HomeFragment : Fragment() {
 
                 sharedPreferences.edit().putString("DATE", weatherData.data).apply()
                 sharedPreferences.edit().putString("TEMP", temperature).apply()
+                sharedPreferences.edit().putLong("LONG_KEY", System.currentTimeMillis()).apply()
 
                 Log.d("WeatherForecast", weatherData.toString())
             } else {
@@ -417,22 +401,57 @@ class HomeFragment : Fragment() {
 
     }
 
-    //TODO: upload recommendation
-    private fun uploadNewRecommendation(data: HashMap<String, Any>) {
+    private fun checkURI(data: HashMap<String, Any>) : HashMap<String, Any> {
+        // Convert Uri to String if present
+        val recommendationData = data.mapValues { entry ->
+            if (entry.value is List<*>) {
+                (entry.value as List<*>).map {
+                    if (it is Uri) it.toString() else it
+                }
+            } else {
+                entry.value
+            }
+        }
+        return HashMap(recommendationData)
+    }
+
+
+    private fun uploadNewRecommendation(data: Any) {
         if (firebaseAuth.currentUser != null) {
             Log.d("USER", firebaseAuth.currentUser!!.uid)
-            val uploadTask = database.child("recommendations").child(firebaseAuth.currentUser!!.uid)
-                .child(recommendationId).setValue(data.get(recommendationId))
+
+            val uploadTask = database.child("recommendations")
+                .child(firebaseAuth.currentUser!!.uid)
+                .child(recommendationId)
+                .setValue(data)
+
             // Register observers to listen for when the upload is done or if it fails
             uploadTask.addOnFailureListener {
                 // Handle unsuccessful uploads
                 Log.d("DatabaseUpdate", "Upload Failed: ${it.stackTrace}")
             }.addOnSuccessListener {
-                // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-                Log.d("DatabaseUpdate", "Upload Success: ${data.get(recommendationId)}")
+                Log.d("DatabaseUpdate", "Upload Success: ${data}")
             }
         }
     }
+
+    private fun deleteRecommendation() {
+        if (firebaseAuth.currentUser != null) {
+            val userUid = firebaseAuth.currentUser!!.uid
+            val deleteTask = database.child("recommendations")
+                .child(userUid)
+                .child(recommendationId)
+                .removeValue()
+
+            deleteTask.addOnFailureListener {
+                // Handle unsuccessful deletions
+                Log.d("DatabaseDelete", "Delete Failed: ${it.stackTrace}")
+            }.addOnSuccessListener {
+                Log.d("DatabaseDelete", "Delete Success")
+            }
+        }
+    }
+
 
     private fun manageNoMeGusta(noMeGustaButton: ImageButton, meGustaButton: ImageButton, sharedPreferences: SharedPreferences) {
         // Change color when pressed
@@ -444,6 +463,10 @@ class HomeFragment : Fragment() {
             sharedPreferences.edit().putInt("megusta", R.color.md_theme_background).apply()
             pressedNo = true
             pressedSi = false
+
+            //DELETE RECOMMENDATION
+            deleteRecommendation()
+
         }
         else
         {
