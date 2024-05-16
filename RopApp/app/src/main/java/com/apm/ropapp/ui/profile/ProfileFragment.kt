@@ -1,6 +1,7 @@
 package com.apm.ropapp.ui.profile
 
 import android.app.AlertDialog
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -70,6 +71,10 @@ class ProfileFragment : Fragment() {
                 .setTitle("Logout")
                 .setMessage("Are you sure you want to logout?")
                 .setPositiveButton("Yes") { _, _ ->
+
+                    //re-initialize SharedPreferences
+                    requireContext().getSharedPreferences("MySharedPreferences", MODE_PRIVATE).
+                        edit().clear().apply()
                     FirebaseAuth.getInstance().signOut()
                     Toast.makeText(requireContext(), "Signed Out", Toast.LENGTH_SHORT).show()
                     val intent = Intent(requireContext(), Login::class.java)

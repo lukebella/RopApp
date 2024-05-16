@@ -26,6 +26,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
@@ -83,6 +84,7 @@ class HomeFragment : Fragment() {
     val recommendationId = dateFormat.format(calendar.time)
     var toRecommend = HashMap<String, Any> ()
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -92,6 +94,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         val locationTextView = binding.aCoruna
+
         val sharedPreferences =
             requireContext().getSharedPreferences("MySharedPreferences", MODE_PRIVATE)
 
@@ -140,8 +143,22 @@ class HomeFragment : Fragment() {
                                 if (value["photo"] == null) photoUrls.add("")
                                 else photoUrls.add(getImageUri(value["photo"].toString(), photos).toString())
                             }
+                            fun updatePrendaRec(str: String, uri: Uri, img: ImageView) {
+                                sharedPreferences.edit().putString(str, uri.toString()).apply()
+                                Glide.with(requireContext()).load(uri).into(img)
+                            }
+
+                            //TODO: I put the first 4 clothes as recommendations, do the random process with the categories etc.
+
+                            updatePrendaRec("prenda1", photoUrls[0].toUri(), binding.prenda1)
+                            updatePrendaRec("prenda2", photoUrls[1].toUri(), binding.prenda2)
+                            updatePrendaRec("prenda3", photoUrls[2].toUri(), binding.prenda3)
+                            updatePrendaRec("prenda4", photoUrls[3].toUri(), binding.prenda4)
 
                             toRecommend[recommendationId] = photoUrls.take(4)
+                        }
+                        else {
+                            binding.textPregunta.text = "No hay ropa..."
                         }
                         callback(toRecommend)
                     }
