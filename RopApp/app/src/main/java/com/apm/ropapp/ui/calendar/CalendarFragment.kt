@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.R
@@ -25,6 +24,20 @@ class CalendarFragment : Fragment() {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var database: DatabaseReference
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        firebaseAuth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
+
+        // Get today's date
+        val today = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(today.time)
+
+        // Fetch and display the images for today's date
+        fetchAndDisplayImages(formattedDate)
+    }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
