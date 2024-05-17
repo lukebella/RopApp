@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.apm.ropapp.EditProfile
 import com.apm.ropapp.Login
 import com.apm.ropapp.Stats
+import com.apm.ropapp.UserInfo
 import com.apm.ropapp.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -59,7 +60,9 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
         binding.infoButton.setOnClickListener {
+            val intent = Intent(requireContext(), UserInfo::class.java)
             Log.d("Profile", "Info button clicked")
+            startActivity(intent)
         }
 
         binding.statsButton.setOnClickListener {

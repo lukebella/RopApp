@@ -121,6 +121,18 @@
             android:label="StatsSeason">
         </activity>
 
+        <activity
+            android:name=".StatsType"
+            android:exported="true"
+            android:label="StatsType">
+        </activity>
+
+        <activity
+            android:name=".UserInfo"
+            android:exported="true"
+            android:label="UserInfo">
+        </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.apm.ropapp.FileProvider"
