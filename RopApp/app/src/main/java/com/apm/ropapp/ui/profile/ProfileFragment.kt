@@ -43,9 +43,12 @@ class ProfileFragment : Fragment() {
                 .child(userId).addValueEventListener(object : ValueEventListener {
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        if (dataSnapshot.exists())
+                        if (dataSnapshot.exists()) {
                             binding.textView6.text =
                                 dataSnapshot.child("username").getValue(String::class.java)
+                            binding.ProfileImage.setImageURI(dataSnapshot.child("image").getValue(String::class.java))
+                        }
+
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {

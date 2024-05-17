@@ -26,7 +26,7 @@
 
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/ProfileImage"
                     android:layout_width="118dp"
                     android:layout_height="129dp"
                     android:layout_marginStart="146dp"
