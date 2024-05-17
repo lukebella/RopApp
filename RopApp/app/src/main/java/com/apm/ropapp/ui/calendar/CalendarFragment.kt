@@ -91,6 +91,7 @@ class CalendarFragment : Fragment() {
         })
     }
 
+
     private fun displayImages(images: List<String>) {
         val imageViews = listOf(
             binding.imageView1,

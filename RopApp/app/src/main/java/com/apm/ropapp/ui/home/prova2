@@ -1,10 +1,13 @@
 package com.apm.ropapp.ui.home
 
+//import com.google.android.gms.maps.model.LatLng
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.location.Geocoder
 import android.net.Uri
 import android.os.AsyncTask
@@ -12,8 +15,10 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,6 +30,8 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
+import com.apm.ropapp.ui.closet.ClosetFragment
+import com.apm.ropapp.ui.closet.CustomAdapter
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -48,12 +55,15 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
+import java.util.UUID
 import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -74,6 +84,7 @@ class HomeFragment : Fragment() {
     val recommendationId = dateFormat.format(calendar.time)
     var toRecommend = HashMap<String, Any> ()
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -82,46 +93,87 @@ class HomeFragment : Fragment() {
         Log.d("HOME", "init")
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val noMeGustaButton = binding.noMeGusta
-        val meGustaButton = binding.meGusta
+        val locationTextView = binding.aCoruna
+
         val sharedPreferences =
             requireContext().getSharedPreferences("MySharedPreferences", MODE_PRIVATE)
 
-        initializeFirebase()
-        val userUid = firebaseAuth.currentUser?.uid
-        loadData(sharedPreferences)
-        resetData(sharedPreferences)
-
-        updateWeather(sharedPreferences, binding.aCoruna)
-        //metodo para recomendar
-
-        getDatabaseValues("clothes", userUid!!, sharedPreferences) { data ->
-            toRecommend = checkURI(data)
-        }
-
-        noMeGustaButton.setOnClickListener {
-            manageNoMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
-        }
-        meGustaButton.setOnClickListener {
-            if (firebaseAuth.currentUser != null) {
-                manageMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
-                Log.d("DatabaseUpdate", "toRecommend: $toRecommend")
-                uploadNewRecommendation(toRecommend[recommendationId]!!)
-            }
-        }
-
-        return root
-    }
-
-
-
-    private fun initializeFirebase() {
         firebaseAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
         storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
-    }
 
-    private fun updateWeather(sharedPreferences: SharedPreferences, locationTextView: TextView) {
+        val noMeGustaButton = binding.noMeGusta
+        val meGustaButton = binding.meGusta
+        val userUid = firebaseAuth.currentUser?.uid
+
+        loadData(sharedPreferences)
+
+        //TODO: comparar data sacada con la odierna para reinizializar buttons y recomendacion
+        resetData(sharedPreferences)
+        //metodo para recomendar
+
+        fun getImageUri(fileName: String, photos: StorageReference): Uri {
+            val dir = File("${root.context.getExternalFilesDir(null)}/clothes")
+            if (!dir.exists()) dir.mkdirs()
+            val imageFile = File(dir, fileName)
+
+            if (!imageFile.exists()) {
+                imageFile.createNewFile()
+                photos.child(fileName).getFile(imageFile)
+            }
+            return FileProvider.getUriForFile(
+                root.context, "com.apm.ropapp.FileProvider", imageFile
+            )
+        }
+
+        fun getDatabaseValues(folderName: String, callback: (HashMap<String, Any>) -> Unit) {
+            database.child("$folderName/$userUid")
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val data = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
+                        val toRecommend = HashMap<String, Any>()
+
+                        if (data != null) {
+                            val photoUrls = mutableListOf<String>()
+                            val photos = storage.child(folderName)
+
+                            data.forEach { (key, value) ->
+                                value["id"] = key
+                                Log.d("Key", value.toString())
+                                if (value["photo"] == null) photoUrls.add("")
+                                else photoUrls.add(getImageUri(value["photo"].toString(), photos).toString())
+                            }
+                            fun updatePrendaRec(str: String, uri: Uri, img: ImageView) {
+                                sharedPreferences.edit().putString(str, uri.toString()).apply()
+                                Glide.with(requireContext()).load(uri).into(img)
+                            }
+
+                            //TODO: I put the first 4 clothes as recommendations, do the random process with the categories etc.
+
+                            updatePrendaRec("prenda1", photoUrls[0].toUri(), binding.prenda1)
+                            updatePrendaRec("prenda2", photoUrls[1].toUri(), binding.prenda2)
+                            updatePrendaRec("prenda3", photoUrls[2].toUri(), binding.prenda3)
+                            updatePrendaRec("prenda4", photoUrls[3].toUri(), binding.prenda4)
+
+                            toRecommend[recommendationId] = photoUrls.take(4)
+                        }
+                        else {
+                            binding.textPregunta.text = "No hay ropa..."
+                        }
+                        callback(toRecommend)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.w("TAG", "Failed to read value.", error.toException())
+                    }
+                })
+        }
+
+
+        getDatabaseValues("clothes") { data ->
+            toRecommend = checkURI(data)
+        }
+
         var tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
         val delta = 2 * 60 * 60 * 1000
         Log.d("TMSU", tmsUpdate.toString())
@@ -137,63 +189,27 @@ class HomeFragment : Fragment() {
 
             }
         }
-    }
+        noMeGustaButton.setOnClickListener {
+            manageNoMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
 
-    fun getImageUri(fileName: String, photos: StorageReference): Uri {
-        val dir = File("${requireContext().getExternalFilesDir(null)}/clothes")
-        if (!dir.exists()) dir.mkdirs()
-        val imageFile = File(dir, fileName)
+            /*
+            - Remove from the database the 4 clothes with the images (key is the date) if existent
+             */
 
-        if (!imageFile.exists()) {
-            imageFile.createNewFile()
-            photos.child(fileName).getFile(imageFile)
         }
-        return FileProvider.getUriForFile(
-            requireContext(), "com.apm.ropapp.FileProvider", imageFile
-        )
-    }
+        meGustaButton.setOnClickListener {
+            if (firebaseAuth.currentUser != null) {
+                manageMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
+                Log.d("DatabaseUpdate", "toRecommend: $toRecommend")
+                uploadNewRecommendation(toRecommend[recommendationId]!!)
+            }            /*
+            - Write in the database the 4 clothes with the images (key is the date)
+             */
 
-    fun getDatabaseValues(folderName: String, userUid:String, sharedPreferences: SharedPreferences, callback: (HashMap<String, Any>) -> Unit) {
-        database.child("$folderName/$userUid")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val data = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
-                    val toRecommend = HashMap<String, Any>()
 
-                    if (data != null) {
-                        val photoUrls = mutableListOf<String>()
-                        val photos = storage.child(folderName)
+        }
 
-                        data.forEach { (key, value) ->
-                            value["id"] = key
-                            Log.d("Key", value.toString())
-                            if (value["photo"] == null) photoUrls.add("")
-                            else photoUrls.add(getImageUri(value["photo"].toString(), photos).toString())
-                        }
-                        fun updatePrendaRec(str: String, uri: Uri, img: ImageView) {
-                            sharedPreferences.edit().putString(str, uri.toString()).apply()
-                            Glide.with(requireContext()).load(uri).into(img)
-                        }
-
-                        //TODO: I put the first 4 clothes as recommendations, do the random process with the categories etc.
-
-                        updatePrendaRec("prenda1", photoUrls[0].toUri(), binding.prenda1)
-                        updatePrendaRec("prenda2", photoUrls[1].toUri(), binding.prenda2)
-                        updatePrendaRec("prenda3", photoUrls[2].toUri(), binding.prenda3)
-                        updatePrendaRec("prenda4", photoUrls[3].toUri(), binding.prenda4)
-
-                        toRecommend[recommendationId] = photoUrls.take(4)
-                    }
-                    else {
-                        binding.textPregunta.text = "No hay ropa..."
-                    }
-                    callback(toRecommend)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.w("TAG", "Failed to read value.", error.toException())
-                }
-            })
+        return root
     }
 
     private fun weatherForecast(lat: Double, longit: Double, key: String) {
