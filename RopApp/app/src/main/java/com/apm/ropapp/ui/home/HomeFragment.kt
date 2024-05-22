@@ -2,9 +2,12 @@ package com.apm.ropapp.ui.home
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.location.Geocoder
 import android.net.Uri
 import android.os.AsyncTask
@@ -40,6 +43,7 @@ import com.google.firebase.storage.StorageReference
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.File
+import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -144,13 +148,50 @@ class HomeFragment : Fragment() {
         if (!dir.exists()) dir.mkdirs()
         val imageFile = File(dir, fileName)
 
+        if (imageFile.isDirectory) {
+            return getUriFromDrawable(requireContext(), R.drawable.unavailable, "default_image.png")
+        }
+
+
         if (!imageFile.exists()) {
             imageFile.createNewFile()
             photos.child(fileName).getFile(imageFile)
         }
+
+
         return FileProvider.getUriForFile(
             requireContext(), "com.apm.ropapp.FileProvider", imageFile
         )
+
+
+    }
+    fun getBitmapFromDrawable(context: Context, drawableId: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(context, drawableId)
+        val bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bitmap
+    }
+
+    // Function to save a Bitmap to a file
+    fun saveBitmapToFile(context: Context, bitmap: Bitmap, fileName: String): File {
+        val file = File(context.getExternalFilesDir(null), fileName)
+        val out = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+        out.flush()
+        out.close()
+        return file
+    }
+
+    fun getUriFromDrawable(context: Context, drawableId: Int, fileName: String): Uri {
+        val bitmap = getBitmapFromDrawable(context, drawableId)
+        val file = saveBitmapToFile(context, bitmap, fileName)
+        return getUriFromFile(context, file)
+    }
+
+    fun getUriFromFile(context: Context, file: File): Uri {
+        return FileProvider.getUriForFile(context, "com.apm.ropapp.FileProvider", file)
     }
 
     fun getDatabaseValues(folderName: String, userUid:String, sharedPreferences: SharedPreferences, callback: (HashMap<String, Any>) -> Unit) {
@@ -167,22 +208,18 @@ class HomeFragment : Fragment() {
                         data.forEach { (key, value) ->
                             value["id"] = key
                             Log.d("Key", value.toString())
-                            if (value["photo"] == null) photoUrls.add("")
-                            else photoUrls.add(getImageUri(value["photo"].toString(), photos).toString())
-                        }
-                        fun updatePrendaRec(str: String, uri: Uri, img: ImageView) {
-                            sharedPreferences.edit().putString(str, uri.toString()).apply()
-                            Glide.with(requireContext()).load(uri).into(img)
                         }
 
-                        //TODO: I put the first 4 clothes as recommendations, do the random process with the categories etc.
+                        //Recommendation Algorithm
+                        val recommendedPhotos = recommendation(data)
+                        Log.d("Recommend", recommendedPhotos.toString())
+                        for (ph in recommendedPhotos) {
+                            Log.d("photo", getImageUri(ph,photos).toString())
+                            photoUrls.add(getImageUri(ph,photos).toString())
+                        }
+                        updateRecommendations(sharedPreferences, photoUrls)
 
-                        updatePrendaRec("prenda1", photoUrls[0].toUri(), binding.prenda1)
-                        updatePrendaRec("prenda2", photoUrls[1].toUri(), binding.prenda2)
-                        updatePrendaRec("prenda3", photoUrls[2].toUri(), binding.prenda3)
-                        updatePrendaRec("prenda4", photoUrls[3].toUri(), binding.prenda4)
-
-                        toRecommend[recommendationId] = photoUrls.take(4)
+                        toRecommend[recommendationId] = recommendedPhotos
                     }
                     else {
                         binding.textPregunta.text = "No hay ropa..."
@@ -463,6 +500,63 @@ class HomeFragment : Fragment() {
             }.addOnSuccessListener {
                 Log.d("DatabaseDelete", "Delete Success")
             }
+        }
+    }
+
+    private fun recommendation(
+        data: HashMap<String, HashMap<String, Any>>
+    ): List<String> {
+        val season = fromMonthToSeason(month.toString())
+        val categories = listOf(
+            listOf("Top"),
+            listOf("Bottom"),
+            listOf("Shoe"),
+            listOf("Accessories")
+        )
+        val filteredClothes = data.values.filter { item ->
+            val seasons = item["seasons"] as? List<String>
+            seasons?.contains(season) == true
+        }
+        val clothesByCategory = filteredClothes.groupBy { it["category"] }
+        Log.d("cc", clothesByCategory.toString())
+        val recommendedPhotos = mutableListOf<String>()
+        for (category in categories) {
+            Log.d("cat", category.toString())
+            val clothes = clothesByCategory[category]
+            Log.d("filcloth",clothes.toString())
+
+            if (clothes != null && clothes.isNotEmpty()) {
+                val randomClothes = clothes.random()
+                val photoUrl = randomClothes["photo"]?.toString() ?: ""
+                Log.d("photourl", photoUrl)
+                recommendedPhotos.add(photoUrl)
+            } else {
+                recommendedPhotos.add("")
+            }
+        }
+
+        return recommendedPhotos
+    }
+
+
+    private fun updateRecommendations(sharedPreferences: SharedPreferences, photoUrls: List<String>) {
+        val photos = listOf(binding.prenda1, binding.prenda2, binding.prenda3, binding.prenda4)
+        photoUrls.forEachIndexed { index, url ->
+            if (index < photos.size) {
+                sharedPreferences.edit().putString("prenda${index + 1}", url).apply()
+                Glide.with(requireContext()).load(url).into(photos[index])
+            }
+        }
+    }
+
+
+    private fun fromMonthToSeason(month: String): String {
+        return when (month) {
+            in listOf("3","4","5") -> "Primavera"
+            in listOf("6","7","8") -> "Verano"
+            in listOf("9","10","11") -> "Otoño"
+            in listOf("12","1","2") -> "Invierno"
+            else -> "Mes desconocido"
         }
     }
 
