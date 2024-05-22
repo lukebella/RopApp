@@ -218,8 +218,8 @@ class HomeFragment : Fragment() {
                             photoUrls.add(getImageUri(ph,photos).toString())
                         }
                         updateRecommendations(sharedPreferences, photoUrls)
-
-                        toRecommend[recommendationId] = recommendedPhotos
+                        Log.d("rp", recommendedPhotos.toString())
+                        toRecommend[recommendationId] = photoUrls
                     }
                     else {
                         binding.textPregunta.text = "No hay ropa..."

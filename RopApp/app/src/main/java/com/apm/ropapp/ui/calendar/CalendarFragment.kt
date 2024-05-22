@@ -99,7 +99,7 @@ class CalendarFragment : Fragment() {
             binding.imageView3,
             binding.imageView4
         )
-
+        Log.d("images", images.toString())
         for (i in imageViews.indices) {
             if (i < images.size) {
                 Glide.with(this).load(images[i]).into(imageViews[i])
