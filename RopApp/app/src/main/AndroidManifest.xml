@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" tools:node="remove"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -33,80 +34,67 @@
 
         <activity
             android:name=".Login"
-            android:exported="true"
-            android:label="Login">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".SignUp"
-            android:exported="true"
-            android:label="SignUp">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".CompleteData"
-            android:exported="true"
-            android:label="CompleteData">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".AddClothes"
-            android:exported="true"
-            android:label="AddClothes">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".AddCategories"
-            android:exported="true"
-            android:label="AddCategories">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".AddStyle"
-            android:exported="true"
-            android:label="AddStyle">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".AddDetails"
-            android:exported="true"
-            android:label="AddDetails">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".SelectItem"
-            android:exported="true"
-            android:label="SelectItem">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".ArrangeItems"
-            android:exported="true"
-            android:label="ArrangeItems">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".CreateOutfit"
-            android:exported="true"
-            android:label="CreateOutfit">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".ShareOutfit"
-            android:exported="true"
-            android:label="ShareOutfit">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".EditProfile"
-            android:exported="true"
-            android:label="EditProfile">
+            android:exported="true">
         </activity>
 
         <activity
             android:name=".EditPassword"
-            android:exported="true"
-            android:label="EditPassword">
+            android:exported="true">
         </activity>
 
         <provider

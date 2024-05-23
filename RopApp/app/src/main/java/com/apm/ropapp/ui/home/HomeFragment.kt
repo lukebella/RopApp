@@ -24,7 +24,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
@@ -62,21 +61,21 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    var pressedNo: Boolean = false
-    var pressedSi: Boolean = false
+    private var pressedNo: Boolean = false
+    private var pressedSi: Boolean = false
 
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
 
-    val calendar = Calendar.getInstance()
+    private val calendar: Calendar = Calendar.getInstance()
     val year = calendar.get(Calendar.YEAR)
     val month = calendar.get(Calendar.MONTH) + 1 // Month is zero-based
     val day = calendar.get(Calendar.DAY_OF_MONTH)
 
-    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale("es", "ES"))
-    val recommendationId = dateFormat.format(calendar.time)
-    var toRecommend = HashMap<String, Any> ()
+    private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale("es", "ES"))
+    val recommendationId: String = dateFormat.format(calendar.time)
+    private var toRecommend = HashMap<String, Any> ()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -126,7 +125,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateWeather(sharedPreferences: SharedPreferences, locationTextView: TextView) {
-        var tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
+        val tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
         val delta = 2 * 60 * 60 * 1000
         Log.d("TMSU", tmsUpdate.toString())
         Log.d("TMS", System.currentTimeMillis().toString())
@@ -165,7 +164,7 @@ class HomeFragment : Fragment() {
 
 
     }
-    fun getBitmapFromDrawable(context: Context, drawableId: Int): Bitmap {
+    private fun getBitmapFromDrawable(context: Context, drawableId: Int): Bitmap {
         val drawable = ContextCompat.getDrawable(context, drawableId)
         val bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
@@ -175,7 +174,7 @@ class HomeFragment : Fragment() {
     }
 
     // Function to save a Bitmap to a file
-    fun saveBitmapToFile(context: Context, bitmap: Bitmap, fileName: String): File {
+    private fun saveBitmapToFile(context: Context, bitmap: Bitmap, fileName: String): File {
         val file = File(context.getExternalFilesDir(null), fileName)
         val out = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
@@ -184,17 +183,17 @@ class HomeFragment : Fragment() {
         return file
     }
 
-    fun getUriFromDrawable(context: Context, drawableId: Int, fileName: String): Uri {
+    private fun getUriFromDrawable(context: Context, drawableId: Int, fileName: String): Uri {
         val bitmap = getBitmapFromDrawable(context, drawableId)
         val file = saveBitmapToFile(context, bitmap, fileName)
         return getUriFromFile(context, file)
     }
 
-    fun getUriFromFile(context: Context, file: File): Uri {
+    private fun getUriFromFile(context: Context, file: File): Uri {
         return FileProvider.getUriForFile(context, "com.apm.ropapp.FileProvider", file)
     }
 
-    fun getDatabaseValues(folderName: String, userUid:String, sharedPreferences: SharedPreferences, callback: (HashMap<String, Any>) -> Unit) {
+    private fun getDatabaseValues(folderName: String, userUid:String, sharedPreferences: SharedPreferences, callback: (HashMap<String, Any>) -> Unit) {
         database.child("$folderName/$userUid")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -378,7 +377,7 @@ class HomeFragment : Fragment() {
             var tempMax = 0
             var weat = ""
 
-            var dateToday = "$year-0$month-$dayString"
+            val dateToday = "$year-0$month-$dayString"
             val jsonObject = JSONObject(jsonString)
             val listArray = jsonObject.getJSONArray("list")
             for (i in 0 until listArray.length()) {
@@ -442,9 +441,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun resetData(sharedPreferences: SharedPreferences) {
-        var memorizedDate: String = sharedPreferences.getString("FORMATTED_DATE", "01-01-24").toString()
+        val memorizedDate: String = sharedPreferences.getString("FORMATTED_DATE", "01-01-24").toString()
 
-        if (!memorizedDate.equals(recommendationId)) {
+        if (memorizedDate != recommendationId) {
             sharedPreferences.edit().putString("FORMATTED_DATE", recommendationId).apply()
 
             sharedPreferences.edit().putInt("nomegusta",R.color.md_theme_background).apply()
@@ -481,7 +480,7 @@ class HomeFragment : Fragment() {
                 // Handle unsuccessful uploads
                 Log.d("DatabaseUpdate", "Upload Failed: ${it.stackTrace}")
             }.addOnSuccessListener {
-                Log.d("DatabaseUpdate", "Upload Success: ${data}")
+                Log.d("DatabaseUpdate", "Upload Success: $data")
             }
         }
     }
@@ -525,7 +524,7 @@ class HomeFragment : Fragment() {
             val clothes = clothesByCategory[category]
             Log.d("filcloth",clothes.toString())
 
-            if (clothes != null && clothes.isNotEmpty()) {
+            if (!clothes.isNullOrEmpty()) {
                 val randomClothes = clothes.random()
                 val photoUrl = randomClothes["photo"]?.toString() ?: ""
                 Log.d("photourl", photoUrl)

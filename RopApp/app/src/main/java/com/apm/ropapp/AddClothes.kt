@@ -1,15 +1,20 @@
 package com.apm.ropapp
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.children
 import com.apm.ropapp.databinding.AddclothesBinding
@@ -21,16 +26,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.File
 import java.util.UUID
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.collections.arrayListOf
 import kotlin.collections.component1
 import kotlin.collections.component2
-import kotlin.collections.contains
-import kotlin.collections.forEach
-import kotlin.collections.get
-import kotlin.collections.isNotEmpty
-import kotlin.collections.remove
 import kotlin.collections.set
 
 
@@ -44,6 +41,10 @@ class AddClothes : AppCompatActivity() {
     private lateinit var imageUri: Uri
     private lateinit var fileNameUpload: String
     private val uploadData = HashMap<String, Any>()
+
+    companion object {
+        private const val CAMERA_PERMISSION_REQUEST_CODE = 100
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,23 +110,21 @@ class AddClothes : AppCompatActivity() {
             finish()
         }
 
-        val resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    // There are no request codes
-                    Log.d("Camara", "Captured URI: $imageUri")
-                    binding.imageView.setImageURI(imageUri)
-                    fileNameUpload = imageUri.toString().substring(
-                        imageUri.toString().lastIndexOf("IMG")
-                    )
-                } else Log.d("Camara", "No media captured")
-            }
-
         binding.camara.setOnClickListener {
-            imageUri = createImageUri()
-            intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-            resultLauncher.launch(intent)
+            // Check if the Camera permission is already available.
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                // If Camera permission is not available, request for it.
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.CAMERA),
+                    CAMERA_PERMISSION_REQUEST_CODE
+                )
+            } else {
+                // Launch the camera if the permission exists
+                launchCamera()
+            }
         }
 
         val pickMedia =
@@ -192,6 +191,46 @@ class AddClothes : AppCompatActivity() {
                 intent.putExtra("checked", uploadData["details"] as HashMap<*, *>)
             startForResult.launch(intent)
         }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            CAMERA_PERMISSION_REQUEST_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    launchCamera()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Es necesario otorgar permisos para utilizar la cámara",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    private val resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                // There are no request codes
+                Log.d("Camara", "Captured URI: $imageUri")
+                binding.imageView.setImageURI(imageUri)
+                fileNameUpload = imageUri.toString().substring(
+                    imageUri.toString().lastIndexOf("IMG")
+                )
+            } else Log.d("Camara", "No media captured")
+        }
+
+    private fun launchCamera() {
+        imageUri = createImageUri()
+        intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        resultLauncher.launch(intent)
     }
 
     private fun updateTextView(data: String): String {

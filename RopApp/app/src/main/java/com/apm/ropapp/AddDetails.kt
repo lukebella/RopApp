@@ -6,7 +6,6 @@ import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.AddchoicedetailsBinding
 
@@ -85,8 +84,8 @@ class AddDetails : AppCompatActivity() {
         binding.colores.text?.toString()?.let { details["colors"] = it }
 
         // Agregar los valores seleccionados de los spinners al mapa details
-        selectedEstado?.let { details["state"] = it }
-        selectedTamano?.let { details["size"] = it }
+        selectedEstado.let { details["state"] = it }
+        selectedTamano.let { details["size"] = it }
 
         // Crear el intent y pasar el mapa details como extra
         val intent = Intent(this, AddClothes::class.java)
