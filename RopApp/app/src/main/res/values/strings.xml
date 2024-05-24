@@ -32,43 +32,44 @@
 
     <string name="guardar">Guardar</string>
 
-    <string name="seleccionarCategorias">Selecciona las categorias de tu prenda:</string>
+    <string name="selectCategories">Selecciona las categorias de tu prenda:</string>
     <string name="prendaTop">Parte de Arriba</string>
-    <string name="prendaAccessories">Accessorios</string>
-    <string name="prendaBottom">Parte de abajo</string>
-    <string name="prendaDress">Vestido</string>
     <string name="prendaOuterwear">Prenda Exterior</string>
-    <string name="prendaActivewear">Tecnica</string>
-    <string name="prendaFormalwear">Formal</string>
-    <string name="prendaLoungewear">Lounge</string>
+    <string name="prendaBottom">Parte de Abajo</string>
     <string name="prendaShoe">Calzado</string>
+    <string name="prendaAccessories">Accesorios</string>
+    <string name="prendaDress">Vestido</string>
     <string name="prendaBag">Bolso</string>
-    <string name="prendaHat">Gorra</string>
-    <string name="prendaScarf">Bufanda</string>
-    <string name="prendaGloves">Guantes</string>
+    <string name="prendaHat">Sombrero</string>
     <string name="prendaSocks">Calcetines</string>
     <string name="prendaBelts">Cinturon</string>
-    <string name="prendaSunglasses">Gafas de sol</string>
+    <string name="prendaScarf">Bufanda</string>
+    <string name="prendaGloves">Guantes</string>
+    <string name="prendaGlasses">Gafas</string>
+    <string name="prendaWatch">Reloj</string>
 
+    <string name="selectStyles">Selecciona los estilos de tu prenda:</string>
+    <string name="styleSportWear">Deportiva</string>
+    <string name="styleFormalWear">Formal</string>
+    <string name="styleLoungeWear">Andar por Casa</string>
     <string name="styleClassic">Atemporal</string>
     <string name="styleStreetwear">De Calle</string>
+    <string name="styleParty">De Fiesta</string>
     <string name="styleMinimalist">Minimalista</string>
-    <string name="styleSporty">Deportivo</string>
     <string name="styleVintage">Vintage</string>
-    <string name="styleBohemian">Bohemio</string>
-    <string name="styleGlamorous">Glamuroso</string>
-    <string name="styleRomantic">Romantico</string>
-    <string name="styleEclectic">Eclectico</string>
-    <string name="valueEstilos">Estilos</string>
-    <string name="seleccionaEstilos">Selecciona los estilos</string>
-
-    <string name="valorDetalles">Detalles</string>
-    <string name="valorEditarDetalles">Edita los detalles</string>
-
-    <string name="botonFlechaNext"><![CDATA[>]]></string>
+    <string name="styleBohemian">Bohemia</string>
+    <string name="styleGlamorous">Glamurosa</string>
+    <string name="styleRomantic">Romantica</string>
+    <string name="styleEclectic">Ecléctica</string>
 
     <string name="valorCategorias">Categorías</string>
-    <string name="valorSeleccionarcategorias">Selecciona las categorías</string>
+    <string name="seleccionaCategorias">Selecciona las categorías</string>
+    <string name="valorEstilos">Estilos</string>
+    <string name="seleccionaEstilos">Selecciona los estilos</string>
+    <string name="valorDetalles">Detalles</string>
+    <string name="editarDetalles">Edita los detalles</string>
+
+    <string name="botonFlechaNext"><![CDATA[>]]></string>
     <string name="valuePlus">+</string>
 
     <string name="valorNombreConjunto">Nombre del conjunto</string>

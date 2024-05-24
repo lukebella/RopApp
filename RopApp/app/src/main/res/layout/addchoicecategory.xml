@@ -11,7 +11,7 @@
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:background="#E1D4D4"
         android:backgroundTint="@color/md_theme_background"
-        android:minHeight="800dp"
+        android:minHeight="700dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,13 +37,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView12"
-            android:layout_width="330dp"
-            android:layout_height="58dp"
+            android:id="@+id/textView"
+            android:layout_width="340dp"
+            android:layout_height="65dp"
             android:layout_marginTop="90dp"
             android:background="#FAF0F0"
             android:fontFamily="casual"
-            android:text="@string/seleccionarCategorias"
+            android:text="@string/selectCategories"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold|italic"
@@ -55,163 +55,141 @@
             android:id="@+id/top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginTop="30dp"
-            android:layout_marginBottom="33dp"
             android:text="@string/prendaTop"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-        <CheckBox
-            android:id="@+id/accessories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:layout_marginEnd="14dp"
-            android:text="@string/prendaAccessories"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-        <CheckBox
-            android:id="@+id/bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="128dp"
-            android:text="@string/prendaBottom"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/top" />
-
-        <CheckBox
-            android:id="@+id/dress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/prendaDress"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <CheckBox
             android:id="@+id/outerwear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
+            android:layout_marginStart="40dp"
             android:layout_marginTop="30dp"
             android:text="@string/prendaOuterwear"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dress" />
+            app:layout_constraintStart_toEndOf="@+id/top"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <CheckBox
-            android:id="@+id/activewear"
+            android:id="@+id/bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/prendaActivewear"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="20dp"
+            android:text="@string/prendaBottom"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/outerwear" />
-
-        <CheckBox
-            android:id="@+id/formalwear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/prendaFormalwear"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activewear" />
-
-        <CheckBox
-            android:id="@+id/loungewear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/prendaLoungewear"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/formalwear" />
+            app:layout_constraintTop_toBottomOf="@id/top" />
 
         <CheckBox
             android:id="@+id/shoe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="61dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/prendaShoe"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/top"
             app:layout_constraintTop_toBottomOf="@+id/top" />
+
+        <CheckBox
+            android:id="@+id/accessories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="20dp"
+            android:text="@string/prendaAccessories"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom" />
+
+        <CheckBox
+            android:id="@+id/dress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/prendaDress"
+            app:layout_constraintStart_toEndOf="@+id/top"
+            app:layout_constraintTop_toBottomOf="@+id/bottom" />
 
         <CheckBox
             android:id="@+id/bag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="68dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:text="@string/prendaBag"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shoe" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accessories" />
 
         <CheckBox
             android:id="@+id/hat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="70dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/prendaHat"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/top"
+            app:layout_constraintTop_toBottomOf="@+id/accessories" />
+
+        <CheckBox
+            android:id="@+id/socks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/prendaSocks"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bag" />
+
+        <CheckBox
+            android:id="@+id/belts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/prendaBelts"
+            app:layout_constraintStart_toEndOf="@+id/top"
             app:layout_constraintTop_toBottomOf="@+id/bag" />
 
         <CheckBox
             android:id="@+id/scarf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="60dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:text="@string/prendaScarf"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hat" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/socks" />
 
         <CheckBox
             android:id="@+id/gloves"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="51dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/prendaGloves"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/top"
+            app:layout_constraintTop_toBottomOf="@+id/socks" />
+
+        <CheckBox
+            android:id="@+id/glasses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/prendaGlasses"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scarf" />
 
         <CheckBox
-            android:id="@+id/socks"
+            android:id="@+id/watch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="56dp"
-            android:text="@string/prendaSocks"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/gloves" />
-
-        <CheckBox
-            android:id="@+id/belts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/prendaBelts"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/loungewear" />
-
-        <CheckBox
-            android:id="@+id/sunglasses"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/prendaSunglasses"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/socks" />
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/prendaWatch"
+            app:layout_constraintStart_toEndOf="@+id/top"
+            app:layout_constraintTop_toBottomOf="@+id/scarf" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

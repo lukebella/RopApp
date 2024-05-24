@@ -11,7 +11,7 @@
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:background="#E1D4D4"
         android:backgroundTint="@color/md_theme_background"
-        android:minHeight="700dp"
+        android:minHeight="600dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -37,13 +37,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textStyle"
-            android:layout_width="325dp"
-            android:layout_height="30dp"
+            android:id="@+id/textView"
+            android:layout_width="340dp"
+            android:layout_height="35dp"
             android:layout_marginTop="90dp"
             android:background="#FAF0F0"
             android:fontFamily="casual"
-            android:text="Selecciona el vestido de tu prenda:"
+            android:text="@string/selectStyles"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold|italic"
@@ -52,107 +52,124 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <CheckBox
+            android:id="@+id/sportWear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="30dp"
+            android:text="@string/styleSportWear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <CheckBox
+            android:id="@+id/formalWear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/styleFormalWear"
+            app:layout_constraintStart_toEndOf="@+id/loungeWear"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <CheckBox
+            android:id="@+id/loungeWear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="20dp"
+            android:text="@string/styleLoungeWear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sportWear" />
+
+        <CheckBox
             android:id="@+id/classic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/styleClassic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textStyle" />
+            app:layout_constraintStart_toEndOf="@+id/loungeWear"
+            app:layout_constraintTop_toBottomOf="@+id/sportWear" />
 
         <CheckBox
-            android:id="@+id/bohemian"
+            android:id="@+id/streetWear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="37dp"
-            android:layout_marginBottom="30dp"
-            android:text="@string/styleBohemian"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textStyle" />
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="20dp"
+            android:text="@string/styleStreetwear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loungeWear" />
+
+        <CheckBox
+            android:id="@+id/party"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/styleParty"
+            app:layout_constraintStart_toEndOf="@+id/loungeWear"
+            app:layout_constraintTop_toBottomOf="@+id/loungeWear" />
+
+        <CheckBox
+            android:id="@+id/minimalist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="20dp"
+            android:text="@string/styleMinimalist"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/streetWear" />
 
         <CheckBox
             android:id="@+id/vintage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/styleVintage"
+            app:layout_constraintStart_toEndOf="@+id/loungeWear"
+            app:layout_constraintTop_toBottomOf="@+id/streetWear" />
+
+        <CheckBox
+            android:id="@+id/bohemian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="20dp"
+            android:text="@string/styleBohemian"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/romantic" />
+            app:layout_constraintTop_toBottomOf="@id/minimalist" />
 
         <CheckBox
             android:id="@+id/glamorous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/styleGlamorous"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vintage" />
-
-        <CheckBox
-            android:id="@+id/preppy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="30dp"
-            android:text="Preppy"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/classic" />
-
-        <CheckBox
-            android:id="@+id/sporty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="52dp"
-            android:text="@string/styleSporty"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/loungeWear"
             app:layout_constraintTop_toBottomOf="@+id/minimalist" />
 
         <CheckBox
             android:id="@+id/romantic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="20dp"
             android:text="@string/styleRomantic"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/preppy" />
+            app:layout_constraintTop_toBottomOf="@id/bohemian" />
 
         <CheckBox
             android:id="@+id/eclectic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="49dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/styleEclectic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sporty" />
-
-
-        <CheckBox
-            android:id="@+id/streetwear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="29dp"
-            android:text="@string/styleStreetwear"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/loungeWear"
             app:layout_constraintTop_toBottomOf="@+id/bohemian" />
-
-        <CheckBox
-            android:id="@+id/minimalist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="28dp"
-            android:text="@string/styleMinimalist"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/streetwear" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

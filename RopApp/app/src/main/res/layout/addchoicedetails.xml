@@ -32,14 +32,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="Guardar"
+            android:text="@string/guardar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView12"
-            android:layout_width="332dp"
-            android:layout_height="67dp"
+            android:layout_width="340dp"
+            android:layout_height="35dp"
             android:layout_marginTop="90dp"
             android:background="#FAF0F0"
             android:fontFamily="casual"
