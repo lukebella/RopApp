@@ -44,7 +44,7 @@ class SignUp : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
                 selectedGender = parent.getItemAtPosition(position).toString()
                 Log.d("SignUp", "Se seleccionó el género: $selectedGender")
-                Toast.makeText(applicationContext, "Selected gender: $selectedGender", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Género seleccionado: $selectedGender", Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -69,12 +69,20 @@ class SignUp : AppCompatActivity() {
                         val uid = firebaseAuth.currentUser?.uid
                         if (uid != null && selectedGender != null)
                             writeNewUser(uid, username, email, birthdate, selectedGender!!)
-                        else Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                        else {
+                            Log.d("Sing Up", it.exception.toString())
+                            Toast.makeText(this, "Ha ocurrido un error al crear la cuenta",
+                                Toast.LENGTH_SHORT).show()
+                        }
 
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
 
-                    } else Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                    } else {
+                        Log.d("Sing Up", it.exception.toString())
+                        Toast.makeText(this, "Ha ocurrido un error al crear la cuenta",
+                            Toast.LENGTH_SHORT).show()
+                    }
                 }
             } else Toast.makeText(this, "Debe rellenar todos los campos", Toast.LENGTH_SHORT).show()
         }

@@ -108,7 +108,7 @@ class EditProfile : AppCompatActivity() {
                     Log.d("EditProfile", "Not allowed to change password")
                     Toast.makeText(
                         applicationContext,
-                        "Not possible to change password, user signed with ${user.providerId}",
+                        "No es posible modificar la contraseña, usuario registrado como ${user.providerId}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

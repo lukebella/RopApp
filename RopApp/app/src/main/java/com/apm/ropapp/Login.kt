@@ -21,7 +21,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 
 class Login : AppCompatActivity() {
@@ -45,8 +44,17 @@ class Login : AppCompatActivity() {
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
-                    if (it.isSuccessful) finish()
-                    else Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                    if (it.isSuccessful) {
+                        val user = firebaseAuth.currentUser
+                        if (user != null)
+                            Toast.makeText(this@Login, "Identificado como ${user.email}", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    else {
+                        Log.d("Login", it.exception.toString())
+                        Toast.makeText(this, "Ha ocurrido un error al iniciar sesión", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
             } else Toast.makeText(this, "Debe rellenar todos los campos", Toast.LENGTH_SHORT).show()
         }
@@ -72,12 +80,12 @@ class Login : AppCompatActivity() {
                             firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     val user = firebaseAuth.currentUser
-                                    Toast.makeText(this@Login, "Signed in as ",
-                                        Toast.LENGTH_SHORT).show()
+                                    if (user != null)
+                                        Toast.makeText(this@Login, "Identificado como ${user.email}", Toast.LENGTH_SHORT).show()
                                     finish()
                                 } else {
-                                    Log.d("Login", "Authentication failed")
-                                    Toast.makeText(this@Login, "Authentication failed",
+                                    Log.d("Login", "Autenticación fallida")
+                                    Toast.makeText(this@Login, "Autenticación fallida",
                                         Toast.LENGTH_SHORT).show()
                                 }
                             }
@@ -85,13 +93,13 @@ class Login : AppCompatActivity() {
                     }
 
                     override fun onCancel() {
-                        Log.d("Login", "Authentication cancelled")
-                        Toast.makeText(this@Login, "Authentication cancelled", Toast.LENGTH_SHORT).show()
+                        Log.d("Login", "Autenticación cancelada")
+                        Toast.makeText(this@Login, "Autenticación cancelada", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onError(error: FacebookException) {
-                        Log.d("Login", "Authentication failed")
-                        Toast.makeText(this@Login, "Authentication failed", Toast.LENGTH_SHORT).show()
+                        Log.d("Login", "Autenticación fallida")
+                        Toast.makeText(this@Login, "Autenticación fallida", Toast.LENGTH_SHORT).show()
                     }
                 })
 
@@ -124,7 +132,7 @@ class Login : AppCompatActivity() {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
-                Toast.makeText(this, "Google sign in failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error al iniciar sesión en Google: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -156,7 +164,7 @@ class Login : AppCompatActivity() {
                         TODO("Not yet implemented")
                     }
                 })
-            } else Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(this, "Autenticación fallida", Toast.LENGTH_SHORT).show()
         }
     }
 

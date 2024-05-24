@@ -6,12 +6,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.EditpasswordBinding
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import org.checkerframework.checker.nullness.qual.NonNull
 
 
 class EditPassword : AppCompatActivity() {
@@ -41,15 +37,16 @@ class EditPassword : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         user.updatePassword(newPassword)
-                            .addOnCompleteListener { task ->
-                                if (!task.isSuccessful) {
-                                    Toast.makeText(this, "Something went wrong. Please try again later", Toast.LENGTH_SHORT).show()
+                            .addOnCompleteListener {
+                                if (!it.isSuccessful) {
+                                    Toast.makeText(this, "Ha ocurrido un error. Vuelva a " +
+                                            "intentarlo más tarde", Toast.LENGTH_SHORT).show()
                                 } else {
-                                    Toast.makeText(this, "Password Successfully Modified", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, "Contraseña modificada con éxito", Toast.LENGTH_SHORT).show()
                                 }
                             }
                     } else {
-                        Toast.makeText(this, "Authentication Failed", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Autenticación fallida", Toast.LENGTH_SHORT).show()
                     }
                 }
             intent = Intent(this, MainActivity::class.java) // Maybe editOutfit?
@@ -57,7 +54,7 @@ class EditPassword : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.newPassword.setOnFocusChangeListener { v, hasFocus ->
+        binding.newPassword.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                  newPassword = binding.newPassword.text.toString()
                 Log.d("EditPassword", "New Password: $newPassword")
@@ -65,7 +62,7 @@ class EditPassword : AppCompatActivity() {
             }
         }
 
-        binding.oldPassword.setOnFocusChangeListener { v, hasFocus ->
+        binding.oldPassword.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
                 oldPassword = binding.oldPassword.text.toString()
                 Log.d("EditPassword", "Old Password: $oldPassword")

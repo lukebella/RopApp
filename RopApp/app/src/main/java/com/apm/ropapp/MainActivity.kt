@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         } else {
             Log.d("Main Activity", "User logged")
-            Toast.makeText(this, "Signed in as ${user.displayName}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Identificado como ${user.email}", Toast.LENGTH_SHORT).show()
         }
 
         binding = ActivityMainBinding.inflate(layoutInflater)
