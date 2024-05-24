@@ -104,7 +104,7 @@ class EditProfile : AppCompatActivity() {
         binding.passwordChange.setOnClickListener() {
             for (user in FirebaseAuth.getInstance().currentUser!!
                 .providerData) {
-                if (user.providerId == "facebook.com" || user.providerId == "google.com") {
+                if (user.providerId == getString(R.string.facebookProvider) || user.providerId == getString(R.string.googleProvider)) {
                     Log.d("EditProfile", "Not allowed to change password")
                     Toast.makeText(
                         applicationContext,

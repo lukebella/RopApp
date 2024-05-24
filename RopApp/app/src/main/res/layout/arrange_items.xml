@@ -33,7 +33,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:background="@drawable/button_default"
-        android:text="Guardar"
+        android:text="@string/guardar"
         app:backgroundTint="@null"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

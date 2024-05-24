@@ -23,7 +23,7 @@
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:ems="10"
         android:inputType="text"
-        android:hint="Email del usuario "
+        android:hint="@string/valorUserEmail"
         app:layout_constraintBottom_toTopOf="@+id/userPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:inputType="textPassword"
-        android:hint="Contraseña"
+        android:hint="@string/valorPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userLogin" />
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginTop="380dp"
-        android:text="Iniciar sesion"
+        android:text="@string/valorSignIn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginTop="450dp"
-        android:text="Crear Cuenta"
+        android:text="@string/valorCreateAccount"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:foregroundGravity="center_vertical"
-        android:text="OR"
+        android:text="@string/valorOr"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/loginGooglebutton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="80dp"
-        android:text="Login with google"
+        android:text="@string/valorLoginGoogle"
         app:buttonSize="wide"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

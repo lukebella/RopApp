@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:background="@drawable/button_default"
-        android:text="Compartir"
+        android:text="@string/valorShare"
         app:layout_constraintBottom_toTopOf="@+id/calendar_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
         android:background="@drawable/button_default"
-        android:text="Añadir al calendario"
+        android:text="@string/valorAddCalendar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

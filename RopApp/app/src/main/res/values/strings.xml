@@ -8,6 +8,9 @@
     <string name="additemdesc">Selecciona que item deseas añadir</string>
     <string name="additem_action_1">Añadir Prenda</string>
     <string name="additem_action_2">Añadir Conjunto</string>
+    <string name="valorGaleria">Galería</string>
+    <string name="valorCamara">Cámara</string>
+    <string name="valorAddClothes">Añadir Prenda</string>
     <string name="plus">+</string>
     <string name="usuario">\@Usuario</string>
 
@@ -17,11 +20,87 @@
     <string name="weather_key">704f6e60299aa4605accec614d63a67b</string>
     <string name="database_url">https://ropapp-743fd-default-rtdb.europe-west1.firebasedatabase.app</string>
     <string name="storage_url">gs://ropapp-743fd.appspot.com</string>
+    <string name="facebookProvider">facebook.com</string>
+    <string name="googleProvider">google.com</string>
+    <string name="googleServerClientID">381231263922-i3ip3jbcdmn641h4uvde1gbrg7noue5m.apps.googleusercontent.com</string>
 
+    <string name="valorEstaciones">Estaciones</string>
     <string name="spring">Primavera</string>
     <string name="summer">Verano</string>
     <string name="autumn">Otoño</string>
     <string name="winter">Invierno</string>
+
+    <string name="guardar">Guardar</string>
+
+    <string name="seleccionarCategorias">Selecciona las categorias de tu prenda:</string>
+    <string name="prendaTop">Parte de Arriba</string>
+    <string name="prendaAccessories">Accessorios</string>
+    <string name="prendaBottom">Parte de abajo</string>
+    <string name="prendaDress">Vestido</string>
+    <string name="prendaOuterwear">Prenda Exterior</string>
+    <string name="prendaActivewear">Tecnica</string>
+    <string name="prendaFormalwear">Formal</string>
+    <string name="prendaLoungewear">Lounge</string>
+    <string name="prendaShoe">Calzado</string>
+    <string name="prendaBag">Bolso</string>
+    <string name="prendaHat">Gorra</string>
+    <string name="prendaScarf">Bufanda</string>
+    <string name="prendaGloves">Guantes</string>
+    <string name="prendaSocks">Calcetines</string>
+    <string name="prendaBelts">Cinturon</string>
+    <string name="prendaSunglasses">Gafas de sol</string>
+
+    <string name="styleClassic">Atemporal</string>
+    <string name="styleStreetwear">De Calle</string>
+    <string name="styleMinimalist">Minimalista</string>
+    <string name="styleSporty">Deportivo</string>
+    <string name="styleVintage">Vintage</string>
+    <string name="styleBohemian">Bohemio</string>
+    <string name="styleGlamorous">Glamuroso</string>
+    <string name="styleRomantic">Romantico</string>
+    <string name="styleEclectic">Eclectico</string>
+    <string name="valueEstilos">Estilos</string>
+    <string name="seleccionaEstilos">Selecciona los estilos</string>
+
+    <string name="valorDetalles">Detalles</string>
+    <string name="valorEditarDetalles">Edita los detalles</string>
+
+    <string name="botonFlechaNext"><![CDATA[>]]></string>
+
+    <string name="valorCategorias">Categorías</string>
+    <string name="valorSeleccionarcategorias">Selecciona las categorías</string>
+    <string name="valuePlus">+</string>
+
+    <string name="valorNombreConjunto">Nombre del conjunto</string>
+    <string name="ValorIntroduceNuevoPassword">Introduce tu nueva contraseña</string>
+    <string name="valorIntroducePassword">Introduce tu contraseña</string>
+
+    <string name="ValorCambiarContraseña">Cambiar Contraseña</string>
+    <string name="valorConjuntoDiario">Conjunto del día</string>
+    <string name="valorPrendas">Prendas</string>
+    <string name="valorConjuntos">Conjuntos</string>
+    <string name="valorRecomendacionDia">Recomendación del día</string>
+    <string name="valorLocation">Localizacion</string>
+    <string name="valorEstadisticas">Estadísticas</string>
+    <string name="valorInfoCuenta">Información Cuenta</string>
+    <string name="valorConfiguracion">Configuración</string>
+    <string name="valorSignOut">Cerrar Sesion</string>
+    <string name="valorInformacionFigura">Información Figura</string>
+    <string name="valorContinuar">Continuar</string>
+    <string name="valorFechaNac">Fecha de Nacimiento</string>
+    <string name="valorCompletarDatos">Completa los datos</string>
+    <string name="valor_armario_principal">Armario Principal</string>
+    <string name="valorUserEmail">Email del usuario</string>
+    <string name="valorPassword">Contraseña</string>
+    <string name="valorSignIn">Iniciar sesion</string>
+    <string name="valorCreateAccount">Crear Cuenta</string>
+    <string name="valorOr">OR</string>
+    <string name="valorLoginGoogle">Inicia sesión con google</string>
+    <string name="valorShare">Compartir</string>
+    <string name="valorAddCalendar">Añadir al calendario</string>
+    <string name="valor_elegir_prenda">Elegir Prenda</string>
+    <string name="valorOldPassword">Contraseña vieja</string>
+    <string name="valorNewPassword">Nueva contraseña</string>
 
 
     <!-- Definición de valores de Dropdown de Género en la vista de crear cuenta -->

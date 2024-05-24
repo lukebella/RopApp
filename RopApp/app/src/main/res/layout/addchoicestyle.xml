@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="Guardar"
+            android:text="@string/guardar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,7 +58,7 @@
             android:layout_marginStart="21dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
-            android:text="Classic"
+            android:text="@string/styleClassic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textStyle" />
 
@@ -69,7 +69,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="37dp"
             android:layout_marginBottom="30dp"
-            android:text="Bohemian"
+            android:text="@string/styleBohemian"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textStyle" />
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="30dp"
-            android:text="Vintage"
+            android:text="@string/styleVintage"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/romantic" />
 
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="30dp"
-            android:text="Glamorous"
+            android:text="@string/styleGlamorous"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/vintage" />
 
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="52dp"
-            android:text="Sporty"
+            android:text="@string/styleSporty"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/minimalist" />
 
@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="30dp"
-            android:text="Romantic"
+            android:text="@string/styleRomantic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/preppy" />
 
@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="49dp"
-            android:text="Eclectic"
+            android:text="@string/styleEclectic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sporty" />
 
@@ -140,7 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="29dp"
-            android:text="Streetwear"
+            android:text="@string/styleStreetwear"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bohemian" />
 
@@ -150,7 +150,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="28dp"
-            android:text="Minimalist"
+            android:text="@string/styleMinimalist"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/streetwear" />
 

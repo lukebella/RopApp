@@ -151,6 +151,7 @@ class HomeFragment : Fragment() {
         FetchWeatherTask().execute(url)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun retrieveCity(
         locationTextView: TextView,
         sharedPreferences: SharedPreferences,
@@ -401,6 +402,7 @@ class HomeFragment : Fragment() {
     private fun getDatabaseValues(folderName: String, userUid:String, sharedPreferences: SharedPreferences, callback: (HashMap<String, Any>) -> Unit) {
         database.child("$folderName/$userUid")
             .addListenerForSingleValueEvent(object : ValueEventListener {
+                @SuppressLint("SetTextI18n")
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val data = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
                     val toRecommend = HashMap<String, Any>()

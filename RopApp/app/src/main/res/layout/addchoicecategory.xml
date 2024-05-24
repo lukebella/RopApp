@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="Guardar"
+            android:text="@string/guardar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,7 +43,7 @@
             android:layout_marginTop="90dp"
             android:background="#FAF0F0"
             android:fontFamily="casual"
-            android:text="Selecciona las categorias de tu prenda:"
+            android:text="@string/seleccionarCategorias"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold|italic"
@@ -58,7 +58,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="33dp"
-            android:text="Top"
+            android:text="@string/prendaTop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="14dp"
-            android:text="Accessories"
+            android:text="@string/prendaAccessories"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
@@ -79,7 +79,7 @@
             android:layout_marginStart="21dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="128dp"
-            android:text="Bottom"
+            android:text="@string/prendaBottom"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/top" />
 
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:text="Dress"
+            android:text="@string/prendaDress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bottom" />
 
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="30dp"
-            android:text="Outerwear"
+            android:text="@string/prendaOuterwear"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/dress" />
 
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="30dp"
-            android:text="Activewear"
+            android:text="@string/prendaActivewear"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/outerwear" />
 
@@ -119,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="30dp"
-            android:text="Formalwear"
+            android:text="@string/prendaFormalwear"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activewear" />
 
@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="30dp"
-            android:text="Loungewear"
+            android:text="@string/prendaLoungewear"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/formalwear" />
 
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="61dp"
-            android:text="Shoe"
+            android:text="@string/prendaShoe"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top" />
 
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="68dp"
-            android:text="Bag"
+            android:text="@string/prendaBag"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shoe" />
 
@@ -159,7 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="70dp"
-            android:text="Hat"
+            android:text="@string/prendaHat"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bag" />
 
@@ -169,7 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="60dp"
-            android:text="Scarf"
+            android:text="@string/prendaScarf"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hat" />
 
@@ -179,7 +179,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="51dp"
-            android:text="Gloves"
+            android:text="@string/prendaGloves"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scarf" />
 
@@ -189,7 +189,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="56dp"
-            android:text="Socks"
+            android:text="@string/prendaSocks"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gloves" />
 
@@ -199,7 +199,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:layout_marginTop="30dp"
-            android:text="Belts"
+            android:text="@string/prendaBelts"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loungewear" />
 
@@ -209,7 +209,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
-            android:text="Sunglasses"
+            android:text="@string/prendaSunglasses"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/socks" />
 

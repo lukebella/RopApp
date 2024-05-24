@@ -10,7 +10,7 @@
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginTop="32dp"
-        android:text="Estadísticas"
+        android:text="@string/valorEstadisticas"
         app:layout_constraintStart_toStartOf="@+id/config_button"
         app:layout_constraintTop_toBottomOf="@+id/config_button" />
 
@@ -19,7 +19,7 @@
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginTop="204dp"
-        android:text="Configuración"
+        android:text="@string/valorConfiguracion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
         android:layout_width="250dp"
         android:layout_height="70dp"
         android:layout_marginTop="36dp"
-        android:text="Información Figura"
+        android:text="@string/valorInformacionFigura"
         app:layout_constraintStart_toStartOf="@+id/season_button"
         app:layout_constraintTop_toBottomOf="@+id/season_button" />
 

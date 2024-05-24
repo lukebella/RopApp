@@ -61,7 +61,6 @@ class Login : AppCompatActivity() {
             Log.d("Login", "Se hizo clic en Iniciar sesión con Facebook")
 
             LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
-            Log.d("1", "pasa por aqui")
 
             LoginManager.getInstance()
                 .registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
@@ -70,7 +69,6 @@ class Login : AppCompatActivity() {
                         result.let {
                             val token = it.accessToken
                             val credential = FacebookAuthProvider.getCredential(token.token)
-                            Log.d("2", "pasa por aqui")
                             firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     val user = firebaseAuth.currentUser
@@ -105,7 +103,7 @@ class Login : AppCompatActivity() {
             Log.d("Login", "Se hizo clic en Iniciar sesión con Google")
 
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("381231263922-i3ip3jbcdmn641h4uvde1gbrg7noue5m.apps.googleusercontent.com")
+                .requestIdToken(getString(R.string.googleServerClientID))
                 .requestEmail()
                 .build()
 

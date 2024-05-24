@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:text="Elegir Prenda"
+        android:text="@string/valor_elegir_prenda"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/floatingBackButton"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:background="@drawable/button_default"
-                android:text="camisetas"
+                android:text="@string/prendaTop"
                 app:backgroundTint="@null" />
 
             <Button
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:background="@drawable/button_default"
-                android:text="chaquetas"
+                android:text="@string/prendaOuterwear"
                 app:backgroundTint="@null" />
 
             <Button
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:background="@drawable/button_default"
-                android:text="pantalones"
+                android:text="@string/prendaBottom"
                 app:backgroundTint="@null" />
 
             <Button
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:background="@drawable/button_default"
-                android:text="zapatillas"
+                android:text="@string/prendaShoe"
                 app:backgroundTint="@null" />
 
         </LinearLayout>
