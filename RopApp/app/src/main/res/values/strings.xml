@@ -102,6 +102,10 @@
     <string name="valor_elegir_prenda">Elegir Prenda</string>
     <string name="valorOldPassword">Contraseña vieja</string>
     <string name="valorNewPassword">Nueva contraseña</string>
+    <string name="valorMarca">Marca</string>
+    <string name="valorEstado">Estado</string>
+    <string name="valorPrecio">Precio</string>
+    <string name="valorColores">Colores</string>
 
 
     <!-- Definición de valores de Dropdown de Género en la vista de crear cuenta -->

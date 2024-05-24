@@ -92,7 +92,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="9dp"
-            android:text="Marca"
+            android:text="@string/valorMarca"
             app:layout_constraintBottom_toTopOf="@+id/marca"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12" />
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="30dp"
-            android:text="Estado"
+            android:text="@string/valorEstado"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/marca" />
 
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="30dp"
-            android:text="Precio"
+            android:text="@string/valorPrecio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/estadoSpinner" />
 
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="30dp"
-            android:text="Colores"
+            android:text="@string/valorColores"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tamanoSpinner" />
 
