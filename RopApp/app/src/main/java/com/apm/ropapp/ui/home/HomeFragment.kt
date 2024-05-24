@@ -20,6 +20,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -98,8 +99,11 @@ class HomeFragment : Fragment() {
         updateWeather(sharedPreferences, binding.aCoruna)
         //metodo para recomendar
 
-        getDatabaseValues("clothes", userUid!!, sharedPreferences) { data ->
-            toRecommend = checkURI(data)
+        if (sharedPreferences.getBoolean("new_rec", true)) {
+            getDatabaseValues("clothes", userUid!!, sharedPreferences) { data ->
+                toRecommend = checkURI(data)
+            }
+            sharedPreferences.edit().putBoolean("new_rec", false).apply()
         }
 
         noMeGustaButton.setOnClickListener {
@@ -116,13 +120,13 @@ class HomeFragment : Fragment() {
         return root
     }
 
-
-
     private fun initializeFirebase() {
         firebaseAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
         storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
     }
+
+    //LOCALIZATION AND WEATHER FUNCTIONS
 
     private fun updateWeather(sharedPreferences: SharedPreferences, locationTextView: TextView) {
         val tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
@@ -142,109 +146,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun getImageUri(fileName: String, photos: StorageReference): Uri {
-        val dir = File("${requireContext().getExternalFilesDir(null)}/clothes")
-        if (!dir.exists()) dir.mkdirs()
-        val imageFile = File(dir, fileName)
-
-        if (imageFile.isDirectory) {
-            return getUriFromDrawable(requireContext(), R.drawable.unavailable, "default_image.png")
-        }
-
-
-        if (!imageFile.exists()) {
-            imageFile.createNewFile()
-            photos.child(fileName).getFile(imageFile)
-        }
-
-
-        return FileProvider.getUriForFile(
-            requireContext(), "com.apm.ropapp.FileProvider", imageFile
-        )
-
-
-    }
-    private fun getBitmapFromDrawable(context: Context, drawableId: Int): Bitmap {
-        val drawable = ContextCompat.getDrawable(context, drawableId)
-        val bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
-        return bitmap
-    }
-
-    // Function to save a Bitmap to a file
-    private fun saveBitmapToFile(context: Context, bitmap: Bitmap, fileName: String): File {
-        val file = File(context.getExternalFilesDir(null), fileName)
-        val out = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-        out.flush()
-        out.close()
-        return file
-    }
-
-    private fun getUriFromDrawable(context: Context, drawableId: Int, fileName: String): Uri {
-        val bitmap = getBitmapFromDrawable(context, drawableId)
-        val file = saveBitmapToFile(context, bitmap, fileName)
-        return getUriFromFile(context, file)
-    }
-
-    private fun getUriFromFile(context: Context, file: File): Uri {
-        return FileProvider.getUriForFile(context, "com.apm.ropapp.FileProvider", file)
-    }
-
-    private fun getDatabaseValues(folderName: String, userUid:String, sharedPreferences: SharedPreferences, callback: (HashMap<String, Any>) -> Unit) {
-        database.child("$folderName/$userUid")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val data = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
-                    val toRecommend = HashMap<String, Any>()
-
-                    if (data != null) {
-                        val photoUrls = mutableListOf<String>()
-                        val photos = storage.child(folderName)
-
-                        data.forEach { (key, value) ->
-                            value["id"] = key
-                            Log.d("Key", value.toString())
-                        }
-
-                        //Recommendation Algorithm
-                        val recommendedPhotos = recommendation(data)
-                        Log.d("Recommend", recommendedPhotos.toString())
-                        for (ph in recommendedPhotos) {
-                            Log.d("photo", getImageUri(ph,photos).toString())
-                            photoUrls.add(getImageUri(ph,photos).toString())
-                        }
-                        updateRecommendations(sharedPreferences, photoUrls)
-                        Log.d("rp", recommendedPhotos.toString())
-                        toRecommend[recommendationId] = photoUrls
-                    }
-                    else {
-                        binding.textPregunta.text = "No hay ropa..."
-                    }
-                    callback(toRecommend)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.w("TAG", "Failed to read value.", error.toException())
-                }
-            })
-    }
-
     private fun weatherForecast(lat: Double, longit: Double, key: String) {
         val url = "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$longit&appid=$key"
         FetchWeatherTask().execute(url)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-
-    companion object {
-        private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
     }
 
     private fun retrieveCity(
@@ -411,15 +315,137 @@ class HomeFragment : Fragment() {
 
     }
 
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1001
+    }
+    data class WeatherData(val weat: String, val tempMin: Int, val tempMax: Int, val data: String)
+
+
+    //------------------------------------------------------------------------------------
+    //CONVERSION IMAGES --> URI
+
+    private fun checkURI(data: HashMap<String, Any>) : HashMap<String, Any> {
+        // Convert Uri to String if present
+        val recommendationData = data.mapValues { entry ->
+            if (entry.value is List<*>) {
+                (entry.value as List<*>).map {
+                    if (it is Uri) it.toString() else it
+                }
+            } else {
+                entry.value
+            }
+        }
+        return HashMap(recommendationData)
+    }
+
+    fun getImageUri(fileName: String, photos: StorageReference): Uri {
+        val dir = File("${requireContext().getExternalFilesDir(null)}/clothes")
+        if (!dir.exists()) dir.mkdirs()
+        val imageFile = File(dir, fileName)
+
+        if (imageFile.isDirectory) {
+            return getUriFromDrawable(requireContext(), R.drawable.unavailable, "default_image.png")
+        }
+
+
+        if (!imageFile.exists()) {
+            imageFile.createNewFile()
+            photos.child(fileName).getFile(imageFile)
+        }
+
+
+        return FileProvider.getUriForFile(
+            requireContext(), "com.apm.ropapp.FileProvider", imageFile
+        )
+
+
+    }
+    private fun getBitmapFromDrawable(context: Context, drawableId: Int): Bitmap {
+        val drawable = ContextCompat.getDrawable(context, drawableId)
+        val bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bitmap
+    }
+
+    // Function to save a Bitmap to a file
+    private fun saveBitmapToFile(context: Context, bitmap: Bitmap, fileName: String): File {
+        val file = File(context.getExternalFilesDir(null), fileName)
+        val out = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+        out.flush()
+        out.close()
+        return file
+    }
+
+    private fun getUriFromDrawable(context: Context, drawableId: Int, fileName: String): Uri {
+        val bitmap = getBitmapFromDrawable(context, drawableId)
+        val file = saveBitmapToFile(context, bitmap, fileName)
+        return getUriFromFile(context, file)
+    }
+
+    private fun getUriFromFile(context: Context, file: File): Uri {
+        return FileProvider.getUriForFile(context, "com.apm.ropapp.FileProvider", file)
+    }
+
     private fun convertToURI(img: ImageView, str: String, sharedPreferences: SharedPreferences) {
         val uriString = sharedPreferences.getString(str, null)
         val uri = if (uriString != null) Uri.parse(uriString) else Uri.EMPTY
         Glide.with(requireContext()).load(uri).into(img)
     }
 
+    //------------------------------------------------------------------------------------
+    //DATABASE FUNCTIONS
+
+    private fun getDatabaseValues(folderName: String, userUid:String, sharedPreferences: SharedPreferences, callback: (HashMap<String, Any>) -> Unit) {
+        database.child("$folderName/$userUid")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val data = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
+                    val toRecommend = HashMap<String, Any>()
+
+                    if (data != null) {
+                        val photoUrls = mutableListOf<String>()
+                        val photos = storage.child(folderName)
+
+                        data.forEach { (key, value) ->
+                            value["id"] = key
+                            Log.d("Key", value.toString())
+                        }
+
+                        //Recommendation Algorithm
+                        val recommendedPhotos = recommendation(data)
+                        Log.d("Recommend", recommendedPhotos.toString())
+                        for ((i,ph) in recommendedPhotos.withIndex()) {
+                            Log.d("photo", getImageUri(ph,photos).toString())
+                            sharedPreferences.edit().putString("r$i", getImageUri(ph,photos).toString()).apply()
+                            photoUrls.add(getImageUri(ph,photos).toString())
+                        }
+                        updateRecommendations(sharedPreferences, photoUrls)
+                        Log.d("rp", recommendedPhotos.toString())
+                        toRecommend[recommendationId] = photoUrls
+                    }
+                    else {
+                        binding.textPregunta.text = "No hay ropa..."
+                    }
+                    callback(toRecommend)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.w("TAG", "Failed to read value.", error.toException())
+                }
+            })
+    }
+
+
+    //-----------------------------------------------------------------------------
+    // SHAREDPREFERENCES FUNCTIONS
+
     private fun loadData(sharedPreferences: SharedPreferences) {
 
         sharedPreferences.getString("FORMATTED_DATE", "01-01-24").toString()
+        sharedPreferences.getBoolean("new_rec", true)
 
         binding.aCoruna.text = sharedPreferences.getString("LOC", binding.aCoruna.text.toString())
         binding.weatherDate.text = sharedPreferences.getString("DATE", binding.weatherDate.text.toString())
@@ -436,36 +462,28 @@ class HomeFragment : Fragment() {
         convertToURI(binding.prenda2, "prenda2", sharedPreferences)
         convertToURI(binding.prenda3, "prenda3", sharedPreferences)
         convertToURI(binding.prenda4, "prenda4", sharedPreferences)
-
+        val uriList= mutableListOf<String>()
+        for (i in 0..3) {
+            uriList.add(sharedPreferences.getString("r$i", "")!!)
+        }
+        toRecommend[recommendationId] = uriList
 
     }
+
 
     private fun resetData(sharedPreferences: SharedPreferences) {
         val memorizedDate: String = sharedPreferences.getString("FORMATTED_DATE", "01-01-24").toString()
 
         if (memorizedDate != recommendationId) {
             sharedPreferences.edit().putString("FORMATTED_DATE", recommendationId).apply()
-
+            sharedPreferences.edit().putBoolean("new_rec", true).apply()
             sharedPreferences.edit().putInt("nomegusta",R.color.md_theme_background).apply()
             sharedPreferences.edit().putInt("megusta",R.color.md_theme_background).apply()
         }
     }
 
-    private fun checkURI(data: HashMap<String, Any>) : HashMap<String, Any> {
-        // Convert Uri to String if present
-        val recommendationData = data.mapValues { entry ->
-            if (entry.value is List<*>) {
-                (entry.value as List<*>).map {
-                    if (it is Uri) it.toString() else it
-                }
-            } else {
-                entry.value
-            }
-        }
-        return HashMap(recommendationData)
-    }
-
-
+    //-------------------------------------------------------------------------------------
+    //RECOMMENDATION FUNCTIONS
     private fun uploadNewRecommendation(data: Any) {
         if (firebaseAuth.currentUser != null) {
             Log.d("USER", firebaseAuth.currentUser!!.uid)
@@ -559,6 +577,8 @@ class HomeFragment : Fragment() {
         }
     }
 
+    //----------------------------------------------------------------------------------
+    //MANAGE BUTTONS
 
     private fun manageNoMeGusta(noMeGustaButton: ImageButton, meGustaButton: ImageButton, sharedPreferences: SharedPreferences) {
         // Change color when pressed
@@ -570,7 +590,7 @@ class HomeFragment : Fragment() {
             sharedPreferences.edit().putInt("megusta", R.color.md_theme_background).apply()
             pressedNo = true
             pressedSi = false
-
+            Toast.makeText(context, "Recomendación quitada del calendario", Toast.LENGTH_SHORT).show()
             //DELETE RECOMMENDATION
             deleteRecommendation()
 
@@ -600,7 +620,7 @@ class HomeFragment : Fragment() {
                 )
             )
             sharedPreferences.edit().putInt("nomegusta", R.color.md_theme_background).apply()
-
+            Toast.makeText(context, "Recomendación añadida al calendario", Toast.LENGTH_SHORT).show()
             pressedNo = false
             pressedSi = true
         }
@@ -612,9 +632,11 @@ class HomeFragment : Fragment() {
 
 
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-
-    data class WeatherData(val weat: String, val tempMin: Int, val tempMax: Int, val data: String)
 
 }
 
