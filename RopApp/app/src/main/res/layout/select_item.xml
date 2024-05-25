@@ -29,13 +29,12 @@
         android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:scrollbars="none"
+        android:layout_marginTop="90dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/seasonsChipGroup"
+            android:id="@+id/chipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:singleLine="true"
@@ -87,106 +86,17 @@
     </HorizontalScrollView>
 
     <ScrollView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="170dp"
-        android:foregroundGravity="top" >
+        android:layout_marginTop="150dp" >
 
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <ImageButton
-                    android:id="@+id/imageButton1"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/tshirt"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
-
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/nike"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
-            </TableRow>
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageButton
-                    android:id="@+id/imageButton3"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/recomendprenda"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
-
-                <ImageButton
-                    android:id="@+id/imageButton4"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/tshirt"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
-            </TableRow>
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageButton
-                    android:id="@+id/imageButton5"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/nike"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
-
-                <ImageButton
-                    android:id="@+id/imageButton6"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/recomendprenda"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
-            </TableRow>
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageButton
-                    android:id="@+id/imageButton7"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/tshirt"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
-
-                <ImageButton
-                    android:id="@+id/imageButton8"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
-                    android:src="@drawable/nike"
-                    android:scaleType="centerCrop"
-                    android:adjustViewBounds="true" />
-            </TableRow>
-        </TableLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

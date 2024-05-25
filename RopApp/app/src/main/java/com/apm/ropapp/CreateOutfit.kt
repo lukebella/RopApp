@@ -1,8 +1,10 @@
 package com.apm.ropapp
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.CreateoutfitBinding
 
@@ -17,9 +19,8 @@ class CreateOutfit : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.backButton.setOnClickListener {
-            intent = Intent(this, MainActivity::class.java)
             Log.d("CreateOutfit", "Back to Main Activity")
-            startActivity(intent)
+            finish()
         }
 
         binding.saveButton.setOnClickListener {
@@ -27,32 +28,58 @@ class CreateOutfit : AppCompatActivity() {
             Log.d("CreateOutfit", "Outfit Added")
             startActivity(intent)
         }
+
+        val startForAccessory =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    Log.d("CreateOutfit", result.data?.extras?.get("image").toString())
+                } else Log.d("CreateOutfit", "Cancelled")
+            }
+
         binding.accesorioButton.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
             Log.d("CreateOutfit", "Add Accessory")
-            startActivity(intent)
+            startForAccessory.launch(intent)
         }
+
+        val startForBottom =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    Log.d("CreateOutfit", result.data?.extras?.get("clothesValues").toString())
+                } else Log.d("CreateOutfit", "Cancelled")
+            }
+
         binding.bottomButton.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
             Log.d("CreateOutfit", "Add Bottom")
-            startActivity(intent)
+            startForBottom.launch(intent)
         }
+
+        val startForTop =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    Log.d("CreateOutfit", result.data?.extras?.get("image").toString())
+                } else Log.d("CreateOutfit", "Cancelled")
+            }
+
         binding.topButton.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
             Log.d("CreateOutfit", "Add Top")
-            startActivity(intent)
+            startForTop.launch(intent)
         }
+
+        val startForShoes =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    Log.d("CreateOutfit", result.data?.extras?.get("clothesValues").toString())
+                } else Log.d("CreateOutfit", "Cancelled")
+            }
+
         binding.shoeButton.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
             Log.d("CreateOutfit", "Add Shoes")
-            startActivity(intent)
+            startForShoes.launch(intent)
         }
-        binding.outfitName.setOnFocusChangeListener { v, hasFocus ->
-            if (!hasFocus) {
-                val outfitName = binding.outfitName.text.toString()
-                Log.d("CreateOutfit", "Outfit Name: $outfitName")
-                // You can now use the outfitName variable
-            }
-        }
+
     }
 }
