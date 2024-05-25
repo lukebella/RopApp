@@ -11,6 +11,7 @@ import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.apm.ropapp.R
@@ -24,6 +25,11 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 
@@ -38,6 +44,8 @@ class ClosetFragment : Fragment() {
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
     private lateinit var buttonSelected: Button
+    private var currentCloset: String? = null
+    private var valueEventListener: ValueEventListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,18 +69,20 @@ class ClosetFragment : Fragment() {
                 } else Log.d("EditClothes", "Cancelled")
             }
 
-        val recyclerView: RecyclerView = binding.root.findViewById(R.id.recycler_view)
-        recyclerView.adapter = CustomAdapter(mutableListOf(), mutableListOf(), startForResult)
+        val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view)
+        recyclerView.adapter = ClosetAdapter(mutableListOf(), mutableListOf(), startForResult)
         recyclerView.autoFitColumns(150)
 
-        fun getImageUri(fileName: String, photos: StorageReference): Uri {
+        suspend fun getImageUri(fileName: String, photos: StorageReference): Uri {
             val dir = File("${root.context.getExternalFilesDir(null)}/clothes")
             if (!dir.exists()) dir.mkdirs()
             val imageFile = File(dir, fileName)
 
             if (!imageFile.exists()) {
-                imageFile.createNewFile()
-                photos.child(fileName).getFile(imageFile)
+                withContext(Dispatchers.IO) {
+                    imageFile.createNewFile()
+                    photos.child(fileName).getFile(imageFile)
+                }
             }
             return FileProvider.getUriForFile(
                 root.context, "com.apm.ropapp.FileProvider", imageFile
@@ -80,8 +90,15 @@ class ClosetFragment : Fragment() {
         }
 
         fun getDatabaseValues(folderName: String) {
-            database.child("$folderName/$userUid")
-                .addValueEventListener(object : ValueEventListener {
+            val newCloset = "$folderName/$userUid"
+            if (newCloset == currentCloset) return
+            // If there's a previous listener, remove it from the previous path
+            if (valueEventListener != null && currentCloset != null)
+                database.child(currentCloset!!).removeEventListener(valueEventListener!!)
+            currentCloset = newCloset
+
+            valueEventListener =
+                database.child(newCloset).addValueEventListener(object : ValueEventListener {
 
                     override fun onDataChange(snapshot: DataSnapshot) {
                         // This method is called once with the initial value and again
@@ -94,21 +111,26 @@ class ClosetFragment : Fragment() {
                             val imageList = mutableListOf<Uri>()
                             val photos = storage.child(folderName)
 
-                            data.forEach { (key, value) ->
-                                value["id"] = key
-                                dataList.add(value)
-                                if (value["photo"] == null) imageList.add(Uri.EMPTY)
-                                else imageList.add(getImageUri(value["photo"].toString(), photos))
+                            val asyncData = data.map { (key, value) ->
+                                lifecycleScope.async {
+                                    value["id"] = key
+                                    dataList.add(value)
+                                    if (value["photo"] == null) Uri.EMPTY
+                                    else getImageUri(value["photo"].toString(), photos)
+                                }
                             }
-
-                            Log.d("TAG", "Value is: $imageList")
-                            recyclerView.adapter =
-                                CustomAdapter(dataList, imageList, startForResult)
+                            lifecycleScope.launch {
+                                val uris = asyncData.awaitAll()
+                                imageList.addAll(uris)
+                                Log.d("Closet", "URIs are: $imageList")
+                                recyclerView.adapter =
+                                    ClosetAdapter(dataList, imageList, startForResult)
+                            }
                         }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        Log.w("TAG", "Failed to read value.", error.toException())
+                        Log.w("Closet", "Failed to read value.", error.toException())
                     }
                 })
         }
@@ -125,11 +147,6 @@ class ClosetFragment : Fragment() {
         }
 
         return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun selectButton(newButton: Button) {

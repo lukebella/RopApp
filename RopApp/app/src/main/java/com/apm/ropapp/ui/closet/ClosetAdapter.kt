@@ -15,17 +15,12 @@ import com.apm.ropapp.R
 import com.bumptech.glide.Glide
 
 
-class CustomAdapter(
+class ClosetAdapter(
     private val dataList: MutableList<HashMap<String, Any>>,
     private val imageList: MutableList<Uri>,
     private val startForResult: ActivityResultLauncher<Intent>
-) :
-    RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ClosetAdapter.ViewHolder>() {
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.textView)
         val imageButton: ImageButton = view.findViewById(R.id.imageButton)
@@ -45,7 +40,7 @@ class CustomAdapter(
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         val nameString = dataList.elementAt(position)["category"].toString()
-        viewHolder.textView.text = nameString.substring(1, nameString.length-1)
+        viewHolder.textView.text = nameString.substring(1, nameString.length - 1)
         if (imageList[position] != Uri.EMPTY)
             Glide.with(viewHolder.itemView.context).load(imageList[position])
                 .into(viewHolder.imageButton)
@@ -55,7 +50,8 @@ class CustomAdapter(
 
             val intent = Intent(viewHolder.itemView.context, AddClothes::class.java)
             intent.putExtra("clothesValues", dataList.elementAt(position))
-            intent.putExtra("image", imageList[position].toString())
+            if (imageList[position] != Uri.EMPTY)
+                intent.putExtra("image", imageList[position].toString())
             startForResult.launch(intent)
         }
     }

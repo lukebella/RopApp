@@ -36,8 +36,7 @@
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="100dp"
-        android:foregroundGravity="top" >
+        android:layout_marginTop="100dp" >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
