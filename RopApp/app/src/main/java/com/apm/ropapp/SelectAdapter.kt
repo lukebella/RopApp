@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 
 class SelectAdapter(
     private val dataList: List<HashMap<String, Any>>,
-    private val imageList: HashMap<String, Uri>,
+    private val imageList: MutableMap<String, Uri>,
     private val activity: Activity
 ) : RecyclerView.Adapter<SelectAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

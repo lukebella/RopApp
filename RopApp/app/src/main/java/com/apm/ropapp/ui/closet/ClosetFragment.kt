@@ -33,6 +33,9 @@ import kotlinx.coroutines.withContext
 import java.io.File
 
 
+private const val CLOTHES = "clothes"
+private const val OUTFITS = "outfits"
+
 class ClosetFragment : Fragment() {
 
     private var _binding: FragmentClosetBinding? = null
@@ -46,6 +49,7 @@ class ClosetFragment : Fragment() {
     private lateinit var buttonSelected: Button
     private var currentCloset: String? = null
     private var valueEventListener: ValueEventListener? = null
+    private val imageUriCache = mutableMapOf<String, Uri>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +57,6 @@ class ClosetFragment : Fragment() {
     ): View {
 
         _binding = FragmentClosetBinding.inflate(inflater, container, false)
-        val root: View = binding.root
         firebaseAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
         storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
@@ -69,25 +72,9 @@ class ClosetFragment : Fragment() {
                 } else Log.d("EditClothes", "Cancelled")
             }
 
-        val recyclerView: RecyclerView = root.findViewById(R.id.recycler_view)
+        val recyclerView: RecyclerView = binding.recyclerView
         recyclerView.adapter = ClosetAdapter(mutableListOf(), mutableListOf(), startForResult)
         recyclerView.autoFitColumns(150)
-
-        suspend fun getImageUri(fileName: String, photos: StorageReference): Uri {
-            val dir = File("${root.context.getExternalFilesDir(null)}/clothes")
-            if (!dir.exists()) dir.mkdirs()
-            val imageFile = File(dir, fileName)
-
-            if (!imageFile.exists()) {
-                withContext(Dispatchers.IO) {
-                    imageFile.createNewFile()
-                    photos.child(fileName).getFile(imageFile)
-                }
-            }
-            return FileProvider.getUriForFile(
-                root.context, "com.apm.ropapp.FileProvider", imageFile
-            )
-        }
 
         fun getDatabaseValues(folderName: String) {
             val newCloset = "$folderName/$userUid"
@@ -99,7 +86,6 @@ class ClosetFragment : Fragment() {
 
             valueEventListener =
                 database.child(newCloset).addValueEventListener(object : ValueEventListener {
-
                     override fun onDataChange(snapshot: DataSnapshot) {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
@@ -116,7 +102,7 @@ class ClosetFragment : Fragment() {
                                     value["id"] = key
                                     dataList.add(value)
                                     if (value["photo"] == null) Uri.EMPTY
-                                    else getImageUri(value["photo"].toString(), photos)
+                                    else getImageUri(value["photo"].toString(), folderName, photos)
                                 }
                             }
                             lifecycleScope.launch {
@@ -128,25 +114,24 @@ class ClosetFragment : Fragment() {
                             }
                         }
                     }
-
                     override fun onCancelled(error: DatabaseError) {
                         Log.w("Closet", "Failed to read value.", error.toException())
                     }
                 })
         }
 
-        getDatabaseValues("clothes")
+        getDatabaseValues(CLOTHES)
 
         binding.button1.setOnClickListener {
             selectButton(binding.button1)
-            getDatabaseValues("clothes")
+            getDatabaseValues(CLOTHES)
         }
         binding.button2.setOnClickListener {
             selectButton(binding.button2)
-            getDatabaseValues("outfits")
+            getDatabaseValues(OUTFITS)
         }
 
-        return root
+        return binding.root
     }
 
     private fun selectButton(newButton: Button) {
@@ -160,5 +145,26 @@ class ClosetFragment : Fragment() {
         val noOfColumns =
             ((displayMetrics.widthPixels / displayMetrics.density) / columnWidth).toInt()
         this.layoutManager = GridLayoutManager(this.context, noOfColumns)
+    }
+
+    private suspend fun getImageUri(fileName: String, folder: String, photos: StorageReference): Uri {
+        // Check if the URI is in the cache
+        if (imageUriCache.containsKey(fileName)) return imageUriCache[fileName]!!
+
+        val dir = File("${binding.root.context.getExternalFilesDir(null)}/$folder")
+        if (!dir.exists()) dir.mkdirs()
+        val imageFile = File(dir, fileName)
+
+        if (!imageFile.exists()) {
+            withContext(Dispatchers.IO) {
+                imageFile.createNewFile()
+                photos.child(fileName).getFile(imageFile)
+            }
+        }
+        val uri = FileProvider.getUriForFile(
+            binding.root.context, "com.apm.ropapp.FileProvider", imageFile
+        )
+        imageUriCache[fileName] = uri
+        return uri
     }
 }

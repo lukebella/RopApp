@@ -39,6 +39,7 @@ class CreateOutfit : AppCompatActivity() {
         binding.accesorioButton.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
             Log.d("CreateOutfit", "Add Accessory")
+            intent.putExtra("selectedChip", getString(R.string.prendaAccessories))
             startForAccessory.launch(intent)
         }
 
@@ -52,6 +53,7 @@ class CreateOutfit : AppCompatActivity() {
         binding.bottomButton.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
             Log.d("CreateOutfit", "Add Bottom")
+            intent.putExtra("selectedChip", getString(R.string.prendaBottom))
             startForBottom.launch(intent)
         }
 
@@ -65,6 +67,7 @@ class CreateOutfit : AppCompatActivity() {
         binding.topButton.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
             Log.d("CreateOutfit", "Add Top")
+            intent.putExtra("selectedChip", getString(R.string.prendaTop))
             startForTop.launch(intent)
         }
 
@@ -78,6 +81,7 @@ class CreateOutfit : AppCompatActivity() {
         binding.shoeButton.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
             Log.d("CreateOutfit", "Add Shoes")
+            intent.putExtra("selectedChip", getString(R.string.prendaShoe))
             startForShoes.launch(intent)
         }
 
