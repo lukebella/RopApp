@@ -46,7 +46,7 @@ class Stats : AppCompatActivity() {
         }
 
         binding.clothesButton.setOnClickListener {
-//            intent = Intent(this, ClothesStats::class.java)
+            intent = Intent(this, StatsType::class.java)
             Log.d("Stats", "Clothes Stats")
             startActivity(intent)
 

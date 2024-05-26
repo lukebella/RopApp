@@ -6,19 +6,18 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.StatsTypeBinding
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
-data class ClothesTypeData(
-    val type: String,
-    val count: Float
-)
 
 class StatsType : AppCompatActivity() {
 
@@ -27,6 +26,8 @@ class StatsType : AppCompatActivity() {
     private lateinit var barData: BarData
     private lateinit var barDataSet: BarDataSet
     private lateinit var barEntriesArrayList: ArrayList<BarEntry>
+    private lateinit var typeLabels: ArrayList<String>
+    private lateinit var databaseReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,18 +36,22 @@ class StatsType : AppCompatActivity() {
 
         barChart = binding.typesChart
 
-        get_database_data()
+        getDatabaseData()
 
         binding.backButton.setOnClickListener {
             finish()
         }
     }
 
-    private fun getBarEntries(clothesTypeDataList: List<ClothesTypeData>) {
+    private fun getBarEntries(clothesTypeDataMap: Map<String, Int>) {
         barEntriesArrayList = ArrayList()
+        typeLabels = ArrayList()
 
-        for ((index, clothesTypeData) in clothesTypeDataList.withIndex()) {
-            barEntriesArrayList.add(BarEntry(index.toFloat(), clothesTypeData.count))
+        var index = 0f
+        for ((type, count) in clothesTypeDataMap) {
+            barEntriesArrayList.add(BarEntry(index, count.toFloat()))
+            typeLabels.add(type)
+            index += 1f
         }
 
         updateChart()
@@ -56,30 +61,52 @@ class StatsType : AppCompatActivity() {
         barDataSet = BarDataSet(barEntriesArrayList, "Clothes Type Data")
         barData = BarData(barDataSet)
         barChart.data = barData
-        barDataSet.colors = ColorTemplate.COLORFUL_COLORS.asList()
+        barDataSet.colors = ColorTemplate.COLORFUL_COLORS.toList()
         barDataSet.valueTextColor = Color.BLACK
         barDataSet.valueTextSize = 16f
-        barChart.description.isEnabled = true
-        barChart.invalidate()
+        barChart.description.isEnabled = false
+
+        // Set the labels on the X-axis
+        val xAxis = barChart.xAxis
+        xAxis.valueFormatter = IndexAxisValueFormatter(typeLabels)
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.granularity = 1f
+        xAxis.labelCount = typeLabels.size
+
+        barChart.invalidate() // refresh the chart
     }
 
-    private fun get_database_data() {
-        val databaseReference = FirebaseDatabase.getInstance().reference.child("path_to_your_data")
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val clothesTypeDataList = mutableListOf<ClothesTypeData>()
-                for (typeSnapshot in dataSnapshot.children) {
-                    val clothesTypeData = typeSnapshot.getValue(ClothesTypeData::class.java)
-                    if (clothesTypeData != null) {
-                        clothesTypeDataList.add(clothesTypeData)
-                    }
-                }
-                getBarEntries(clothesTypeDataList)
-            }
+    private fun getDatabaseData() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.d("ClothesTypeChart", "Failed to get clothes type data.", databaseError.toException())
-            }
-        })
+        if (userId != null) {
+            // Obtain a reference to the user's clothes data
+            databaseReference = FirebaseDatabase.getInstance().reference
+                .child("clothes").child(userId)
+
+            databaseReference.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val TypeDataMap = mutableMapOf<String, Int>()
+
+                    for (clothSnapshot in dataSnapshot.children) {
+                        val typesSnapshot = clothSnapshot.child("style")
+                        for (typesSnapshot in typesSnapshot.children) {
+                            val season = typesSnapshot.getValue(String::class.java)
+                            if (season != null) {
+                                TypeDataMap[season] = TypeDataMap.getOrDefault(season, 0) + 1
+                            }
+                        }
+                    }
+
+                    getBarEntries(TypeDataMap)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d("StatsType", "Failed to get clothes type data.", databaseError.toException())
+                }
+            })
+        } else {
+            Log.d("StatsType", "User ID is null.")
+        }
     }
 }
