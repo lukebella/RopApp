@@ -3,6 +3,8 @@ package com.apm.ropapp.ui.profile
 import android.app.AlertDialog
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,12 +14,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.EditProfile
 import com.apm.ropapp.Login
+import com.apm.ropapp.Stats
+import com.apm.ropapp.UserInfo
 import com.apm.ropapp.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 class ProfileFragment : Fragment() {
 
@@ -42,13 +47,36 @@ class ProfileFragment : Fragment() {
                 .child(userId).addValueEventListener(object : ValueEventListener {
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        if (dataSnapshot.exists())
+                        if (dataSnapshot.exists()) {
                             binding.textView6.text =
                                 dataSnapshot.child("username").getValue(String::class.java)
+                            val imageUrl = dataSnapshot.child("image").getValue(String::class.java)
+                            if (!imageUrl.isNullOrEmpty()) {
+                                val imageRef =
+                                    FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
+                                imageRef.getBytes(10 * 1024 * 1024).addOnSuccessListener { bytes ->
+                                    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                                    binding.ProfileImage.setImageBitmap(bitmap)
+                                }.addOnFailureListener {
+                                    // Handle any errors
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "Image upload failed: ${it.message}",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                }
+                            }
+
+                        }
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        Log.d("ProfileFragment", "Failed to get user data.", databaseError.toException())
+                        Log.d(
+                            "ProfileFragment",
+                            "Failed to get user data.",
+                            databaseError.toException()
+                        )
                     }
                 })
         }
@@ -59,11 +87,15 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
         binding.infoButton.setOnClickListener {
+            val intent = Intent(requireContext(), UserInfo::class.java)
             Log.d("Profile", "Info button clicked")
+            startActivity(intent)
         }
 
         binding.statsButton.setOnClickListener {
+            val intent = Intent(requireContext(), Stats::class.java)
             Log.d("Profile", "Stats button clicked")
+            startActivity(intent)
         }
 
         binding.logOutButton.setOnClickListener {
