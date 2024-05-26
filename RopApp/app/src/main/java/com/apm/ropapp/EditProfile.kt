@@ -189,18 +189,24 @@ class EditProfile : AppCompatActivity() {
         imageUri?.let { uri ->
             val storage = FirebaseStorage.getInstance()
             val storageRef = storage.reference
-            val imageRef = storageRef.child("images/${userId}.jpg")
+            val imageRef = storageRef.child("user_images/${userId}.jpg")
 
             val uploadTask = imageRef.putFile(uri)
             uploadTask.addOnSuccessListener {
-                Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
-                databaseReference.child("image").setValue("images/${userId}.jpg")
+                imageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
+                    // Get the download URL and store it in the database
+                    Toast.makeText(this, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+                    databaseReference.child("image").setValue(downloadUrl.toString())
+                }.addOnFailureListener {
+                    // Handle any errors
+                    Toast.makeText(this, "Failed to get download URL: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
             }.addOnFailureListener {
-                Toast.makeText(this, "Image upload failed: ${it.message}", Toast.LENGTH_SHORT)
-                    .show()
+                // Handle any errors
+                Toast.makeText(this, "Image upload failed: ${it.message}", Toast.LENGTH_SHORT).show()
             }
-        }
-//            ?: Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
+        } ?: Toast.makeText(this, "No image selected", Toast.LENGTH_SHORT).show()
     }
+
 }
 
