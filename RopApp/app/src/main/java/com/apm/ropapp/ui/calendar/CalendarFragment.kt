@@ -73,6 +73,7 @@ class CalendarFragment : Fragment() {
                 val images = mutableListOf<String>()
                 if (snapshot.exists()) {
                     for (imageSnapshot in snapshot.children) {
+                        Log.d("LLAVE", imageSnapshot.key.toString())
                         val imageUrl = imageSnapshot.getValue(String::class.java)
                         imageUrl?.let { images.add(it) }
                     }
