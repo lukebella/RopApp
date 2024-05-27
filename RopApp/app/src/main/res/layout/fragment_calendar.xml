@@ -27,10 +27,10 @@
         android:layout_width="383dp"
         android:layout_height="239dp"
         android:layout_margin="@dimen/activity_vertical_margin"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/rectangle_borders"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/simpleCalendarView">
 
@@ -52,52 +52,84 @@
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.681" />
+            app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageView1"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="16dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="68dp"
             android:layout_marginTop="85dp"
             android:layout_marginBottom="26dp"
+            android:background="@drawable/selector_button_nomegusta"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.76"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@drawable/tshirt" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageView2"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginStart="112dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="173dp"
+            android:background="@drawable/selector_button_nomegusta"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.765"
+            app:layout_constraintVertical_bias="0.427"
             app:srcCompat="@drawable/tshirt" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageView3"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginEnd="108dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="68dp"
+            android:background="@drawable/selector_button_nomegusta"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.765"
+            app:layout_constraintVertical_bias="0.427"
             app:srcCompat="@drawable/tshirt" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginEnd="16dp"
+        <ImageButton
+            android:id="@+id/imageView6"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="68dp"
+            android:background="@drawable/selector_button_nomegusta"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.769"
+            app:layout_constraintVertical_bias="0.733"
+            app:srcCompat="@drawable/tshirt" />
+
+        <ImageButton
+            android:id="@+id/imageView5"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="173dp"
+            android:background="@drawable/selector_button_nomegusta"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.733"
+            app:srcCompat="@drawable/tshirt" />
+
+        <ImageButton
+            android:id="@+id/imageView4"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="68dp"
+            android:background="@drawable/selector_button_nomegusta"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.733"
             app:srcCompat="@drawable/tshirt" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
