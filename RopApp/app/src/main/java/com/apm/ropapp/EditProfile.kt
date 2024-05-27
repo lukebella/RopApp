@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener
 
 import android.Manifest
 import android.os.Build
+import android.view.View
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -61,6 +62,20 @@ class EditProfile : AppCompatActivity() {
         databaseReference = userId?.let {
             FirebaseDatabase.getInstance().reference.child("users").child(it)
         }!!
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        currentUser?.providerData?.forEach { userInfo ->
+            if (userInfo.providerId == getString(R.string.facebookProvider) || userInfo.providerId == getString(R.string.googleProvider)) {
+                binding.passwordChange.visibility = View.GONE
+                Log.d("EditProfile", "Not allowed to change password")
+                Toast.makeText(
+                    applicationContext,
+                    "No es posible modificar la contraseña, usuario registrado con google",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
 
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -164,18 +179,12 @@ class EditProfile : AppCompatActivity() {
         binding.passwordChange.setOnClickListener() {
             for (user in FirebaseAuth.getInstance().currentUser!!
                 .providerData) {
-                if (user.providerId == getString(R.string.facebookProvider) || user.providerId == getString(R.string.googleProvider)) {
-                    Log.d("EditProfile", "Not allowed to change password")
-                    Toast.makeText(
-                        applicationContext,
-                        "No es posible modificar la contraseña, usuario registrado como ${user.providerId}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+
+                intent = Intent(this, EditPassword::class.java)
+                Log.d("EditProfile", "Change Password")
+                startActivity(intent)
             }
-            intent = Intent(this, EditPassword::class.java)
-            Log.d("EditProfile", "Change Password")
-            startActivity(intent)
+
         }
 
         // Similarly, initialize other views and set their behavior
