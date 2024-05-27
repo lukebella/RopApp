@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.R
@@ -67,7 +68,6 @@ class CalendarFragment : Fragment() {
     private fun fetchAndDisplayImages(selectedDate: String) {
         val userUid = firebaseAuth.currentUser?.uid ?: return
         val recommendationRef = database.child("recommendations").child(userUid).child(selectedDate)
-
         recommendationRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val images = mutableListOf<String>()

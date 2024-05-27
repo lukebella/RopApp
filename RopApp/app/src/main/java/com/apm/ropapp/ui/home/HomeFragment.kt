@@ -535,7 +535,7 @@ class HomeFragment : Fragment() {
             listOf("Top"),
             listOf("Bottom"),
             listOf("Shoe"),
-            listOf("Accessories")
+            listOf("Prenda Exterior")
         )
         val filteredClothes = data.values.filter { item ->
             val seasons = item["seasons"] as? List<String>
