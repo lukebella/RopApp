@@ -24,7 +24,8 @@ class CreateOutfit : AppCompatActivity() {
         }
 
         binding.saveButton.setOnClickListener {
-            intent = Intent(this, ArrangeItems::class.java)
+            finish()
+            intent = Intent(this, ShareOutfit::class.java)
             Log.d("CreateOutfit", "Outfit Added")
             startActivity(intent)
         }
@@ -36,7 +37,7 @@ class CreateOutfit : AppCompatActivity() {
                 } else Log.d("CreateOutfit", "Cancelled")
             }
 
-        binding.accesorioButton.setOnClickListener {
+        binding.accesory1Button.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
             Log.d("CreateOutfit", "Add Accessory")
             intent.putExtra("selectedChip", getString(R.string.prendaAccessories))
@@ -78,10 +79,10 @@ class CreateOutfit : AppCompatActivity() {
                 } else Log.d("CreateOutfit", "Cancelled")
             }
 
-        binding.shoeButton.setOnClickListener {
+        binding.shoesButton.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
             Log.d("CreateOutfit", "Add Shoes")
-            intent.putExtra("selectedChip", getString(R.string.prendaShoe))
+            intent.putExtra("selectedChip", getString(R.string.prendaShoes))
             startForShoes.launch(intent)
         }
 

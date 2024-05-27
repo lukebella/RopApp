@@ -71,7 +71,7 @@
                 app:srcCompat="@drawable/tshirt" />
 
             <ImageButton
-                android:id="@+id/shoe_button"
+                android:id="@+id/shoes_button"
                 android:layout_width="200dp"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"

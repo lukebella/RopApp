@@ -19,12 +19,11 @@ class ShareOutfit : AppCompatActivity() {
         // Initialize your views here
         // For example, to set a click listener on the floating action button:
         binding.cancelButton.setOnClickListener {
-            intent = Intent(this, MainActivity::class.java)
             Log.d("ShareOutfit", "Back to Main Activity")
-            startActivity(intent)
+            finish()
         }
         binding.editButton.setOnClickListener {
-            intent = Intent(this, CreateOutfit::class.java) // Maybe editOutfit?
+            intent = Intent(this, CreateOutfit::class.java)
             Log.d("ShareOutfit", "Edit Outfit")
             startActivity(intent)
         }

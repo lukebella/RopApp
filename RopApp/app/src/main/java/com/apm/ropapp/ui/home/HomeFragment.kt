@@ -10,7 +10,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.location.Geocoder
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -236,7 +235,7 @@ class HomeFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun processWeatherData(weatherData: WeatherData) {
-        val temperature: String =
+        val temperature =
             "${weatherData.tempMax}/${weatherData.tempMin}°C"
 
         val sharedPreferences: SharedPreferences =
@@ -538,11 +537,11 @@ class HomeFragment : Fragment() {
         val categories = listOf(
             listOf("Top"),
             listOf("Bottom"),
-            listOf("Shoe"),
+            listOf("Shoes"),
             listOf("Prenda Exterior")
         )
         val filteredClothes = data.values.filter { item ->
-            val seasons = item["seasons"] as? List<String>
+            val seasons = item["seasons"] as? List<*>
             seasons?.contains(season) == true
         }
         val clothesByCategory = filteredClothes.groupBy { it["category"] }

@@ -2,6 +2,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.Material3.Dark.NoActionBar">
         <item name="android:textColor">@color/md_theme_onSurface</item>
+        <item name="android:textColorHint">@color/md_theme_outline</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>

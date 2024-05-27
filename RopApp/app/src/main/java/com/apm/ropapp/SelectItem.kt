@@ -57,7 +57,7 @@ class SelectItem : AppCompatActivity() {
             getString(R.string.prendaTop) to listOf(getString(R.string.prendaDress)),
             getString(R.string.prendaOuterwear) to listOf(),
             getString(R.string.prendaBottom) to listOf(),
-            getString(R.string.prendaShoe) to listOf(),
+            getString(R.string.prendaShoes) to listOf(),
             getString(R.string.prendaAccessories) to listOf(
                 getString(R.string.prendaBag),
                 getString(R.string.prendaHat),
@@ -74,7 +74,7 @@ class SelectItem : AppCompatActivity() {
             getString(R.string.prendaTop) -> R.id.chipTop
             getString(R.string.prendaOuterwear) -> R.id.chipOuterwear
             getString(R.string.prendaBottom) -> R.id.chipBottom
-            getString(R.string.prendaShoe) -> R.id.chipShoe
+            getString(R.string.prendaShoes) -> R.id.chipShoes
             getString(R.string.prendaAccessories) -> R.id.chipAccessories
             else -> R.id.chipTop
         }
