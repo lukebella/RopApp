@@ -103,12 +103,12 @@ class HomeFragment : Fragment() {
         updateWeather(sharedPreferences, binding.aCoruna)
         //metodo para recomendar
 
-        //if (sharedPreferences.getBoolean("new_rec", true)) {
+        if (sharedPreferences.getBoolean("new_rec", true)) {
             getDatabaseValues("clothes", userUid!!, sharedPreferences) { data ->
                 toRecommend = checkURI(data)
             }
             sharedPreferences.edit().putBoolean("new_rec", false).apply()
-        //}
+        }
 
         noMeGustaButton.setOnClickListener {
             manageNoMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
