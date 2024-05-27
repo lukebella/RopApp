@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.R
@@ -67,12 +68,12 @@ class CalendarFragment : Fragment() {
     private fun fetchAndDisplayImages(selectedDate: String) {
         val userUid = firebaseAuth.currentUser?.uid ?: return
         val recommendationRef = database.child("recommendations").child(userUid).child(selectedDate)
-
         recommendationRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val images = mutableListOf<String>()
                 if (snapshot.exists()) {
                     for (imageSnapshot in snapshot.children) {
+                        Log.d("LLAVE", imageSnapshot.key.toString())
                         val imageUrl = imageSnapshot.getValue(String::class.java)
                         imageUrl?.let { images.add(it) }
                     }
@@ -81,6 +82,8 @@ class CalendarFragment : Fragment() {
                 } else {
                     Log.d("Firebase", "No data found for the selected date")
                     binding.prendaMasUtilizada.text = "No recomendaciónes"
+                    binding.imageView5.setImageDrawable(null)
+                    binding.imageView6.setImageDrawable(null)
                     displayImages(images)
                 }
             }

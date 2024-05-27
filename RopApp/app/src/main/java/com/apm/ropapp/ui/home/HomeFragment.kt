@@ -104,12 +104,12 @@ class HomeFragment : Fragment() {
         updateWeather(sharedPreferences, binding.aCoruna)
         //metodo para recomendar
 
-        if (sharedPreferences.getBoolean("new_rec", true)) {
+        //if (sharedPreferences.getBoolean("new_rec", true)) {
             getDatabaseValues("clothes", userUid!!, sharedPreferences) { data ->
                 toRecommend = checkURI(data)
             }
             sharedPreferences.edit().putBoolean("new_rec", false).apply()
-        }
+        //}
 
         noMeGustaButton.setOnClickListener {
             manageNoMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
@@ -425,13 +425,17 @@ class HomeFragment : Fragment() {
                         val recommendedPhotos = recommendation(data)
                         Log.d("Recommend", recommendedPhotos.toString())
                         for ((i,ph) in recommendedPhotos.withIndex()) {
-                            Log.d("photo", getImageUri(ph,photos).toString())
-                            sharedPreferences.edit().putString("r$i", getImageUri(ph,photos).toString()).apply()
-                            photoUrls.add(getImageUri(ph,photos).toString())
+                            Log.d("photo", getImageUri(ph[0],photos).toString())
+                            sharedPreferences.edit().putString("r$i", getImageUri(ph[0],photos).toString()).apply()
+                            photoUrls.add(getImageUri(ph[0],photos).toString())
                         }
                         updateRecommendations(sharedPreferences, photoUrls)
                         Log.d("rp", recommendedPhotos.toString())
-                        toRecommend[recommendationId] = photoUrls
+                        val valor = HashMap<String, String>()
+                        for ((i,photo) in photoUrls.withIndex()) {
+                            valor[recommendedPhotos[i][1]] = photo
+                        }
+                        toRecommend[recommendationId] = valor
                     }
                     else {
                         binding.textPregunta.text = "No hay ropa..."
@@ -529,13 +533,13 @@ class HomeFragment : Fragment() {
 
     private fun recommendation(
         data: HashMap<String, HashMap<String, Any>>
-    ): List<String> {
+    ): List<List<String>> {
         val season = fromMonthToSeason(month.toString())
         val categories = listOf(
             listOf("Top"),
             listOf("Bottom"),
             listOf("Shoe"),
-            listOf("Accessories")
+            listOf("Prenda Exterior")
         )
         val filteredClothes = data.values.filter { item ->
             val seasons = item["seasons"] as? List<String>
@@ -543,19 +547,19 @@ class HomeFragment : Fragment() {
         }
         val clothesByCategory = filteredClothes.groupBy { it["category"] }
         Log.d("cc", clothesByCategory.toString())
-        val recommendedPhotos = mutableListOf<String>()
+        val recommendedPhotos : MutableList<MutableList<String>> = mutableListOf()
         for (category in categories) {
             Log.d("cat", category.toString())
             val clothes = clothesByCategory[category]
             Log.d("filcloth",clothes.toString())
-
             if (!clothes.isNullOrEmpty()) {
                 val randomClothes = clothes.random()
                 val photoUrl = randomClothes["photo"]?.toString() ?: ""
+                val idPhoto = randomClothes["id"]?.toString() ?: ""
                 Log.d("photourl", photoUrl)
-                recommendedPhotos.add(photoUrl)
+                recommendedPhotos.add(mutableListOf( photoUrl, idPhoto))
             } else {
-                recommendedPhotos.add("")
+                recommendedPhotos.add(mutableListOf( "", ""))
             }
         }
 
