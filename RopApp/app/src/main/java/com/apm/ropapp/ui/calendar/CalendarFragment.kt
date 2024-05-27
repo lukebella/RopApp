@@ -81,6 +81,8 @@ class CalendarFragment : Fragment() {
                 } else {
                     Log.d("Firebase", "No data found for the selected date")
                     binding.prendaMasUtilizada.text = "No recomendaciónes"
+                    binding.imageView5.setImageDrawable(null)
+                    binding.imageView6.setImageDrawable(null)
                     displayImages(images)
                 }
             }
