@@ -8,6 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.EditpasswordBinding
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 class EditPassword : AppCompatActivity() {
@@ -16,6 +20,23 @@ class EditPassword : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = EditpasswordBinding.inflate(layoutInflater)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        if (userId != null) {
+            FirebaseDatabase.getInstance().reference.child("users")
+                .child(userId).addValueEventListener(object : ValueEventListener {
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            binding.textView6.text =
+                                dataSnapshot.child("username").getValue(String::class.java)
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // Handle possible errors.
+                    }
+                })
+        }
         setContentView(binding.root)
         var newPassword = ""
         var oldPassword = ""

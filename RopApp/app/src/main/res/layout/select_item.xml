@@ -66,11 +66,11 @@
                 app:chipBackgroundColor="@color/chip_state_list" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chipShoe"
+                android:id="@+id/chipShoes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checkable="true"
-                android:text="@string/prendaShoe"
+                android:text="@string/prendaShoes"
                 app:chipBackgroundColor="@color/chip_state_list" />
 
             <com.google.android.material.chip.Chip

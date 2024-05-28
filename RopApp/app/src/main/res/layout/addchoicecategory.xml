@@ -82,12 +82,12 @@
             app:layout_constraintTop_toBottomOf="@id/top" />
 
         <CheckBox
-            android:id="@+id/shoe"
+            android:id="@+id/shoes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
-            android:text="@string/prendaShoe"
+            android:text="@string/prendaShoes"
             app:layout_constraintStart_toEndOf="@+id/top"
             app:layout_constraintTop_toBottomOf="@+id/top" />
 

@@ -1,7 +1,6 @@
 package com.apm.ropapp.ui.home
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
@@ -10,7 +9,6 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.location.Geocoder
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +19,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -74,15 +71,14 @@ class HomeFragment : Fragment() {
     private lateinit var storage: StorageReference
 
     private val calendar: Calendar = Calendar.getInstance()
-    val year = calendar.get(Calendar.YEAR)
-    val month = calendar.get(Calendar.MONTH) + 1 // Month is zero-based
-    val day = calendar.get(Calendar.DAY_OF_MONTH)
+    private val year = calendar.get(Calendar.YEAR)
+    private val month = calendar.get(Calendar.MONTH) + 1 // Month is zero-based
+    private val day = calendar.get(Calendar.DAY_OF_MONTH)
 
     private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale("es", "ES"))
     val recommendationId: String = dateFormat.format(calendar.time)
     private var toRecommend = HashMap<String, Any> ()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -104,12 +100,12 @@ class HomeFragment : Fragment() {
         updateWeather(sharedPreferences, binding.aCoruna)
         //metodo para recomendar
 
-        //if (sharedPreferences.getBoolean("new_rec", true)) {
+        if (sharedPreferences.getBoolean("new_rec", true)) {
             getDatabaseValues("clothes", userUid!!, sharedPreferences) { data ->
                 toRecommend = checkURI(data)
             }
             sharedPreferences.edit().putBoolean("new_rec", false).apply()
-        //}
+        }
 
         noMeGustaButton.setOnClickListener {
             manageNoMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
@@ -134,7 +130,6 @@ class HomeFragment : Fragment() {
 
     //LOCALIZATION AND WEATHER FUNCTIONS
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateWeather(sharedPreferences: SharedPreferences, locationTextView: TextView) {
         val tmsUpdate = sharedPreferences.getLong("LONG_KEY", 0)
         val delta = 2 * 60 * 60 * 1000
@@ -153,7 +148,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun weatherForecast(lat: Double, longit: Double, key: String) {
         val url = "https://api.openweathermap.org/data/2.5/forecast?lat=$lat&lon=$longit&appid=$key"
         CoroutineScope(Dispatchers.Main).launch {
@@ -164,8 +158,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    suspend fun fetchWeatherData(url: String): WeatherData? {
+    private suspend fun fetchWeatherData(url: String): WeatherData? {
         return withContext(Dispatchers.IO) {
             var result: String? = null
             var urlConnection: HttpURLConnection? = null
@@ -191,8 +184,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    @SuppressLint("DiscouragedApi")
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun parseWeatherData(result: String): WeatherData {
         val dayString = if (day < 10) {
             "0$day" // Adding leading zero if dayOfMonth is less than 10
@@ -234,9 +225,8 @@ class HomeFragment : Fragment() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun processWeatherData(weatherData: WeatherData) {
-        val temperature: String =
+        val temperature =
             "${weatherData.tempMax}/${weatherData.tempMin}°C"
 
         val sharedPreferences: SharedPreferences =
@@ -249,7 +239,6 @@ class HomeFragment : Fragment() {
         Log.d("WeatherForecast", weatherData.toString())
     }
 
-    @SuppressLint("SetTextI18n")
     private fun retrieveCity(
         locationTextView: TextView,
         sharedPreferences: SharedPreferences,
@@ -407,7 +396,6 @@ class HomeFragment : Fragment() {
     private fun getDatabaseValues(folderName: String, userUid:String, sharedPreferences: SharedPreferences, callback: (HashMap<String, Any>) -> Unit) {
         database.child("$folderName/$userUid")
             .addListenerForSingleValueEvent(object : ValueEventListener {
-                @SuppressLint("SetTextI18n")
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val data = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
                     val toRecommend = HashMap<String, Any>()
@@ -538,11 +526,11 @@ class HomeFragment : Fragment() {
         val categories = listOf(
             listOf("Top"),
             listOf("Bottom"),
-            listOf("Shoe"),
+            listOf("Shoes"),
             listOf("Prenda Exterior")
         )
         val filteredClothes = data.values.filter { item ->
-            val seasons = item["seasons"] as? List<String>
+            val seasons = item["seasons"] as? List<*>
             seasons?.contains(season) == true
         }
         val clothesByCategory = filteredClothes.groupBy { it["category"] }
