@@ -45,21 +45,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val b = intent.extras
-        if (b != null) {
-            val navFragment = b.getInt("fragment")
-            if (navFragment != 0) {
-                navController.popBackStack()
-                navController.navigate(navFragment)
-            }
-        }
-
         binding.floatingAddButton.setOnClickListener {
             Log.d("Main Activity", "Se hizo clic en el botón flotante")
             showCustomDialog()
-            //Log.d("TAG", navController.currentDestination?.id.toString())
-            //Log.d("TAG", R.id.navigation_closet.toString())
-            //onDestinationchangedListener
         }
     }
 

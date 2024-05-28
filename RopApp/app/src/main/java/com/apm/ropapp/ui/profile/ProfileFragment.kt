@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,9 +32,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -43,8 +40,8 @@ class ProfileFragment : Fragment() {
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
         if (userId != null) {
-            FirebaseDatabase.getInstance().reference.child("users")
-                .child(userId).addValueEventListener(object : ValueEventListener {
+            FirebaseDatabase.getInstance().reference.child("users").child(userId)
+                .addValueEventListener(object : ValueEventListener {
 
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
@@ -63,11 +60,9 @@ class ProfileFragment : Fragment() {
                                         requireContext(),
                                         "Image upload failed: ${it.message}",
                                         Toast.LENGTH_SHORT
-                                    )
-                                        .show()
+                                    ).show()
                                 }
                             }
-
                         }
                     }
 
@@ -99,26 +94,21 @@ class ProfileFragment : Fragment() {
         }
 
         binding.logOutButton.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle("Logout")
-                .setMessage("Are you sure you want to logout?")
-                .setPositiveButton("Yes") { _, _ ->
+            AlertDialog.Builder(requireContext()).setTitle("Logout")
+                .setMessage("Are you sure you want to logout?").setPositiveButton("Yes") { _, _ ->
 
                     //re-initialize SharedPreferences
-                    requireContext().getSharedPreferences("MySharedPreferences", MODE_PRIVATE).
-                        edit().clear().apply()
+                    requireContext().getSharedPreferences("MySharedPreferences", MODE_PRIVATE)
+                        .edit().clear().apply()
                     FirebaseAuth.getInstance().signOut()
                     Toast.makeText(requireContext(), "Signed Out", Toast.LENGTH_SHORT).show()
                     val intent = Intent(requireContext(), Login::class.java)
                     startActivity(intent)
-                }
-                .setNegativeButton("Cancel", null)
-                .show()
+                }.setNegativeButton("Cancel", null).show()
 
         }
 
         return root
-
     }
 
     override fun onDestroyView() {

@@ -1,15 +1,16 @@
 package com.apm.ropapp
 
 import android.content.Intent
-import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.apm.ropapp.databinding.EditprofileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -17,11 +18,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
-import android.Manifest
-import android.graphics.BitmapFactory
-import android.os.Build
-import android.view.View
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -32,27 +28,6 @@ class EditProfile : AppCompatActivity() {
     private var imageUri: Uri? = null
     private var userId = FirebaseAuth.getInstance().currentUser?.uid
 
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                openGallery()
-            } else {
-                Toast.makeText(
-                    this,
-                    "Permission denied to read your External storage",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-
-    // Register the activity result launcher for picking images from gallery
-    private val pickImageLauncher =
-        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            uri?.let {
-                imageUri = it
-                binding.editImage.setImageURI(it)
-            }
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,8 +86,7 @@ class EditProfile : AppCompatActivity() {
                                 applicationContext,
                                 "Image upload failed: ${it.message}",
                                 Toast.LENGTH_SHORT
-                            )
-                                .show()
+                            ).show()
                         }
                     }
                 }
@@ -132,7 +106,7 @@ class EditProfile : AppCompatActivity() {
         binding.editGenero.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>,
-                view: android.view.View?,
+                view: View?,
                 position: Int,
                 id: Long
             ) {
@@ -146,34 +120,19 @@ class EditProfile : AppCompatActivity() {
             }
         }
 
-        binding.editImage.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.READ_MEDIA_IMAGES
-                    ) == PERMISSION_GRANTED
-                ) {
-                    openGallery()
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
-                }
-            } else {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) == PERMISSION_GRANTED
-                ) {
-                    openGallery()
-                } else {
-                    requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-                }
+        val pickImageLauncher =
+            registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+                // Callback is invoked after the user selects a media item or closes the photo picker.
+                if (uri != null) {
+                    imageUri = uri
+                    Log.d("PhotoPicker", "Selected URI: $imageUri")
+                    binding.editImage.setImageURI(imageUri)
+                } else Log.d("PhotoPicker", "No media selected")
             }
+
+        binding.editImage.setOnClickListener {
+            pickImageLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
-
-
-
-
-
 
         binding.saveButton2.setOnClickListener {
             Log.d("EditProfile", "Edit Profile")
@@ -188,28 +147,18 @@ class EditProfile : AppCompatActivity() {
             databaseReference.child("gender").setValue(selectedGender)
 
             // Navigate back to MainActivity
-            intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("fragment", R.id.navigation_user)
+            finish()
+        }
+
+
+        binding.passwordChange.setOnClickListener {
+
+            intent = Intent(this, EditPassword::class.java)
+            Log.d("EditProfile", "Change Password")
             startActivity(intent)
         }
 
-
-        binding.passwordChange.setOnClickListener() {
-            for (user in FirebaseAuth.getInstance().currentUser!!
-                .providerData) {
-
-                intent = Intent(this, EditPassword::class.java)
-                Log.d("EditProfile", "Change Password")
-                startActivity(intent)
-            }
-
-        }
-
         // Similarly, initialize other views and set their behavior
-    }
-
-    private fun openGallery() {
-        pickImageLauncher.launch("image/*")
     }
 
     private fun uploadImageToFirebase(databaseReference: DatabaseReference = this.databaseReference) {

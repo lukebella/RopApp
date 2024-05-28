@@ -74,11 +74,6 @@
         </activity>
 
         <activity
-            android:name=".ArrangeItems"
-            android:exported="true">
-        </activity>
-
-        <activity
             android:name=".CreateOutfit"
             android:exported="true">
         </activity>

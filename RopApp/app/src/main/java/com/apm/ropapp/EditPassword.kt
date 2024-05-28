@@ -1,6 +1,5 @@
 package com.apm.ropapp
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -54,30 +53,23 @@ class EditPassword : AppCompatActivity() {
             val email: String? = user?.email
             val credential = email?.let { it1 -> EmailAuthProvider.getCredential(it1, oldPassword) }
 
-            user!!.reauthenticate(credential!!)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        user.updatePassword(newPassword)
-                            .addOnCompleteListener {
-                                if (!it.isSuccessful) {
-                                    Toast.makeText(this, "Ha ocurrido un error. Vuelva a " +
-                                            "intentarlo más tarde", Toast.LENGTH_SHORT).show()
-                                } else {
-                                    Toast.makeText(this, "Contraseña modificada con éxito", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                    } else {
-                        Toast.makeText(this, "Autenticación fallida", Toast.LENGTH_SHORT).show()
+            user!!.reauthenticate(credential!!).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    user.updatePassword(newPassword).addOnCompleteListener {
+                        if (!it.isSuccessful) {
+                            Toast.makeText(this, "Ha ocurrido un error. Vuelva a " +
+                                        "intentarlo más tarde", Toast.LENGTH_SHORT).show()
+                        } else Toast.makeText(this, "Contraseña modificada con éxito",
+                            Toast.LENGTH_SHORT).show()
                     }
-                }
-            intent = Intent(this, MainActivity::class.java) // Maybe editOutfit?
-            intent.putExtra("fragment", R.id.navigation_user)
-            startActivity(intent)
+                } else Toast.makeText(this, "Autenticación fallida", Toast.LENGTH_SHORT).show()
+            }
+            finish()
         }
 
         binding.newPassword.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                 newPassword = binding.newPassword.text.toString()
+                newPassword = binding.newPassword.text.toString()
                 Log.d("EditPassword", "New Password: $newPassword")
                 // You can now use the newPassword variable
             }
