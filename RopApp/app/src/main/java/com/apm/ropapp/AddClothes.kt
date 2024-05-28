@@ -70,9 +70,9 @@ class AddClothes : AppCompatActivity() {
                 if (seasonsList.contains(chip.text)) chip.toggle()
             }
 
-            binding.categoryTextView.text = updateTextView("category")
-            binding.styleTextView.text = updateTextView("style")
-            binding.detailsTextView.text = updateTextView("details")
+            binding.categoryTextView.text = updateTextViewCheckbox("category")
+            binding.styleTextView.text = updateTextViewCheckbox("style")
+            binding.detailsTextView.text = updateTextViewDetail("details")
 
             val imageString = intent.extras?.getString("image")
             if (imageString != null) {
@@ -147,12 +147,12 @@ class AddClothes : AppCompatActivity() {
                     val extras = result.data?.extras
                     if (extras?.getStringArrayList("category") != null) {
                         uploadData["category"] = extras.getStringArrayList("category")!!
-                        binding.categoryTextView.text = updateTextView("category")
+                        binding.categoryTextView.text = updateTextViewCheckbox("category")
                         Log.d("AddCategories", uploadData["category"].toString())
                     }
                     if (extras?.getStringArrayList("style") != null) {
                         uploadData["style"] = extras.getStringArrayList("style")!!
-                        binding.styleTextView.text = updateTextView("style")
+                        binding.styleTextView.text = updateTextViewCheckbox("style")
                         Log.d("AddStyle", uploadData["style"].toString())
                     }
 
@@ -161,7 +161,7 @@ class AddClothes : AppCompatActivity() {
                     else extras?.getSerializable("details")
                     if (detailsData != null && detailsData is HashMap<*, *>) {
                         uploadData["details"] = detailsData
-                        binding.detailsTextView.text = updateTextView("details")
+                        binding.detailsTextView.text = updateTextViewDetail("details")
                         Log.d("AddDetails", uploadData["details"].toString())
                     }
                 }
@@ -232,12 +232,17 @@ class AddClothes : AppCompatActivity() {
         resultLauncher.launch(intent)
     }
 
-    private fun updateTextView(data: String): String {
+    private fun updateTextViewCheckbox(data: String): String {
         if (uploadData[data] != null) {
             val dataString = uploadData[data].toString()
             return dataString.substring(1, dataString.length - 1)
         }
         return ""
+    }
+
+    private fun updateTextViewDetail(key: String): String {
+        val detailsData = uploadData[key] as? HashMap<*, *>
+        return detailsData?.values?.joinToString(", ") ?: ""
     }
 
     private fun generateFileName(): String {
