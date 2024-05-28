@@ -6,57 +6,13 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageshoes"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginEnd="104dp"
+        android:id="@+id/image_combined"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginEnd="56dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagebottom"
-        app:srcCompat="@drawable/nike" />
-
-    <ImageView
-        android:id="@+id/imagesocks"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="67dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagebottom"
-        app:srcCompat="@drawable/nike" />
-
-    <ImageView
-        android:id="@+id/imagetop"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="114dp"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/nike" />
-
-    <ImageView
-        android:id="@+id/imagebottom"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        app:layout_constraintStart_toEndOf="@+id/imageacc1"
-        app:layout_constraintTop_toBottomOf="@+id/imagetop"
-        app:srcCompat="@drawable/nike" />
-
-    <ImageView
-        android:id="@+id/imageacc1"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/imagetop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagetop"
-        app:srcCompat="@drawable/nike" />
-
-    <ImageView
-        android:id="@+id/imageacc2"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        app:layout_constraintStart_toEndOf="@+id/imagebottom"
-        app:layout_constraintTop_toBottomOf="@+id/imagetop"
+        app:layout_constraintTop_toBottomOf="@+id/cardView"
         app:srcCompat="@drawable/nike" />
 
     <TextView
@@ -104,7 +60,7 @@
         android:id="@+id/share_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="612dp"
+        android:layout_marginTop="556dp"
         android:background="@drawable/button_default"
         android:text="@string/valorShare"
         app:layout_constraintEnd_toEndOf="parent"

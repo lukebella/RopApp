@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
@@ -29,8 +30,8 @@ class CreateOutfit : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     private lateinit var storage: StorageReference
     private lateinit var outfitId: String
-    private val clothesDataMap = mutableMapOf<String, Any>()
-    private val clothesUriMap = mutableMapOf<String, String>()
+    private val clothesDataMap = HashMap<String, Any>()
+    private val clothesUriMap = HashMap<String, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +100,8 @@ class CreateOutfit : AppCompatActivity() {
 
             intent = Intent(this, ShareOutfit::class.java)
             intent.putExtra("outfitName", outfitName)
+            intent.putExtra("clothesDataBundle", clothesDataMap)
+            intent.putExtra("clothesUriBundle", clothesUriMap)
             //intent.putExtra("outfitImage", clothesDataMap["outfitImage"])
             startForResult.launch(intent)
         }
