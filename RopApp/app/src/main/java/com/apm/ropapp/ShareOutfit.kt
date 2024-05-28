@@ -3,7 +3,6 @@ package com.apm.ropapp
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
@@ -38,10 +37,12 @@ class ShareOutfit : AppCompatActivity() {
         }
 
         // Retrieve the data correctly
-        val clothesUriMap = intent.getSerializableExtra("clothesUriBundle", HashMap<String, String>().javaClass)
+        val clothesUriMap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            intent.extras?.getSerializable("clothesUriBundle", HashMap<String, Any>().javaClass)
+        else intent.extras?.getSerializable("clothesUriBundle")
 
-        if (clothesUriMap != null) {
-            loadAndCombineOutfitImages(clothesUriMap)
+        if (clothesUriMap != null && clothesUriMap is HashMap<*, *>) {
+            loadAndCombineOutfitImages(clothesUriMap as HashMap<String, String>)
         } else {
             Log.e("ShareOutfit", "Failed to retrieve clothes URI map")
         }
@@ -58,7 +59,7 @@ class ShareOutfit : AppCompatActivity() {
         }
         binding.shareButton.setOnClickListener {
             // Share the outfit
-            shareContent("Check out my outfit: $outfitName")
+            shareCombinedImage()
             Log.d("ShareOutfit", "Share Outfit")
         }
     }
@@ -139,7 +140,7 @@ class ShareOutfit : AppCompatActivity() {
         binding.imageCombined.setImageBitmap(combinedClothesBitmap)
 
         if (accessoriesBitmaps.isNotEmpty()) {
-            if (accessoriesBitmaps.size > 0) {
+            if (accessoriesBitmaps.size == 1) {
                 binding.imageAccesories1.setImageBitmap(accessoriesBitmaps[0])
                 binding.imageAccesories1.visibility = ImageView.VISIBLE
             } else {
@@ -175,13 +176,18 @@ class ShareOutfit : AppCompatActivity() {
         return result
     }
 
-    private fun shareCombinedImage(bitmap: Bitmap) {
-        val uri = getImageUri(this, bitmap)
-        ShareCompat.IntentBuilder(this)
-            .setType("image/png")
-            .setChooserTitle("Share via")
-            .setStream(uri)
-            .startChooser()
+    private fun shareCombinedImage() {
+        combinedBitmap?.let { bitmap ->
+            val uri = getImageUri(this, bitmap)
+            val shareIntent = ShareCompat.IntentBuilder(this)
+                .setType("image/png")
+                .setStream(uri)
+                .intent
+                .setAction(Intent.ACTION_SEND)
+                .setDataAndType(uri, "image/png")
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            startActivity(Intent.createChooser(shareIntent, "Share outfit via"))
+        }
     }
 
     private fun getImageUri(context: Context, bitmap: Bitmap): Uri {
@@ -191,11 +197,4 @@ class ShareOutfit : AppCompatActivity() {
         return Uri.parse(path)
     }
 
-    private fun shareContent(content: String) {
-        ShareCompat.IntentBuilder(this)
-            .setType("text/plain")
-            .setChooserTitle("Share via")
-            .setText(content)
-            .startChooser()
-    }
 }
