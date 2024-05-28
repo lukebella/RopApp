@@ -24,7 +24,6 @@ Aplicación móvil para gestionar y recomendar conjuntos en función de la ropa 
   - Sistema de creación de conjuntos
 - Alejandro Esteban (CTO):
   - Perfil de usuario y métricas del armario
-  - Comunicación con redes sociales
   - Vistas para tablets
 - Luca Bellani (CXO):
   - Geolocalización para tiempo y temperatura
@@ -32,6 +31,7 @@ Aplicación móvil para gestionar y recomendar conjuntos en función de la ropa 
   - Cambios en Usabilidad y UX
 
 ## Tareas no críticas:
+- Comunicación con redes sociales
 - Mejora de interfaz
 - Implementación de un sistema de VA para detección de ropa
 - Implementación de sistemas de RA
