@@ -16,26 +16,27 @@ class ShareOutfit : AppCompatActivity() {
         binding = ShareoutfitBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize your views here
-        // For example, to set a click listener on the floating action button:
+        val outfitName = intent.getStringExtra("outfitName")
+        if (!outfitName.isNullOrEmpty()) {
+            binding.textView.text = outfitName
+        }
+
         binding.cancelButton.setOnClickListener {
             Log.d("ShareOutfit", "Back to Main Activity")
+            intent = Intent()
+            setResult(RESULT_OK, intent)
             finish()
         }
         binding.editButton.setOnClickListener {
-            intent = Intent(this, CreateOutfit::class.java)
             Log.d("ShareOutfit", "Edit Outfit")
-            startActivity(intent)
+            finish()
         }
         binding.shareButton.setOnClickListener {
             // Share the outfit
             shareContent("Check out this outfit!")
             Log.d("ShareOutfit", "Share Outfit")
         }
-        binding.likeButton.setOnClickListener {
-            // Like the outfit
-            Log.d("ShareOutfit", "Like Outfit")
-        }
+
         binding.calendarButton.setOnClickListener {
             // Add the outfit to the calendar
             Log.d("ShareOutfit", "Continue to Fragment Calendar")
@@ -44,7 +45,6 @@ class ShareOutfit : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Similarly, initialize other views and set their behavior
     }
     private fun shareContent(content: String) {
         ShareCompat.IntentBuilder(this)

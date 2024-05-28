@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingBackButton"
@@ -15,14 +15,24 @@
         app:srcCompat="@android:drawable/ic_menu_revert" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:text="@string/valor_elegir_prenda"
+        android:text="@string/elegirPrenda"
         android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/buttonRemove"
         app:layout_constraintStart_toEndOf="@+id/floatingBackButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:text="@string/remove"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <HorizontalScrollView
@@ -90,7 +100,8 @@
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="150dp" >
+        android:layout_marginTop="150dp"
+        android:layout_marginHorizontal="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

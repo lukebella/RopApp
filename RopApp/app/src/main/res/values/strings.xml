@@ -31,6 +31,7 @@
     <string name="winter">Invierno</string>
 
     <string name="guardar">Guardar</string>
+    <string name="remove">Quitar</string>
 
     <string name="selectCategories">Selecciona las categorias de tu prenda:</string>
     <string name="prendaTop">Parte de Arriba</string>
@@ -90,22 +91,24 @@
     <string name="valorContinuar">Continuar</string>
     <string name="valorFechaNac">Fecha de Nacimiento</string>
     <string name="valorCompletarDatos">Completa los datos</string>
-    <string name="valor_armario_principal">Armario Principal</string>
+    <string name="valorClosetName">Armario Principal</string>
     <string name="valorUserEmail">Email del usuario</string>
     <string name="valorPassword">Contraseña</string>
     <string name="valorSignIn">Iniciar sesion</string>
     <string name="valorCreateAccount">Crear Cuenta</string>
     <string name="valorOr">OR</string>
     <string name="valorLoginGoogle">Inicia sesión con google</string>
+    <string name="valorEdit">Editar</string>
     <string name="valorShare">Compartir</string>
     <string name="valorAddCalendar">Añadir al calendario</string>
-    <string name="valor_elegir_prenda">Elegir Prenda</string>
+    <string name="elegirPrenda">Elegir %s</string>
     <string name="valorOldPassword">Contraseña vieja</string>
     <string name="valorNewPassword">Nueva contraseña</string>
     <string name="valorMarca">Marca</string>
     <string name="valorEstado">Estado</string>
     <string name="valorPrecio">Precio</string>
     <string name="valorColores">Colores</string>
+    <string name="valorOutfitName">Conjunto moderno</string>
 
 
     <!-- Definición de valores de Dropdown de Género en la vista de crear cuenta -->

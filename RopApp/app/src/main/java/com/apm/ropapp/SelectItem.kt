@@ -1,5 +1,6 @@
 package com.apm.ropapp
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -80,6 +81,7 @@ class SelectItem : AppCompatActivity() {
         }
         selectedChip = binding.chipGroup.findViewById(chipId)
         selectedChip.isChecked = true
+        binding.textView.text = getString(R.string.elegirPrenda, selectedChip.text)
 
         firebaseAuth.currentUser?.uid?.let { userUid ->
             database.child("clothes/$userUid").addValueEventListener(object : ValueEventListener {
@@ -117,7 +119,12 @@ class SelectItem : AppCompatActivity() {
         }
 
         binding.floatingBackButton.setOnClickListener {
-            Log.d("SelectItem", "Back to Create Outfit")
+            finish()
+        }
+
+        binding.buttonRemove.setOnClickListener {
+            val intent = Intent()
+            setResult(RESULT_FIRST_USER, intent)
             finish()
         }
 

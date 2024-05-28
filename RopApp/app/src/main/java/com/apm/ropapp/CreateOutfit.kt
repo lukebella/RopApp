@@ -41,7 +41,6 @@ class CreateOutfit : AppCompatActivity() {
             outfitId = outfitData["id"].toString()
             outfitData.remove("id")
             outfitData.forEach { (key, value) -> clothesDataMap[key.toString()] = value }
-
             binding.outfitName.setText(clothesDataMap["outfitName"].toString())
         }
 
@@ -50,13 +49,25 @@ class CreateOutfit : AppCompatActivity() {
             finish()
         }
 
+        val startForResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    Log.d("CreateOutfit", "Completed")
+                    finish()
+                }
+                else Log.d("CreateOutfit", "Editing Outfit")
+            }
+
         binding.saveButton.setOnClickListener {
-            clothesDataMap["outfitName"] = binding.outfitName.text.toString()
+            val outfitName = binding.outfitName.text.toString()
+            clothesDataMap["outfitName"] = outfitName
             uploadNewOutfit()
-            finish()
-            intent = Intent(this, ShareOutfit::class.java)
             Log.d("CreateOutfit", "Outfit Added")
-            startActivity(intent)
+
+            intent = Intent(this, ShareOutfit::class.java)
+            intent.putExtra("outfitName", outfitName)
+            //intent.putExtra("outfitImage", clothesDataMap["outfitImage"])
+            startForResult.launch(intent)
         }
 
         val buttonMapKeyPairs = listOf(
@@ -75,9 +86,9 @@ class CreateOutfit : AppCompatActivity() {
     }
 
     private fun setupButtonWithActivityResult(button: ImageButton, selectedChip: String, mapKey: String) {
-        val startForResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
+        val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                Activity.RESULT_OK -> {
                     result.data?.extras?.let { extras ->
                         val clothesValues =
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
@@ -93,13 +104,16 @@ class CreateOutfit : AppCompatActivity() {
                             button.setImageResource(R.drawable.tshirt)
                         }
                     }
-                } else {
-                    Log.d("CreateOutfit", "Cancelled")
+                }
+                Activity.RESULT_FIRST_USER -> {
+                    Log.d("CreateOutfit", "Removed Clothes")
                     clothesDataMap.remove(mapKey)
                     clothesUriMap.remove(mapKey)
                     button.setImageResource(R.drawable.baseline_add_24)
                 }
+                else -> Log.d("CreateOutfit", "Cancelled")
             }
+        }
 
         button.setOnClickListener {
             intent = Intent(this, SelectItem::class.java)
