@@ -9,10 +9,17 @@ import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.apm.ropapp.databinding.CreateoutfitBinding
+import com.apm.ropapp.utils.CLOTHES
+import com.apm.ropapp.utils.ImageUtils
+import com.apm.ropapp.utils.OUTFITS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 class CreateOutfit : AppCompatActivity() {
@@ -20,6 +27,7 @@ class CreateOutfit : AppCompatActivity() {
     private lateinit var binding: CreateoutfitBinding
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var database: DatabaseReference
+    private lateinit var storage: StorageReference
     private lateinit var outfitId: String
     private val clothesDataMap = mutableMapOf<String, Any>()
     private val clothesUriMap = mutableMapOf<String, String>()
@@ -31,10 +39,11 @@ class CreateOutfit : AppCompatActivity() {
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
+        storage = FirebaseStorage.getInstance(getString(R.string.storage_url)).reference
 
         val outfitData = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-            intent.extras?.getSerializable("clothesValues", HashMap<String, Any>().javaClass)
-        else intent.extras?.getSerializable("clothesValues")
+            intent.extras?.getSerializable("outfitValues", HashMap<String, Any>().javaClass)
+        else intent.extras?.getSerializable("outfitValues")
 
         if (outfitData != null && outfitData is HashMap<*, *>) {
             Log.d("EditOutfit", outfitData.toString())
@@ -42,6 +51,30 @@ class CreateOutfit : AppCompatActivity() {
             outfitData.remove("id")
             outfitData.forEach { (key, value) -> clothesDataMap[key.toString()] = value }
             binding.outfitName.setText(clothesDataMap["outfitName"].toString())
+
+            clothesDataMap.forEach { (key, value) ->
+                if (value is HashMap<*, *> && value["photo"] != null) {
+                    lifecycleScope.launch {
+                        val image = ImageUtils.getImageUri(value["photo"].toString(), CLOTHES,
+                            storage.child(CLOTHES), binding.root.context).toString()
+                        clothesUriMap[key] = image
+                        when (key) {
+                            getString(R.string.prendaTop) ->
+                                binding.topButton.setImageURI(image.toUri())
+                            getString(R.string.prendaOuterwear) ->
+                                binding.outerwearButton.setImageURI(image.toUri())
+                            getString(R.string.prendaBottom) ->
+                                binding.bottomButton.setImageURI(image.toUri())
+                            getString(R.string.prendaShoes) ->
+                                binding.shoesButton.setImageURI(image.toUri())
+                            "${getString(R.string.prendaAccessories)}1" ->
+                                binding.accesory1Button.setImageURI(image.toUri())
+                            "${getString(R.string.prendaAccessories)}2" ->
+                                binding.accesory2Button.setImageURI(image.toUri())
+                        }
+                    }
+                }
+            }
         }
 
         binding.backButton.setOnClickListener {
@@ -62,7 +95,7 @@ class CreateOutfit : AppCompatActivity() {
             val outfitName = binding.outfitName.text.toString()
             clothesDataMap["outfitName"] = outfitName
             uploadNewOutfit()
-            Log.d("CreateOutfit", "Outfit Added")
+            Log.d("CreateOutfit", "Outfit Added: $clothesUriMap")
 
             intent = Intent(this, ShareOutfit::class.java)
             intent.putExtra("outfitName", outfitName)
@@ -126,7 +159,7 @@ class CreateOutfit : AppCompatActivity() {
     private fun uploadNewOutfit() {
         if (firebaseAuth.currentUser != null) {
             if (!this::outfitId.isInitialized) outfitId = UUID.randomUUID().toString()
-            val uploadTask = database.child("outfits").child(firebaseAuth.currentUser!!.uid)
+            val uploadTask = database.child(OUTFITS).child(firebaseAuth.currentUser!!.uid)
                 .child(outfitId).setValue(clothesDataMap)
             // Register observers to listen for when the upload is done or if it fails
             uploadTask.addOnFailureListener {

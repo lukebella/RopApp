@@ -9,13 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentClosetBinding
+import com.apm.ropapp.utils.CLOTHES
+import com.apm.ropapp.utils.ImageUtils
+import com.apm.ropapp.utils.OUTFITS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,16 +27,10 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
 
-
-private const val CLOTHES = "clothes"
-private const val OUTFITS = "outfits"
 
 class ClosetFragment : Fragment() {
 
@@ -49,7 +45,6 @@ class ClosetFragment : Fragment() {
     private lateinit var buttonSelected: Button
     private var currentCloset: String? = null
     private var valueEventListener: ValueEventListener? = null
-    private val imageUriCache = mutableMapOf<String, Uri>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +68,7 @@ class ClosetFragment : Fragment() {
             }
 
         val recyclerView: RecyclerView = binding.recyclerView
-        recyclerView.adapter = ClosetAdapter(mutableListOf(), mutableListOf(), startForResult)
+        recyclerView.adapter = ClosetAdapter(mutableListOf(), mutableListOf(), startForResult, CLOTHES)
         recyclerView.autoFitColumns(150)
 
         fun getDatabaseValues(folderName: String) {
@@ -102,7 +97,8 @@ class ClosetFragment : Fragment() {
                                     value["id"] = key
                                     dataList.add(value)
                                     if (value["photo"] == null) Uri.EMPTY
-                                    else getImageUri(value["photo"].toString(), folderName, photos)
+                                    else ImageUtils.getImageUri(value["photo"].toString(), folderName,
+                                        photos, requireContext())
                                 }
                             }
                             lifecycleScope.launch {
@@ -110,7 +106,7 @@ class ClosetFragment : Fragment() {
                                 imageList.addAll(uris)
                                 Log.d("Closet", "URIs are: $imageList")
                                 recyclerView.adapter =
-                                    ClosetAdapter(dataList, imageList, startForResult)
+                                    ClosetAdapter(dataList, imageList, startForResult, folderName)
                             }
                         }
                     }
@@ -145,26 +141,5 @@ class ClosetFragment : Fragment() {
         val noOfColumns =
             ((displayMetrics.widthPixels / displayMetrics.density) / columnWidth).toInt()
         this.layoutManager = GridLayoutManager(this.context, noOfColumns)
-    }
-
-    private suspend fun getImageUri(fileName: String, folder: String, photos: StorageReference): Uri {
-        // Check if the URI is in the cache
-        if (imageUriCache.containsKey(fileName)) return imageUriCache[fileName]!!
-
-        val dir = File("${binding.root.context.getExternalFilesDir(null)}/$folder")
-        if (!dir.exists()) dir.mkdirs()
-        val imageFile = File(dir, fileName)
-
-        if (!imageFile.exists()) {
-            withContext(Dispatchers.IO) {
-                imageFile.createNewFile()
-                photos.child(fileName).getFile(imageFile)
-            }
-        }
-        val uri = FileProvider.getUriForFile(
-            binding.root.context, "com.apm.ropapp.FileProvider", imageFile
-        )
-        imageUriCache[fileName] = uri
-        return uri
     }
 }
