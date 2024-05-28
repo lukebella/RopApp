@@ -15,23 +15,25 @@ Aplicación móvil para gestionar y recomendar conjuntos en función de la ropa 
 
 ## Miembros y tareas críticas:
 - Hugo Álvarez (CEO):
-  - Implementación del uso de la cámara
-  - Implementación de sistema de autenticación
+  - Implementación de sistema de usuarios y autenticación
+  - Almacenamiento de las cuentas de los usuarios
 - Julián Jesús Alba (COO):
-  - Registro de prendas, con datos como marca, tipo de lavado, etc
-  - Sistema de creación de conjuntos, manuales y automáticos
-- Alejandro Esteban (CTO):
+  - Implementación del uso de la cámara
   - Almacenamiento y armario virtual
-  - Planificación semanal y comunicación con calendario del teléfono
+  - Registro de prendas, con datos como marca, tipo de lavado, etc
+  - Sistema de creación de conjuntos
+- Alejandro Esteban (CTO):
+  - Perfil de usuario y métricas del armario
+  - Comunicación con redes sociales
+  - Vistas para tablets
 - Luca Bellani (CXO):
   - Geolocalización para tiempo y temperatura
-  - Sistema de recomendación de ropa
+  - Sistema de recomendación de ropa y simulación con calendario
+  - Cambios en Usabilidad y UX
 
 ## Tareas no críticas:
+- Mejora de interfaz
 - Implementación de un sistema de VA para detección de ropa
-- Métricas del armario
-- Comunicación con redes sociales
-- Mejora de interfaz 
 - Implementación de sistemas de RA
 - Comunicación con APIs de anuncios
 - Implementación del sistema de subscripciones
