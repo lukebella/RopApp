@@ -5,25 +5,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentCalendarBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
+import java.util.*
 
 class CalendarFragment : Fragment() {
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var database: DatabaseReference
+    private lateinit var calendarView: DatePicker
     private var lastFetchedDate: String? = null
 
     override fun onCreateView(
@@ -34,8 +33,7 @@ class CalendarFragment : Fragment() {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         firebaseAuth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
-
-        val calendarView = binding.simpleCalendarView
+        calendarView = binding.simpleCalendarView
 
         // Get today's date
         val selectedDate = Calendar.getInstance()
@@ -61,16 +59,15 @@ class CalendarFragment : Fragment() {
 
         // Get today's date
         val today = Calendar.getInstance()
-        val calendarView = binding.simpleCalendarView
         calendarView.updateDate(
             today.get(Calendar.YEAR), today.get(Calendar.MONTH),
             today.get(Calendar.DAY_OF_MONTH)
         )
 
         // Format today's date and fetch and display the images
-        val formattedDate = formatDate(today)
-        fetchAndDisplayImages(formattedDate)
+        fetchAndDisplayImages(formatDate(today))
     }
+
     private fun formatDate(date: Calendar): String {
         val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         return dateFormat.format(date.time)
@@ -82,8 +79,8 @@ class CalendarFragment : Fragment() {
 
         val userUid = firebaseAuth.currentUser?.uid ?: return
         val recommendationRef = database.child("recommendations").child(userUid).child(selectedDate)
-        recommendationRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
+        lifecycleScope.launch {
+            recommendationRef.get().addOnSuccessListener { snapshot ->
                 val images = mutableListOf<String>()
                 if (snapshot.exists()) {
                     for (imageSnapshot in snapshot.children) {
@@ -96,17 +93,13 @@ class CalendarFragment : Fragment() {
                 } else {
                     Log.d("Firebase", "No data found for the selected date")
                     binding.textViewCalendar.text = getString(R.string.valorSinRecomendacion)
-                    binding.imageView5.setImageDrawable(null)
-                    binding.imageView6.setImageDrawable(null)
                     displayImages(images)
                 }
                 lastFetchedDate = selectedDate
-            }
-
-            override fun onCancelled(error: DatabaseError) {
+            }.addOnFailureListener { error ->
                 Log.e("Firebase", "Error fetching data: ${error.message}")
             }
-        })
+        }
     }
 
     private fun displayImages(images: List<String>) {
@@ -114,14 +107,17 @@ class CalendarFragment : Fragment() {
             binding.imageView1,
             binding.imageView2,
             binding.imageView3,
-            binding.imageView4
+            binding.imageView4,
+            binding.imageView5,
+            binding.imageView6
         )
+
         Log.d("images", images.toString())
-        for (i in imageViews.indices) {
-            if (i < images.size) {
-                Glide.with(this).load(images[i]).into(imageViews[i])
+        imageViews.forEachIndexed { index, imageView ->
+            if (index < images.size) {
+                Glide.with(this).load(images[index]).into(imageView)
             } else {
-                imageViews[i].setImageDrawable(null)
+                imageView.setImageDrawable(null)
             }
         }
     }
