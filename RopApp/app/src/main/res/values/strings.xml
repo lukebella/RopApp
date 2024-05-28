@@ -78,7 +78,6 @@
     <string name="valorIntroducePassword">Introduce tu contraseña</string>
 
     <string name="ValorCambiarContraseña">Cambiar Contraseña</string>
-    <string name="valorConjuntoDiario">Conjunto del día</string>
     <string name="valorPrendas">Prendas</string>
     <string name="valorConjuntos">Conjuntos</string>
     <string name="valorRecomendacionDia">Recomendación del día</string>
@@ -109,6 +108,8 @@
     <string name="valorPrecio">Precio</string>
     <string name="valorColores">Colores</string>
     <string name="valorOutfitName">Conjunto moderno</string>
+    <string name="valorConjuntoCalendario">Conjunto del día:</string>
+    <string name="valorSinRecomendacion">Sin recomendaciones</string>
 
 
     <!-- Definición de valores de Dropdown de Género en la vista de crear cuenta -->

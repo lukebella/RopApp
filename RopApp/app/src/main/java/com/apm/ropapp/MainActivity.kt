@@ -37,6 +37,14 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         binding.navView.setupWithNavController(navController)
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.navigation_calendar || destination.id == R.id.navigation_user) {
+                binding.floatingAddButton.hide()
+            } else {
+                binding.floatingAddButton.show()
+            }
+        }
+
         val b = intent.extras
         if (b != null) {
             val navFragment = b.getInt("fragment")

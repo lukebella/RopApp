@@ -1,20 +1,20 @@
 package com.apm.ropapp.ui.calendar
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentCalendarBinding
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
-
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -24,22 +24,8 @@ class CalendarFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var database: DatabaseReference
+    private var lastFetchedDate: String? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        firebaseAuth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance(getString(R.string.database_url)).reference
-
-        // Get today's date
-        val today = Calendar.getInstance()
-        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val formattedDate = dateFormat.format(today.time)
-
-        // Fetch and display the images for today's date
-        fetchAndDisplayImages(formattedDate)
-    }
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,11 +37,16 @@ class CalendarFragment : Fragment() {
 
         val calendarView = binding.simpleCalendarView
 
-        calendarView.setOnDateChangedListener { view, year, month, dayOfMonth ->
-            val selectedDate = Calendar.getInstance()
+        // Get today's date
+        val selectedDate = Calendar.getInstance()
+        var formattedDate = formatDate(selectedDate)
+
+        // Fetch and display the images for today's date
+        fetchAndDisplayImages(formattedDate)
+
+        calendarView.setOnDateChangedListener { _, year, month, dayOfMonth ->
             selectedDate.set(year, month, dayOfMonth)
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val formattedDate = dateFormat.format(selectedDate.time)
+            formattedDate = formatDate(selectedDate)
             Log.d("SEL DATE", formattedDate)
 
             // Fetch and display the images for the selected date
@@ -65,7 +56,30 @@ class CalendarFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        // Get today's date
+        val today = Calendar.getInstance()
+        val calendarView = binding.simpleCalendarView
+        calendarView.updateDate(
+            today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+            today.get(Calendar.DAY_OF_MONTH)
+        )
+
+        // Format today's date and fetch and display the images
+        val formattedDate = formatDate(today)
+        fetchAndDisplayImages(formattedDate)
+    }
+    private fun formatDate(date: Calendar): String {
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        return dateFormat.format(date.time)
+    }
+
     private fun fetchAndDisplayImages(selectedDate: String) {
+        // If the images for the selected date have already been fetched, no need to fetch them again
+        if (selectedDate == lastFetchedDate) return
+
         val userUid = firebaseAuth.currentUser?.uid ?: return
         val recommendationRef = database.child("recommendations").child(userUid).child(selectedDate)
         recommendationRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -77,15 +91,16 @@ class CalendarFragment : Fragment() {
                         val imageUrl = imageSnapshot.getValue(String::class.java)
                         imageUrl?.let { images.add(it) }
                     }
-                    binding.prendaMasUtilizada.text = "Conjunto del día:"
+                    binding.textViewCalendar.text = getString(R.string.valorConjuntoCalendario)
                     displayImages(images)
                 } else {
                     Log.d("Firebase", "No data found for the selected date")
-                    binding.prendaMasUtilizada.text = "No recomendaciónes"
+                    binding.textViewCalendar.text = getString(R.string.valorSinRecomendacion)
                     binding.imageView5.setImageDrawable(null)
                     binding.imageView6.setImageDrawable(null)
                     displayImages(images)
                 }
+                lastFetchedDate = selectedDate
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -93,7 +108,6 @@ class CalendarFragment : Fragment() {
             }
         })
     }
-
 
     private fun displayImages(images: List<String>) {
         val imageViews = listOf(
