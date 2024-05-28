@@ -73,7 +73,7 @@ class AddClothes : AppCompatActivity() {
 
             binding.categoryTextView.text = updateTextViewCheckbox("category")
             binding.styleTextView.text = updateTextViewCheckbox("style")
-            binding.detailsTextView.text = updateTextViewDetail("details")
+            binding.detailsTextView.text = updateTextViewDetails()
 
             val imageString = intent.extras?.getString("image")
             if (imageString != null) {
@@ -162,7 +162,7 @@ class AddClothes : AppCompatActivity() {
                     else extras?.getSerializable("details")
                     if (detailsData != null && detailsData is HashMap<*, *>) {
                         uploadData["details"] = detailsData
-                        binding.detailsTextView.text = updateTextViewDetail("details")
+                        binding.detailsTextView.text = updateTextViewDetails()
                         Log.d("AddDetails", uploadData["details"].toString())
                     }
                 }
@@ -188,7 +188,7 @@ class AddClothes : AppCompatActivity() {
             Log.d("AddClothes", "Add Details")
             val intent = Intent(this, AddDetails::class.java)
             if (uploadData["details"] != null)
-                intent.putExtra("checked", uploadData["details"] as HashMap<*, *>)
+                intent.putExtra("details", uploadData["details"] as HashMap<*, *>)
             startForResult.launch(intent)
         }
     }
@@ -241,8 +241,8 @@ class AddClothes : AppCompatActivity() {
         return ""
     }
 
-    private fun updateTextViewDetail(key: String): String {
-        val detailsData = uploadData[key] as? HashMap<*, *>
+    private fun updateTextViewDetails(): String {
+        val detailsData = uploadData["details"] as? HashMap<*, *>
         return detailsData?.values?.joinToString(", ") ?: ""
     }
 
