@@ -58,7 +58,7 @@ class ShareOutfit : AppCompatActivity() {
         }
         binding.shareButton.setOnClickListener {
             // Share the outfit
-            shareCombinedImage()
+            shareContent("Check out my outfit: $outfitName")
             Log.d("ShareOutfit", "Share Outfit")
         }
     }
@@ -175,18 +175,13 @@ class ShareOutfit : AppCompatActivity() {
         return result
     }
 
-    private fun shareCombinedImage() {
-        combinedBitmap?.let { bitmap ->
-            val uri = getImageUri(this, bitmap)
-            val shareIntent = ShareCompat.IntentBuilder(this)
-                .setType("image/png")
-                .setStream(uri)
-                .intent
-                .setAction(Intent.ACTION_SEND)
-                .setDataAndType(uri, "image/png")
-                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            startActivity(Intent.createChooser(shareIntent, "Share outfit via"))
-        }
+    private fun shareCombinedImage(bitmap: Bitmap) {
+        val uri = getImageUri(this, bitmap)
+        ShareCompat.IntentBuilder(this)
+            .setType("image/png")
+            .setChooserTitle("Share via")
+            .setStream(uri)
+            .startChooser()
     }
 
     private fun getImageUri(context: Context, bitmap: Bitmap): Uri {
@@ -194,5 +189,13 @@ class ShareOutfit : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes)
         val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "Outfit", null)
         return Uri.parse(path)
+    }
+
+    private fun shareContent(content: String) {
+        ShareCompat.IntentBuilder(this)
+            .setType("text/plain")
+            .setChooserTitle("Share via")
+            .setText(content)
+            .startChooser()
     }
 }
