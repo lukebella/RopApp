@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 import android.Manifest
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.view.View
 import com.google.firebase.storage.FirebaseStorage
@@ -96,6 +97,23 @@ class EditProfile : AppCompatActivity() {
                             else -> 2
                         }
                         binding.editGenero.setSelection(spinnerPosition)
+                    }
+                    val imageUrl = dataSnapshot.child("image").getValue(String::class.java)
+                    if (!imageUrl.isNullOrEmpty()) {
+                        val imageRef =
+                            FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
+                        imageRef.getBytes(10 * 1024 * 1024).addOnSuccessListener { bytes ->
+                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                            binding.editImage.setImageBitmap(bitmap)
+                        }.addOnFailureListener {
+                            // Handle any errors
+                            Toast.makeText(
+                                applicationContext,
+                                "Image upload failed: ${it.message}",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
                     }
                 }
             }
