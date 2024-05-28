@@ -1,6 +1,8 @@
 package com.apm.ropapp
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.UserinfoBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -9,6 +11,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
 
 class UserInfo : AppCompatActivity() {
 
@@ -41,6 +44,23 @@ class UserInfo : AppCompatActivity() {
                     birthdate?.let { binding.userBirthdate.setText(it) }
                     selectedGender?.let { binding.userGenero.setText(it) }
                     email?.let { binding.userEmail.setText(it) }
+                    val imageUrl = dataSnapshot.child("image").getValue(String::class.java)
+                    if (!imageUrl.isNullOrEmpty()) {
+                        val imageRef =
+                            FirebaseStorage.getInstance().getReferenceFromUrl(imageUrl)
+                        imageRef.getBytes(10 * 1024 * 1024).addOnSuccessListener { bytes ->
+                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                            binding.imageButton.setImageBitmap(bitmap)
+                        }.addOnFailureListener {
+                            // Handle any errors
+                            Toast.makeText(
+                                applicationContext,
+                                "Image upload failed: ${it.message}",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
+                    }
                 }
             }
 
