@@ -3,7 +3,6 @@ package com.apm.ropapp
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,10 +37,13 @@ class SelectAdapter(
             Glide.with(viewHolder.itemView.context).load(photoUri).into(viewHolder.imageButton)
 
         viewHolder.imageButton.setOnClickListener {
-            Log.d("SelectItem", "Has pulsado la prenda $position")
-
+            val selectedData = dataList.elementAt(position)
+            val simplifiedData = hashMapOf(
+                "id" to selectedData["id"],
+                "photo" to selectedData["photo"]
+            )
             val intent = Intent()
-            intent.putExtra("clothesValues", dataList.elementAt(position))
+            intent.putExtra("clothesValues", simplifiedData)
             if (photoUri != null) intent.putExtra("image", photoUri.toString())
             activity.setResult(Activity.RESULT_OK, intent)
             activity.finish()
