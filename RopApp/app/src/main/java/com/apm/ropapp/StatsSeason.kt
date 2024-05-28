@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.StatsSeasonBinding
+import com.apm.ropapp.utils.CLOTHES
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -84,8 +85,7 @@ class StatsSeason : AppCompatActivity() {
 
         if (userId != null) {
             // Obtain a reference to the user's clothes data
-            databaseReference = FirebaseDatabase.getInstance().reference
-                .child("clothes").child(userId)
+            databaseReference = FirebaseDatabase.getInstance().reference.child(CLOTHES).child(userId)
 
             databaseReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {

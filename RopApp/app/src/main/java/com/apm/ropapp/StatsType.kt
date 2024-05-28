@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.apm.ropapp.databinding.StatsTypeBinding
+import com.apm.ropapp.utils.CLOTHES
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -82,23 +83,23 @@ class StatsType : AppCompatActivity() {
         if (userId != null) {
             // Obtain a reference to the user's clothes data
             databaseReference = FirebaseDatabase.getInstance().reference
-                .child("clothes").child(userId)
+            .child(CLOTHES).child(userId)
 
             databaseReference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val TypeDataMap = mutableMapOf<String, Int>()
+                    val typeDataMap = mutableMapOf<String, Int>()
 
                     for (clothSnapshot in dataSnapshot.children) {
-                        val typesSnapshot = clothSnapshot.child("style")
-                        for (typesSnapshot in typesSnapshot.children) {
+                        val typesSnapshots = clothSnapshot.child("style")
+                        for (typesSnapshot in typesSnapshots.children) {
                             val season = typesSnapshot.getValue(String::class.java)
                             if (season != null) {
-                                TypeDataMap[season] = TypeDataMap.getOrDefault(season, 0) + 1
+                                typeDataMap[season] = typeDataMap.getOrDefault(season, 0) + 1
                             }
                         }
                     }
 
-                    getBarEntries(TypeDataMap)
+                    getBarEntries(typeDataMap)
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {

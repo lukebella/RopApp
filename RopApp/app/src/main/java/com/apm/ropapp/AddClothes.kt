@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.view.children
 import com.apm.ropapp.databinding.AddclothesBinding
+import com.apm.ropapp.utils.CLOTHES
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -255,14 +256,14 @@ class AddClothes : AppCompatActivity() {
         //or externalMediaDirs -> carpeta media
         //or getExternalFilesDir(null) -> carpeta data/files
         //or getExternalFilesDir(Environment.DIRECTORY_PICTURES)} -> carpeta data/files/Pictures
-        val dir = File("${getExternalFilesDir(null)}/clothes")
+        val dir = File("${getExternalFilesDir(null)}/$CLOTHES")
         if (!dir.exists()) dir.mkdirs()
         val imageFile = File(dir, generateFileName())
         return FileProvider.getUriForFile(this, "com.apm.ropapp.FileProvider", imageFile)
     }
 
     private fun uploadPhoto() {
-        val uploadTask = storage.child("clothes/$fileNameUpload").putFile(imageUri)
+        val uploadTask = storage.child("$CLOTHES/$fileNameUpload").putFile(imageUri)
         // Register observers to listen for when the upload is done or if it fails
         uploadTask.addOnFailureListener {
             // Handle unsuccessful uploads
@@ -276,7 +277,7 @@ class AddClothes : AppCompatActivity() {
     private fun uploadNewClothes(data: HashMap<String, Any>) {
         if (firebaseAuth.currentUser != null) {
             if (!this::clothesId.isInitialized) clothesId = UUID.randomUUID().toString()
-            val uploadTask = database.child("clothes").child(firebaseAuth.currentUser!!.uid)
+            val uploadTask = database.child(CLOTHES).child(firebaseAuth.currentUser!!.uid)
                 .child(clothesId).setValue(data)
             // Register observers to listen for when the upload is done or if it fails
             uploadTask.addOnFailureListener {

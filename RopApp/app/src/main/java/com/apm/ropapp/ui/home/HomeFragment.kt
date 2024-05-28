@@ -23,8 +23,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
+import com.apm.ropapp.utils.CLOTHES
+import com.apm.ropapp.utils.ImageUtils
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -39,6 +42,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -101,7 +106,7 @@ class HomeFragment : Fragment() {
         //metodo para recomendar
 
         if (sharedPreferences.getBoolean("new_rec", true)) {
-            getDatabaseValues("clothes", userUid!!, sharedPreferences) { data ->
+            getDatabaseValues(userUid!!, sharedPreferences) { data ->
                 toRecommend = checkURI(data)
             }
             sharedPreferences.edit().putBoolean("new_rec", false).apply()
@@ -342,7 +347,6 @@ class HomeFragment : Fragment() {
             return getUriFromDrawable(requireContext(), R.drawable.unavailable, "default_image.png")
         }
 
-
         if (!imageFile.exists()) {
             imageFile.createNewFile()
             photos.child(fileName).getFile(imageFile)
@@ -393,8 +397,8 @@ class HomeFragment : Fragment() {
     //------------------------------------------------------------------------------------
     //DATABASE FUNCTIONS
 
-    private fun getDatabaseValues(folderName: String, userUid:String, sharedPreferences: SharedPreferences, callback: (HashMap<String, Any>) -> Unit) {
-        database.child("$folderName/$userUid")
+    private fun getDatabaseValues(userUid:String, sharedPreferences: SharedPreferences, callback: (HashMap<String, Any>) -> Unit) {
+        database.child("$CLOTHES/$userUid")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val data = snapshot.getValue<HashMap<String, HashMap<String, Any>>>()
@@ -402,7 +406,7 @@ class HomeFragment : Fragment() {
 
                     if (data != null) {
                         val photoUrls = mutableListOf<String>()
-                        val photos = storage.child(folderName)
+                        val photos = storage.child(CLOTHES)
 
                         data.forEach { (key, value) ->
                             value["id"] = key
@@ -412,24 +416,29 @@ class HomeFragment : Fragment() {
                         //Recommendation Algorithm
                         val recommendedPhotos = recommendation(data)
                         Log.d("Recommend", recommendedPhotos.toString())
-                        for ((i,ph) in recommendedPhotos.withIndex()) {
-                            Log.d("photo", getImageUri(ph[0],photos).toString())
-                            sharedPreferences.edit().putString("r$i", getImageUri(ph[0],photos).toString()).apply()
-                            photoUrls.add(getImageUri(ph[0],photos).toString())
+                        val asyncPhotos = recommendedPhotos.mapIndexed { i, ph ->
+                            lifecycleScope.async {
+                                val imageUri = getImageUri(ph, photos).toString()
+                                sharedPreferences.edit().putString("r$i", imageUri).apply()
+                                imageUri
+                            }
                         }
-                        updateRecommendations(sharedPreferences, photoUrls)
-                        Log.d("rp", recommendedPhotos.toString())
-                        val valor = HashMap<String, String>()
-                        for ((i,photo) in photoUrls.withIndex()) {
-                            valor[recommendedPhotos[i][1]] = photo
+                        lifecycleScope.launch {
+                            photoUrls.addAll(asyncPhotos.awaitAll())
+                            updateRecommendations(sharedPreferences, photoUrls)
+                            Log.d("rp", recommendedPhotos.toString())
+                            toRecommend[recommendationId] = photoUrls
                         }
-                        toRecommend[recommendationId] = valor
                     }
-                    else {
-                        binding.textPregunta.text = "No hay ropa..."
-                    }
+                    else binding.textPregunta.text = "No hay ropa..."
+
                     callback(toRecommend)
                 }
+
+
+
+
+
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.w("TAG", "Failed to read value.", error.toException())
@@ -521,13 +530,13 @@ class HomeFragment : Fragment() {
 
     private fun recommendation(
         data: HashMap<String, HashMap<String, Any>>
-    ): List<List<String>> {
+    ): List<String> {
         val season = fromMonthToSeason(month.toString())
         val categories = listOf(
-            listOf("Top"),
-            listOf("Bottom"),
-            listOf("Shoes"),
-            listOf("Prenda Exterior")
+            listOf(getString(R.string.prendaTop), getString(R.string.prendaDress)),
+            listOf(getString(R.string.prendaOuterwear)),
+            listOf(getString(R.string.prendaBottom)),
+            listOf(getString(R.string.prendaShoes)),
         )
         val filteredClothes = data.values.filter { item ->
             val seasons = item["seasons"] as? List<*>
@@ -535,7 +544,7 @@ class HomeFragment : Fragment() {
         }
         val clothesByCategory = filteredClothes.groupBy { it["category"] }
         Log.d("cc", clothesByCategory.toString())
-        val recommendedPhotos : MutableList<MutableList<String>> = mutableListOf()
+        val recommendedPhotos = mutableListOf<String>()
         for (category in categories) {
             Log.d("cat", category.toString())
             val clothes = clothesByCategory[category]
@@ -543,11 +552,10 @@ class HomeFragment : Fragment() {
             if (!clothes.isNullOrEmpty()) {
                 val randomClothes = clothes.random()
                 val photoUrl = randomClothes["photo"]?.toString() ?: ""
-                val idPhoto = randomClothes["id"]?.toString() ?: ""
                 Log.d("photourl", photoUrl)
-                recommendedPhotos.add(mutableListOf( photoUrl, idPhoto))
+                recommendedPhotos.add(photoUrl)
             } else {
-                recommendedPhotos.add(mutableListOf( "", ""))
+                recommendedPhotos.add("")
             }
         }
 

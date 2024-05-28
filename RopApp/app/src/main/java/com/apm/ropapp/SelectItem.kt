@@ -5,11 +5,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.apm.ropapp.databinding.SelectItemBinding
+import com.apm.ropapp.utils.CLOTHES
+import com.apm.ropapp.utils.ImageUtils
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -20,12 +21,9 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.getValue
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
 
 class SelectItem : AppCompatActivity() {
 
@@ -38,7 +36,6 @@ class SelectItem : AppCompatActivity() {
     private lateinit var relatedCategories: Map<String, List<String>>
     private val dataList = mutableListOf<HashMap<String, Any>>()
     private val imageList = mutableMapOf<String, Uri>()
-    private val imageUriCache = mutableMapOf<String, Uri>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,16 +81,17 @@ class SelectItem : AppCompatActivity() {
         binding.textView.text = getString(R.string.elegirPrenda, selectedChip.text)
 
         firebaseAuth.currentUser?.uid?.let { userUid ->
-            database.child("clothes/$userUid").addValueEventListener(object : ValueEventListener {
+            database.child("$CLOTHES/$userUid").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.getValue<HashMap<String, HashMap<String, Any>>>()?.let { data ->
-                        val photos = storage.child("clothes")
+                        val photos = storage.child(CLOTHES)
                         val asyncData = data.map { (key, value) ->
                             lifecycleScope.async {
                                 value["id"] = key
                                 dataList.add(value)
                                 value["photo"]?.toString()?.let { photoKey ->
-                                    Pair(photoKey, getImageUri(photoKey, photos))
+                                    Pair(photoKey, ImageUtils.getImageUri(photoKey, CLOTHES,
+                                        photos, this@SelectItem))
                                 }
                             }
                         }
@@ -135,27 +133,6 @@ class SelectItem : AppCompatActivity() {
         val noOfColumns =
             ((displayMetrics.widthPixels / displayMetrics.density) / columnWidth).toInt()
         this.layoutManager = GridLayoutManager(this.context, noOfColumns)
-    }
-
-    private suspend fun getImageUri(fileName: String, photos: StorageReference): Uri {
-        // Check if the URI is in the cache
-        if (imageUriCache.containsKey(fileName)) return imageUriCache[fileName]!!
-
-        val dir = File("${binding.root.context.getExternalFilesDir(null)}/clothes")
-        if (!dir.exists()) dir.mkdirs()
-        val imageFile = File(dir, fileName)
-
-        if (!imageFile.exists()) {
-            withContext(Dispatchers.IO) {
-                imageFile.createNewFile()
-                photos.child(fileName).getFile(imageFile)
-            }
-        }
-        val uri = FileProvider.getUriForFile(
-            binding.root.context, "com.apm.ropapp.FileProvider", imageFile
-        )
-        imageUriCache[fileName] = uri
-        return uri
     }
 
     private fun updateRecyclerView() {
