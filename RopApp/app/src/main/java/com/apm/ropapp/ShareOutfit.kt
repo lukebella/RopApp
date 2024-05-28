@@ -59,7 +59,11 @@ class ShareOutfit : AppCompatActivity() {
         }
         binding.shareButton.setOnClickListener {
             // Share the outfit
-            shareCombinedImage()
+            if (combinedBitmap == null) {
+                Log.e("ShareOutfit", "Combined bitmap is null")
+                return@setOnClickListener
+            }
+            shareCombinedImage(getImageUri(this, combinedBitmap!!))
             Log.d("ShareOutfit", "Share Outfit")
         }
     }
@@ -136,8 +140,8 @@ class ShareOutfit : AppCompatActivity() {
     }
 
     private fun displayCombinedImages(clothesBitmaps: List<Bitmap>, accessoriesBitmaps: List<Bitmap>) {
-        val combinedClothesBitmap = combineImagesVertically(clothesBitmaps)
-        binding.imageCombined.setImageBitmap(combinedClothesBitmap)
+        combinedBitmap = combineImagesVertically(clothesBitmaps)
+        binding.imageCombined.setImageBitmap(combinedBitmap)
 
         if (accessoriesBitmaps.isNotEmpty()) {
             if (accessoriesBitmaps.size == 1) {
@@ -176,18 +180,15 @@ class ShareOutfit : AppCompatActivity() {
         return result
     }
 
-    private fun shareCombinedImage() {
-        combinedBitmap?.let { bitmap ->
-            val uri = getImageUri(this, bitmap)
-            val shareIntent = ShareCompat.IntentBuilder(this)
-                .setType("image/png")
-                .setStream(uri)
-                .intent
-                .setAction(Intent.ACTION_SEND)
-                .setDataAndType(uri, "image/png")
-                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            startActivity(Intent.createChooser(shareIntent, "Share outfit via"))
-        }
+    private fun shareCombinedImage(uri: Uri) {
+        val shareIntent = ShareCompat.IntentBuilder(this)
+            .setType("image/png")
+            .setStream(uri)
+            .intent
+            .setAction(Intent.ACTION_SEND)
+            .setDataAndType(uri, "image/png")
+            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        startActivity(Intent.createChooser(shareIntent, "Share outfit via"))
     }
 
     private fun getImageUri(context: Context, bitmap: Bitmap): Uri {
