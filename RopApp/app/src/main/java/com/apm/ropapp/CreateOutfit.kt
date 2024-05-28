@@ -100,7 +100,6 @@ class CreateOutfit : AppCompatActivity() {
 
             intent = Intent(this, ShareOutfit::class.java)
             intent.putExtra("outfitName", outfitName)
-            intent.putExtra("clothesDataBundle", clothesDataMap)
             intent.putExtra("clothesUriBundle", clothesUriMap)
             //intent.putExtra("outfitImage", clothesDataMap["outfitImage"])
             startForResult.launch(intent)

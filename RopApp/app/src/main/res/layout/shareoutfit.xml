@@ -7,12 +7,32 @@
 
     <ImageView
         android:id="@+id/image_combined"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="56dp"
+        android:layout_width="208dp"
+        android:layout_height="187dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="156dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView"
+        app:srcCompat="@drawable/nike" />
+
+    <ImageView
+        android:id="@+id/image_accesories1"
+        android:layout_width="83dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="160dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_button"
+        app:srcCompat="@drawable/nike" />
+
+    <ImageView
+        android:id="@+id/image_accesories2"
+        android:layout_width="83dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="256dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_button"
         app:srcCompat="@drawable/nike" />
 
     <TextView
@@ -60,11 +80,11 @@
         android:id="@+id/share_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="556dp"
+        android:layout_marginTop="484dp"
         android:background="@drawable/button_default"
         android:text="@string/valorShare"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 

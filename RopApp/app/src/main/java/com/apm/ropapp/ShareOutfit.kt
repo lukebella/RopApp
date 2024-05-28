@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -37,7 +38,7 @@ class ShareOutfit : AppCompatActivity() {
         }
 
         // Retrieve the data correctly
-        val clothesUriMap = intent.getSerializableExtra("clothesUriBundle", HashMap<String, String>().javaClass) as? HashMap<String, String>
+        val clothesUriMap = intent.getSerializableExtra("clothesUriBundle", HashMap<String, String>().javaClass)
 
         if (clothesUriMap != null) {
             loadAndCombineOutfitImages(clothesUriMap)
@@ -64,35 +65,108 @@ class ShareOutfit : AppCompatActivity() {
 
     private fun loadAndCombineOutfitImages(clothesUriMap: HashMap<String, String>) {
         val bitmaps = mutableListOf<Bitmap>()
-        val uris = clothesUriMap.values.map { Uri.parse(it) }
+        val accessories = mutableListOf<Bitmap>()
+        val order = listOf("Prenda Exterior", "Parte de Arriba", "Parte de Abajo", "Calzado")
 
-        uris.forEach { uri ->
-            try {
-                contentResolver.openInputStream(uri)?.use { inputStream ->
-                    val bitmap = BitmapFactory.decodeStream(inputStream)
-                    bitmaps.add(bitmap)
-                }
-            } catch (e: Exception) {
-                Log.e("ShareOutfit", "Failed to load image: $uri", e)
-            }
+        // Sort the URIs according to the defined order, separate accessories
+        val sortedUris = order.mapNotNull { key ->
+            clothesUriMap[key]?.let { uriString -> key to Uri.parse(uriString) }
+        }
+        val accessoryUris = clothesUriMap.entries
+            .filter { it.key.contains("accesorio", ignoreCase = true) }
+            .map { it.key to Uri.parse(it.value) }
+
+        var loadCount = 0
+        val totalImagesToLoad = sortedUris.size + accessoryUris.size
+
+        sortedUris.forEach { (key, uri) ->
+            Log.d("ShareOutfit", "Loading URI: $uri for $key")
+            Glide.with(this)
+                .asBitmap()
+                .load(uri)
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        bitmaps.add(resource)
+                        loadCount++
+                        if (loadCount == totalImagesToLoad) {
+                            displayCombinedImages(bitmaps, accessories)
+                        }
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {}
+
+                    override fun onLoadFailed(errorDrawable: Drawable?) {
+                        super.onLoadFailed(errorDrawable)
+                        Log.e("ShareOutfit", "Failed to load image: $uri for $key")
+                        loadCount++
+                        if (loadCount == totalImagesToLoad) {
+                            displayCombinedImages(bitmaps, accessories)
+                        }
+                    }
+                })
         }
 
-        if (bitmaps.isNotEmpty()) {
-            combinedBitmap = combineImagesVertically(bitmaps)
-            binding.imageCombined.setImageBitmap(combinedBitmap)
+        accessoryUris.forEach { (key, uri) ->
+            Log.d("ShareOutfit", "Loading URI: $uri for $key")
+            Glide.with(this)
+                .asBitmap()
+                .load(uri)
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        accessories.add(resource)
+                        loadCount++
+                        if (loadCount == totalImagesToLoad) {
+                            displayCombinedImages(bitmaps, accessories)
+                        }
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {}
+
+                    override fun onLoadFailed(errorDrawable: Drawable?) {
+                        super.onLoadFailed(errorDrawable)
+                        Log.e("ShareOutfit", "Failed to load image: $uri for $key")
+                        loadCount++
+                        if (loadCount == totalImagesToLoad) {
+                            displayCombinedImages(bitmaps, accessories)
+                        }
+                    }
+                })
         }
     }
 
+    private fun displayCombinedImages(clothesBitmaps: List<Bitmap>, accessoriesBitmaps: List<Bitmap>) {
+        val combinedClothesBitmap = combineImagesVertically(clothesBitmaps)
+        binding.imageCombined.setImageBitmap(combinedClothesBitmap)
+
+        if (accessoriesBitmaps.isNotEmpty()) {
+            if (accessoriesBitmaps.size > 0) {
+                binding.imageAccesories1.setImageBitmap(accessoriesBitmaps[0])
+                binding.imageAccesories1.visibility = ImageView.VISIBLE
+            } else {
+                binding.imageAccesories1.visibility = ImageView.GONE
+            }
+
+            if (accessoriesBitmaps.size > 1) {
+                binding.imageAccesories2.setImageBitmap(accessoriesBitmaps[1])
+                binding.imageAccesories2.visibility = ImageView.VISIBLE
+            } else {
+                binding.imageAccesories2.visibility = ImageView.GONE
+            }
+        } else {
+            binding.imageAccesories1.visibility = ImageView.GONE
+            binding.imageAccesories2.visibility = ImageView.GONE
+        }
+    }
 
     private fun combineImagesVertically(bitmaps: List<Bitmap>): Bitmap {
-        val width = bitmaps.maxOf { it.width }
+        val width = bitmaps.maxOfOrNull { it.width } ?: 0
         val height = bitmaps.sumOf { it.height }
 
         val result = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(result)
-        var currentHeight = 0
-
         val paint = Paint()
+
+        var currentHeight = 0
         bitmaps.forEach { bitmap ->
             canvas.drawBitmap(bitmap, 0f, currentHeight.toFloat(), paint)
             currentHeight += bitmap.height
