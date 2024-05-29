@@ -27,7 +27,6 @@ import androidx.lifecycle.lifecycleScope
 import com.apm.ropapp.R
 import com.apm.ropapp.databinding.FragmentHomeBinding
 import com.apm.ropapp.utils.CLOTHES
-import com.apm.ropapp.utils.ImageUtils
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -105,12 +104,12 @@ class HomeFragment : Fragment() {
         updateWeather(sharedPreferences, binding.aCoruna)
         //metodo para recomendar
 
-        if (sharedPreferences.getBoolean("new_rec", true)) {
-            getDatabaseValues(userUid!!, sharedPreferences) { data ->
-                toRecommend = checkURI(data)
-            }
-            sharedPreferences.edit().putBoolean("new_rec", false).apply()
+        //if (sharedPreferences.getBoolean("new_rec", true)) {
+        getDatabaseValues(userUid!!, sharedPreferences) { data ->
+            toRecommend = checkURI(data)
         }
+        sharedPreferences.edit().putBoolean("new_rec", false).apply()
+        //}
 
         noMeGustaButton.setOnClickListener {
             manageNoMeGusta(noMeGustaButton, meGustaButton, sharedPreferences)
@@ -291,7 +290,7 @@ class HomeFragment : Fragment() {
                             callback(location.latitude, location.longitude)
                         } else {
                             Log.d("HOME", "no address")
-                            locationTextView.text = "City not found"
+                            locationTextView.text = getString(R.string.valorCityNotFound)
                         }
 
                     }
@@ -306,7 +305,7 @@ class HomeFragment : Fragment() {
                         callback(location.latitude, location.longitude)
                     } else {
                         Log.d("HOME", "no address")
-                        locationTextView.text = "City not found"
+                        locationTextView.text = getString(R.string.valorCityNotFound)
                     }
 
                 }
@@ -344,7 +343,13 @@ class HomeFragment : Fragment() {
         val imageFile = File(dir, fileName)
 
         if (imageFile.isDirectory) {
-            return getUriFromDrawable(requireContext(), R.drawable.unavailable, "default_image.png")
+            val defaultImageFile = File("${requireContext().getExternalFilesDir(null)}",
+                "default_image.png")
+            if (!defaultImageFile.exists()) {
+                val bitmap = getBitmapFromDrawable(requireContext(), R.drawable.unavailable)
+                saveBitmapToFile(bitmap, "default_image.png")
+            }
+            return FileProvider.getUriForFile(requireContext(), "com.apm.ropapp.FileProvider", defaultImageFile)
         }
 
         if (!imageFile.exists()) {
@@ -352,40 +357,24 @@ class HomeFragment : Fragment() {
             photos.child(fileName).getFile(imageFile)
         }
 
-
-        return FileProvider.getUriForFile(
-            requireContext(), "com.apm.ropapp.FileProvider", imageFile
-        )
-
-
+        return FileProvider.getUriForFile(requireContext(), "com.apm.ropapp.FileProvider", imageFile)
     }
+
     private fun getBitmapFromDrawable(context: Context, drawableId: Int): Bitmap {
         val drawable = ContextCompat.getDrawable(context, drawableId)
-        val bitmap = Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
-        return bitmap
+        return Bitmap.createBitmap(drawable!!.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888).apply {
+            val canvas = Canvas(this)
+            drawable.setBounds(0, 0, canvas.width, canvas.height)
+            drawable.draw(canvas)
+        }
     }
 
-    // Function to save a Bitmap to a file
-    private fun saveBitmapToFile(context: Context, bitmap: Bitmap, fileName: String): File {
-        val file = File(context.getExternalFilesDir(null), fileName)
-        val out = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-        out.flush()
-        out.close()
-        return file
-    }
-
-    private fun getUriFromDrawable(context: Context, drawableId: Int, fileName: String): Uri {
-        val bitmap = getBitmapFromDrawable(context, drawableId)
-        val file = saveBitmapToFile(context, bitmap, fileName)
-        return getUriFromFile(context, file)
-    }
-
-    private fun getUriFromFile(context: Context, file: File): Uri {
-        return FileProvider.getUriForFile(context, "com.apm.ropapp.FileProvider", file)
+    private fun saveBitmapToFile(bitmap: Bitmap, fileName: String) {
+        val file = File(requireContext().getExternalFilesDir(null), fileName)
+        FileOutputStream(file).use { out ->
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+            out.flush()
+        }
     }
 
     private fun convertToURI(img: ImageView, str: String, sharedPreferences: SharedPreferences) {
@@ -430,15 +419,10 @@ class HomeFragment : Fragment() {
                             toRecommend[recommendationId] = photoUrls
                         }
                     }
-                    else binding.textPregunta.text = "No hay ropa..."
+                    else binding.textPregunta.text = getString(R.string.valorNoClothes)
 
                     callback(toRecommend)
                 }
-
-
-
-
-
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.w("TAG", "Failed to read value.", error.toException())

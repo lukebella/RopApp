@@ -110,6 +110,8 @@
     <string name="valorOutfitName">Conjunto moderno</string>
     <string name="valorConjuntoCalendario">Conjunto del día:</string>
     <string name="valorSinRecomendacion">Sin recomendaciones</string>
+    <string name="valorCityNotFound">Ciudad no encontrada</string>
+    <string name="valorNoClothes">No hay ropa…</string>
 
 
     <!-- Definición de valores de Dropdown de Género en la vista de crear cuenta -->
