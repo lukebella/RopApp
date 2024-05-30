@@ -517,7 +517,7 @@ class HomeFragment : Fragment() {
     ): List<String> {
         val season = fromMonthToSeason(month.toString())
         val categories = listOf(
-            listOf(getString(R.string.prendaTop), getString(R.string.prendaDress)),
+            listOf(getString(R.string.prendaTop)),
             listOf(getString(R.string.prendaOuterwear)),
             listOf(getString(R.string.prendaBottom)),
             listOf(getString(R.string.prendaShoes)),

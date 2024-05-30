@@ -21,7 +21,7 @@ object ImageUtils {
         if (!dir.exists()) dir.mkdirs()
         val imageFile = File(dir, fileName)
 
-        if (!imageFile.exists()) {
+        if (!imageFile.exists() || imageFile.length() == 0L){
             withContext(Dispatchers.IO) {
                 imageFile.createNewFile()
                 photosStorage.child(fileName).getFile(imageFile)

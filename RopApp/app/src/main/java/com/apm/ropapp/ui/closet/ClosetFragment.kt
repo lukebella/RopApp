@@ -98,7 +98,7 @@ class ClosetFragment : Fragment() {
                                     dataList.add(value)
                                     if (value["photo"] == null) Uri.EMPTY
                                     else ImageUtils.getImageUri(value["photo"].toString(), folderName,
-                                        photos, requireContext())
+                                        photos, binding.root.context)
                                 }
                             }
                             lifecycleScope.launch {
